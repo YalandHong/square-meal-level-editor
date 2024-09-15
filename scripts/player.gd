@@ -4,12 +4,8 @@ extends Sprite2D
 var current_block: int = 0
 var target_block: int = 0
 
-# var moving: bool = false
-
-# var turning: bool = false
-# var turn_count: int = 0
-
-@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
+@onready var debug_rect: ColorRect = $PlayerDebugColorRect
 
 # enum DirectionState {UP, DOWN, LEFT, RIGHT, NONE}
 const UP = "up"
@@ -20,6 +16,12 @@ const NONE = ""
 
 enum PlayerState {MOVING, TURNING, IDLE, SLIPPING, EATING, SPITTING}
 var state: PlayerState
+
+# var moving: bool = false
+
+# var turning: bool = false
+var turn_count: int = 0
+const MAX_TURN_COUNT: int = 3
 
 var target_x: float
 var target_y: float
@@ -35,7 +37,7 @@ var current_col: int = 0
 
 # 调用GameManager来获取按键和地图信息
 @export var game_manager: GameManager
-@export var shadow_holder: ShadowManager # 拖入shadow_holder节点
+@export var shadow_holder: ShadowManager
 
 # 在 _ready() 中初始化玩家
 func _ready():
@@ -75,10 +77,12 @@ func _process(_delta):
             process_idle()
         PlayerState.MOVING, PlayerState.SLIPPING:
             process_moving_or_slipping()
-            
+        PlayerState.TURNING:
+            process_turning()
+    # debug target x/y
+    debug_rect.position = Vector2(target_x, target_y)
 
 func process_moving_or_slipping():
-    # 移动状态的主逻辑
     do_move()
 
     # 如果玩家到达目标位置，停止移动
@@ -129,35 +133,24 @@ func is_opposite_direction(new_dir: String) -> bool:
 # 主逻辑，检测按键
 func process_idle():
     if Input.is_action_pressed("ui_select"):
-        process_eat_or_spit()
-    else:
-        process_movement()
-
-# 处理吃东西或吐方块的逻辑
-func process_eat_or_spit():
-    if current_block == 0 and target_block == 0:
-        start_eat_block()
+        start_eat_or_spit()
         return
     
-    if current_block != 0:
-        start_spit_block()
-
-# 处理移动的逻辑
-func process_movement():
+    # 处理移动的逻辑
     var direction_pressed = get_direction_pressed()
     if direction_pressed == NONE:
-        process_idle_animation()
+        play_stop_animation()
         return
     
     change_dir(direction_pressed)
 
-    # TODO turning不支持    
-    # if direction_pressed != dir:
-    #     dir = direction_pressed
-    #     play_stop_animation()
-    #     # turning = true
-    #     # turn_count = 0
-    #     return
+    if direction_pressed != dir:
+        dir = direction_pressed
+        play_stop_animation()
+        # turning = true
+        state = PlayerState.TURNING
+        turn_count = 0
+        return
 
     # 执行移动动画和移动逻辑
     play_walk_animation()
@@ -165,6 +158,15 @@ func process_movement():
         # moving = true
         do_move()
 
+# 处理吃东西或吐方块的逻辑
+func start_eat_or_spit():
+    if current_block == 0 and target_block == 0:
+        start_eat_block()
+        return
+    
+    if current_block != 0:
+        start_spit_block()
+    
 func change_dir(direction_pressed: String):
     dir = direction_pressed
     if direction_pressed == LEFT:
@@ -185,13 +187,6 @@ func play_walk_animation():
         anim_sprite.play("walk_" + dir)
     else:
         anim_sprite.play("walk_" + dir + "_fat")
-
-# 停止移动时的动画处理
-func process_idle_animation():
-    if current_block == 0:
-        anim_sprite.play("stop_" + dir)
-    else:
-        anim_sprite.play("stop_" + dir + "_fat")
 
 # 模拟获取方向键的按键状态
 func get_direction_pressed() -> String:
@@ -298,3 +293,8 @@ func update_players_array() -> void:
     # 更新 Player 类的 current_row 和 current_col
     current_row = new_row
     current_col = new_col
+
+func process_turning() -> void:
+    turn_count += 1
+    if turn_count >= MAX_TURN_COUNT:
+        state = PlayerState.IDLE
