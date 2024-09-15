@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=44 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Texture2D" uid="uid://bl5kqg8sa5a0m" path="res://sprites/player/die/1018.png" id="1_gkm0k"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_whyef"]
@@ -40,6 +40,8 @@
 [ext_resource type="Script" path="res://scripts/player_debug_color_rect.gd" id="25_utrei"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/shadow_manager.gd" id="27_fconu"]
+[ext_resource type="Script" path="res://scripts/fps_manager.gd" id="41_22c60"]
+[ext_resource type="Script" path="res://scripts/player_debug_positioner.gd" id="42_35ot8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mcnxm"]
 animations = [{
@@ -196,26 +198,32 @@ animations = [{
 
 [node name="MainGame" type="Node2D"]
 
+[node name="FpsManager" type="Node2D" parent="."]
+script = ExtResource("41_22c60")
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("25_h0p2b")
+
+[node name="ShadowManager" type="Node2D" parent="."]
+script = ExtResource("27_fconu")
+
 [node name="Player" type="Sprite2D" parent="."]
 script = ExtResource("1_whyef")
-
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
-position = Vector2(44, 41)
-sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"walk_left"
-frame = 6
-frame_progress = 0.00990797
 
 [node name="PlayerDebugColorRect" type="ColorRect" parent="Player"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("25_utrei")
 
-[node name="GameManager" type="Node2D" parent="."]
-script = ExtResource("25_h0p2b")
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(44, 41)
+sprite_frames = SubResource("SpriteFrames_mcnxm")
+animation = &"stop_left"
 
 [node name="GridDrawer" type="Node2D" parent="."]
 script = ExtResource("26_pxk8i")
 
-[node name="ShadowManager" type="Node2D" parent="."]
-script = ExtResource("27_fconu")
+[node name="PlayerDebugPositioner" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("42_35ot8")
