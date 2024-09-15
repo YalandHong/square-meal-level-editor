@@ -11,6 +11,10 @@ const TILE_HEIGHT = 30
 var map_width: int
 var map_height: int
 var level_map: Array
+var level_map_movers: Array
+var level_map_players: Array
+var level_map_floor: Array
+var level_map_tiles: Array
 var players_map: Dictionary
 
 # 滚动边界
@@ -73,11 +77,6 @@ func _init():
 
     draw_level()
 
-# 绘制地图
-func draw_level() -> void:
-    # TODO 添加绘制关卡的具体逻辑
-    pass
-
 # level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
 func get_loaded_level_map() -> Array:
     var array_2d := []
@@ -103,3 +102,29 @@ func update_players(player_name: String, old_row: int, old_col: int, new_row: in
 
     # 在新位置更新玩家
     players_map[Vector2(new_row, new_col)] = player_name
+
+# 绘制地图
+func draw_level():
+    for row in range(map_height):
+        for col in range(map_width):
+            var tile_type = level_map[row][col]
+
+            # 初始化所有默认值为 null
+            var mover = null
+            var player = null
+            var floor = null
+            var tile = null
+
+            if tile_type == GlobalVars.ID_STONE_BLOCK:
+                # 处理编号为 1 的方块
+                tile = create_stone_block(row, col)
+
+            # 将结果填充到对应的列表中
+            level_map_movers[row][col] = mover
+            level_map_players[row][col] = player
+            level_map_floor[row][col] = floor
+            level_map_tiles[row][col] = tile
+
+static func create_stone_block(row: int, col: int):
+    # TODO
+    pass
