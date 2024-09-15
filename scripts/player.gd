@@ -23,7 +23,7 @@ var state: PlayerState
 
 # var turning: bool = false
 var turn_count: int = 0
-const MAX_TURN_COUNT: int = 8
+const MAX_TURN_COUNT: int = 2
 
 var target_x: float
 var target_y: float
@@ -144,8 +144,6 @@ func process_idle():
         play_stop_animation()
         return
 
-    change_dir(direction_pressed)
-
     if direction_pressed != dir:
         dir = direction_pressed
         play_stop_animation()
@@ -169,13 +167,6 @@ func start_eat_or_spit():
 
     if current_block != 0:
         start_spit_block()
-
-func change_dir(direction_pressed: String):
-    dir = direction_pressed
-    #if direction_pressed == LEFT:
-        #flip_h = true
-    #else:
-        #flip_h = false
 
 # 停止动画
 func play_stop_animation():
@@ -282,8 +273,7 @@ func do_move():
     # shadow.position.y = position.y + 5
 
     # 更新玩家深度和其他信息
-    # TODO magic number
-    var depth = GameManager.get_row(position.y) * 1000 + GameManager.get_col(position.x) + 101
+    var depth = GameManager.get_col(position.x)
     z_index = depth
     update_players_array()
 
