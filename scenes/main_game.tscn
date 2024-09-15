@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=29 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Texture2D" uid="uid://bl5kqg8sa5a0m" path="res://sprites/player/die/1018.png" id="1_gkm0k"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_whyef"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://rh2jw3yydb3x" path="res://sprites/player/walk/up/881.png" id="23_vtx3q"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
+[ext_resource type="Script" path="res://scripts/shadow_manager.gd" id="27_fconu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mcnxm"]
 animations = [{
@@ -128,10 +129,12 @@ script = ExtResource("1_whyef")
 position = Vector2(44, 41)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
 animation = &"die"
-frame_progress = 0.78168
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("25_h0p2b")
 
 [node name="GridDrawer" type="Node2D" parent="."]
 script = ExtResource("26_pxk8i")
+
+[node name="ShadowManager" type="Node2D" parent="."]
+script = ExtResource("27_fconu")

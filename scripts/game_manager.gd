@@ -1,3 +1,4 @@
+class_name GameManager
 extends Node2D
 
 # GameManager 负责游戏全局的逻辑
@@ -7,9 +8,10 @@ const TILE_WIDTH = 50
 const TILE_HEIGHT = 30
 
 # 关卡地图（二维）
-var level_map: Array[Array]
 var map_width: int
 var map_height: int
+var level_map: Array[Array]
+var players_map: Dictionary
 
 # 滚动边界
 var scroll_x_min: int
@@ -72,10 +74,30 @@ func _init():
 
 # 绘制地图
 func draw_level() -> void:
-    # 添加绘制关卡的具体逻辑
+    # TODO 添加绘制关卡的具体逻辑
     pass
 
 func get_loaded_level_map() -> Array[Array]:
-    return [
-        []
-    ]
+    var array_2d := []
+    for i in range(10):
+        array_2d.append([])
+        for j in range(10):
+            array_2d[i].append(0)
+    return array_2d
+
+# 用于获取行
+static func get_row(y: float) -> int:
+    return int(y / TILE_HEIGHT)
+
+# 用于获取列
+static func get_col(x: float) -> int:
+    return int(x / TILE_WIDTH)
+
+# 更新玩家位置
+func update_players(player_name: String, old_row: int, old_col: int, new_row: int, new_col: int):
+    # 将玩家从旧位置移除
+    if players_map.has(Vector2(old_row, old_col)):
+        players_map.erase(Vector2(old_row, old_col))
+
+    # 在新位置更新玩家
+    players_map[Vector2(new_row, new_col)] = player_name
