@@ -1,11 +1,16 @@
 extends ColorRect
 
 var square_size : Vector2 = Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT)
-var square_color : Color = Color(1, 1, 1)
+var square_color : Color = Color("LIGHT_GREEN")
+
+var player: Player
 
 func _init():
-    # 创建 ColorRect
-    # color_rect = ColorRect.new()
     size = square_size
     color = square_color
-    # position = square_position
+
+func _ready() -> void:
+    player = get_node("../Player")
+
+func _process(delta: float) -> void:
+    position = Vector2(player.target_x, player.target_y)

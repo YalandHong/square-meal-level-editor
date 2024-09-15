@@ -5,7 +5,6 @@ var current_block: int = 0
 var target_block: int = 0
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
-@onready var debug_rect: ColorRect = $PlayerDebugColorRect
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
@@ -29,8 +28,9 @@ const MAX_TURN_COUNT: int = 8
 var target_x: float
 var target_y: float
 
-const SIDE_WALK_SPEED: float = 4
-const WALK_SPEED: float = 4
+# TODO 我怀疑，如果speed不是5的倍数，moving的时候可能会对不齐网格
+const SIDE_WALK_SPEED: float = 5
+const WALK_SPEED: float = 5
 
 var player_id: int = 1
 
@@ -82,8 +82,6 @@ func _process(_delta):
             process_moving_or_slipping()
         PlayerState.TURNING:
             process_turning()
-    # debug target x/y
-    debug_rect.position = Vector2(target_x - position.x, target_y - position.y)
 
 func process_moving_or_slipping():
     do_move()

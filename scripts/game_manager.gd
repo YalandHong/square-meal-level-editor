@@ -27,14 +27,22 @@ func init_scroll_bounds() -> void:
     scroll_y_min = 400 - map_height * TILE_HEIGHT
     scroll_y_max = 0
 
+# 返回给定列的tile的左上角X坐标
+static func get_tile_top_left_x(col: int) -> float:
+    return col * TILE_WIDTH
+
+# 返回给定行的tile的左上角Y坐标
+static func get_tile_top_left_y(row: int) -> float:
+    return row * TILE_HEIGHT
+
 # 返回给定列的tile的中心X坐标
 static func get_tile_center_x(col: int) -> float:
-    return col * TILE_WIDTH + TILE_WIDTH / 2
+    return get_tile_top_left_x(col) + TILE_WIDTH / 2.0
 
 # 返回给定行的tile的中心Y坐标
 static func get_tile_center_y(row: int) -> float:
     # TODO magic number 10
-    return row * TILE_HEIGHT + TILE_HEIGHT / 2 + 10
+    return get_tile_top_left_y(row) + TILE_HEIGHT / 2.0 + 10
 
 # 判断某一块是否为空
 func get_empty(row: int, col: int) -> bool:
@@ -52,13 +60,6 @@ func get_empty(row: int, col: int) -> bool:
 static func calculate_depth(row: int, col: int) -> int:
     # TODO magic numbers
     return row * 1000 + col + 101
-
-# 提供 getter 方法
-func get_tile_width() -> int:
-    return TILE_WIDTH
-
-func get_tile_height() -> int:
-    return TILE_HEIGHT
 
 func _init():
     # 获取全局的 loaded_level_map 数据

@@ -13,5 +13,5 @@ func _ready() -> void:
     player = get_node("../Player")
 
 func _process(delta: float) -> void:
-    position.x = player.current_row
-    position.y = player.current_col
+    position.x = GameManager.get_tile_top_left_x(player.current_col)
+    position.y = GameManager.get_tile_top_left_y(player.current_row)

@@ -210,13 +210,8 @@ script = ExtResource("27_fconu")
 [node name="Player" type="Sprite2D" parent="."]
 script = ExtResource("1_whyef")
 
-[node name="PlayerDebugColorRect" type="ColorRect" parent="Player"]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("25_utrei")
-
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
-position = Vector2(44, 41)
+position = Vector2(0, -30)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
 animation = &"die"
 
@@ -227,3 +222,8 @@ script = ExtResource("26_pxk8i")
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("42_35ot8")
+
+[node name="PlayerDebugColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("25_utrei")
