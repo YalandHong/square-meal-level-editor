@@ -1,9 +1,9 @@
 extends Node2D
 
-@export var tile_width: int = 32
-@export var tile_height: int = 32
-@export var grid_color: Color = Color(1, 1, 1) # 白色
-@export var line_width: float = 1.0
+var tile_width: int = GameManager.TILE_WIDTH
+var tile_height: int = GameManager.TILE_HEIGHT
+var grid_color: Color = Color(1, 1, 1) # 白色
+var line_width: float = 1.0
 
 func _draw():
     var viewport_size = get_viewport_rect().size

@@ -218,7 +218,7 @@ script = ExtResource("25_utrei")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(44, 41)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"stop_left"
+animation = &"die"
 
 [node name="GridDrawer" type="Node2D" parent="."]
 script = ExtResource("26_pxk8i")
