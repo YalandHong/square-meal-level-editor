@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://xomsdew3vt0u"]
+
+[ext_resource type="Script" path="res://scripts/tiles/stone_block.gd" id="1_8hy0e"]
+[ext_resource type="Texture2D" uid="uid://cfre1gprsgwqr" path="res://sprites/block/70.png" id="2_lsr51"]
+
+[node name="StoneBlock" type="Node2D"]
+script = ExtResource("1_8hy0e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_lsr51")
+centered = false

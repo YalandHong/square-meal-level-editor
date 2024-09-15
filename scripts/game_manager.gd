@@ -77,6 +77,11 @@ func _init():
 
     draw_level()
 
+func _ready() -> void:
+    var mouse_displayer_scene: PackedScene = load("res://scenes/mouse_tracker.tscn")
+    var mouse_tracker = mouse_displayer_scene.instantiate()
+    add_child(mouse_tracker)
+
 # level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
 func get_loaded_level_map() -> Array:
     var array_2d := []
@@ -84,6 +89,8 @@ func get_loaded_level_map() -> Array:
         array_2d.append([])
         for j in range(10):
             array_2d[i].append(0)
+    array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
+    array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
     return array_2d
 
 # 用于获取行
@@ -105,26 +112,40 @@ func update_players(player_name: String, old_row: int, old_col: int, new_row: in
 
 # 绘制地图
 func draw_level():
+    level_map_movers = []
+    level_map_players = []
+    level_map_tiles = []
     for row in range(map_height):
+        level_map_movers.append([])
+        level_map_players.append([])
+        level_map_tiles.append([])
         for col in range(map_width):
-            var tile_type = level_map[row][col]
+            var tile_type: int = level_map[row][col]
 
             # 初始化所有默认值为 null
             var mover = null
             var player = null
-            var floor = null
             var tile = null
 
             if tile_type == GlobalVars.ID_STONE_BLOCK:
                 # 处理编号为 1 的方块
                 tile = create_stone_block(row, col)
+            elif tile_type != GlobalVars.ID_EMPTY_TILE:
+                print("unknown tile type: ", tile_type)
 
             # 将结果填充到对应的列表中
-            level_map_movers[row][col] = mover
-            level_map_players[row][col] = player
-            level_map_floor[row][col] = floor
-            level_map_tiles[row][col] = tile
+            level_map_movers[row].append(mover)
+            level_map_players[row].append(player)
+            level_map_tiles[row].append(tile)
 
-static func create_stone_block(row: int, col: int):
-    # TODO
-    pass
+func create_stone_block(row: int, col: int) -> StoneBlock:
+    # 动态加载 StoneBlock 预制场景
+    var stone_block_scene: PackedScene = load("res://scenes/tiles/stone_block.tscn")
+    var stone_block = stone_block_scene.instantiate()
+
+    # 设置石头方块的在地图中的位置
+    stone_block.position = Vector2(GameManager.get_tile_top_left_x(col), GameManager.get_tile_center_y(row))
+
+    # 将 StoneBlock 加入到当前地图场景中
+    add_child(stone_block)
+    return stone_block
