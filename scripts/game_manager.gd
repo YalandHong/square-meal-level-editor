@@ -138,12 +138,8 @@ func draw_level():
 func create_stone_block(row: int, col: int) -> StoneBlock:
     # 动态加载 StoneBlock 预制场景
     var stone_block_scene: PackedScene = load("res://scenes/tiles/stone_block.tscn")
-    var stone_block = stone_block_scene.instantiate()
-
-    # 设置石头方块的在地图中的位置
-    var spawn_col = GameManager.get_tile_top_left_x(col)
-    var spawn_row = GameManager.get_tile_top_left_y(row)
-    stone_block.position = Vector2(spawn_col, spawn_row)
+    var stone_block: StoneBlock = stone_block_scene.instantiate()
+    stone_block.set_block_grid_pos(row, col)
 
     # 将 StoneBlock 加入到当前地图场景中
     add_child(stone_block)

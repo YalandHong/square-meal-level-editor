@@ -40,25 +40,20 @@ var current_col: int = 0
 
 # 在 _ready() 中初始化玩家
 func _ready():
-    # 获取必要的node
     game_manager = get_node("../GameManager")
     shadow_holder = get_node("../ShadowManager")
 
-    # 假设你要在 (100, 200) 位置初始化玩家
-    init_player(5, 5)
-
-# 初始化玩家位置
-func init_player(start_x: float, start_y: float) -> void:
-    position.x = start_x
-    position.y = start_y
-
-    # 获取当前的行列位置
-    current_row = GameManager.get_row(position.y)
-    current_col = GameManager.get_col(position.x)
-
     state = PlayerState.IDLE
     dir = DOWN
-    anim_sprite.play("stop_" + dir)
+    play_stop_animation()
+
+# 初始化玩家位置
+func set_player_init_pos(row: int, col: int) -> void:
+    position.x = GameManager.get_tile_center_x(col)
+    position.y = GameManager.get_tile_center_y(row)
+
+    current_row = row
+    current_col = col
 
     # 设置玩家ID
     # TODO 暂不支持多人游戏
@@ -97,7 +92,7 @@ func process_moving_or_slipping():
         # TODO shadow
         # shadow_manager.update_shadow_position(player_id, position.x, position.y + 5)
 
-        update_players_array()
+        update_player_grid_pos()
 
         # slipping = false
         # moving = false
@@ -119,10 +114,7 @@ func process_moving_or_slipping():
         dir = new_direction
         # moving = true
         do_move()
-        if current_block == 0:
-            anim_sprite.play("walk_" + dir)
-        else:
-            anim_sprite.play("walk_" + dir + "_fat")
+        play_walk_animation()
 
 # 判断是否为相反方向
 func is_opposite_direction(new_dir: String) -> bool:
@@ -132,18 +124,17 @@ func is_opposite_direction(new_dir: String) -> bool:
            (dir == DOWN and new_dir == UP))
 
 
-# 主逻辑，检测按键
 func process_idle():
     if Input.is_action_pressed("ui_select"):
         start_eat_or_spit()
         return
 
-    # 处理移动的逻辑
     var direction_pressed = get_direction_pressed()
     if direction_pressed == NONE:
         play_stop_animation()
         return
 
+    # 转向
     if direction_pressed != dir:
         dir = direction_pressed
         play_stop_animation()
@@ -203,6 +194,7 @@ func start_spit_block():
     print("Spitting block...")
 
 # 获取玩家是否可以移动到目标格子
+# 玩家的移动是从一个tile的center移动到另一个tile的center
 func get_target(dir_pressed: String) -> bool:
     var target_row = current_row
     var target_col = current_col
@@ -253,7 +245,8 @@ func get_target(dir_pressed: String) -> bool:
 
 # 玩家移动
 func do_move():
-    if dir == "":
+    if dir == NONE:
+        print("Bug: dir = NONE")
         return
 
     if dir == LEFT:
@@ -275,9 +268,9 @@ func do_move():
     # 更新玩家深度和其他信息
     var depth = GameManager.get_col(position.x)
     z_index = depth
-    update_players_array()
+    update_player_grid_pos()
 
-func update_players_array() -> void:
+func update_player_grid_pos() -> void:
     var new_row = GameManager.get_row(position.y)
     var new_col = GameManager.get_col(position.x)
 
