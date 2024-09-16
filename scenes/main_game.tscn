@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=8 format=3 uid="uid://bf5f0nj851ygd"]
 
+[ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/player_debug_color_rect.gd" id="25_utrei"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
@@ -9,10 +10,10 @@
 
 [node name="MainGame" type="Node2D"]
 
-[node name="FpsManager" type="Node2D" parent="."]
+[node name="FpsManager" type="Node" parent="."]
 script = ExtResource("41_22c60")
 
-[node name="GameManager" type="Node2D" parent="."]
+[node name="GameManager" type="Node" parent="."]
 script = ExtResource("25_h0p2b")
 
 [node name="ShadowManager" type="Node2D" parent="."]
@@ -30,3 +31,6 @@ script = ExtResource("42_35ot8")
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("25_utrei")
+
+[node name="SfxPlayer" type="Node" parent="."]
+script = ExtResource("7_2pbga")

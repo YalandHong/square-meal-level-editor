@@ -1,5 +1,5 @@
 class_name GameManager
-extends Node2D
+extends Node
 
 # 假设tile的宽度和高度
 const TILE_WIDTH = 50

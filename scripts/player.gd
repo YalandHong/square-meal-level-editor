@@ -5,6 +5,7 @@ extends Sprite2D
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
+var sfx_player: SfxPlayer
 
 # enum DirectionState {UP, DOWN, LEFT, RIGHT, NONE}
 const UP = GlobalVars.UP
@@ -42,9 +43,9 @@ const ANIMATION_FPS_SCALE_EAT: float = 1.0
 const EATING_BLOCK_START_SHIFTING_FRAME: int = 7
 const SPITTING_BLOCK_DO_SPIT_FRAME: int = 2
 
-# 在 _ready() 中初始化玩家
 func _ready():
     game_manager = get_parent()
+    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
     # TODO 暂不支持
     #shadow_holder = get_parent()
 
@@ -209,23 +210,23 @@ func process_spitting():
 
 # 吐出方块逻辑
 func start_spit_block():
-    var target_row: int
-    var target_col: int
-
     # 根据玩家的方向确定目标格子位置
+    var target_row: int = GlobalVars.step_row_by_direction(current_row, dir)
+    var target_col: int = GlobalVars.step_col_by_direction(current_col, dir)
+
     # TODO 类似这样的代码片段太多了，重构，去重
-    if dir == LEFT:
-        target_row = current_row
-        target_col = current_col - 1
-    elif dir == RIGHT:
-        target_row = current_row
-        target_col = current_col + 1
-    elif dir == UP:
-        target_row = current_row - 1
-        target_col = current_col
-    elif dir == DOWN:
-        target_row = current_row + 1
-        target_col = current_col
+    #if dir == LEFT:
+        #target_row = current_row
+        #target_col = current_col - 1
+    #elif dir == RIGHT:
+        #target_row = current_row
+        #target_col = current_col + 1
+    #elif dir == UP:
+        #target_row = current_row - 1
+        #target_col = current_col
+    #elif dir == DOWN:
+        #target_row = current_row + 1
+        #target_col = current_col
 
     # 检查目标格子是否为空
     var target_tile_type = game_manager.get_tile_type(target_row, target_col)
@@ -354,26 +355,14 @@ func process_turning() -> void:
         state = PlayerState.IDLE
 
 func start_eat_block() -> void:
-    eating_block_row = current_row
-    eating_block_col = current_col
-    match dir:
-        LEFT:
-            eating_block_col = current_col - 1
-        RIGHT:
-            eating_block_col = current_col + 1
-        UP:
-            eating_block_row = current_row - 1
-        DOWN:
-            eating_block_row = current_row + 1
+    eating_block_row = GlobalVars.step_row_by_direction(current_row, dir)
+    eating_block_col = GlobalVars.step_col_by_direction(current_col, dir)
 
     # 检查目标位置的方块是否可食用
     if game_manager.is_eatable_tile(eating_block_row, eating_block_col):
         eating_block = game_manager.get_tile_instance(eating_block_row, eating_block_col)
         eating_block.being_eaten = true
-
-        # 播放吞咽音效
-        # TODO 暂不支持音效
-        #GameManager.sfx.play_sound("gulp")
+        sfx_player.play_sfx("eat")
 
     # 检查目标位置是否是可食用的敌人
     # TODO 暂不支持enemy
@@ -410,15 +399,17 @@ func process_eating():
         return
     if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
         return
-    match dir:
-        LEFT:
-            eating_block.position.x += EATING_BLOCK_SHIFT_SPEED
-        RIGHT:
-            eating_block.position.x -= EATING_BLOCK_SHIFT_SPEED
-        UP:
-            eating_block.position.y += EATING_BLOCK_SHIFT_SPEED
-        DOWN:
-            eating_block.position.y -= EATING_BLOCK_SHIFT_SPEED
+    eating_block.position = GlobalVars.back_position_by_speed(eating_block.position, dir, EATING_BLOCK_SHIFT_SPEED)
+    # TODO remove this code
+    #match dir:
+        #LEFT:
+            #eating_block.position.x += EATING_BLOCK_SHIFT_SPEED
+        #RIGHT:
+            #eating_block.position.x -= EATING_BLOCK_SHIFT_SPEED
+        #UP:
+            #eating_block.position.y += EATING_BLOCK_SHIFT_SPEED
+        #DOWN:
+            #eating_block.position.y -= EATING_BLOCK_SHIFT_SPEED
 
 func finish_eat_block():
     state = PlayerState.IDLE
@@ -446,6 +437,5 @@ func eat_food():
 
 func eat_non_food_block():
     game_manager.remove_block(eating_block_row, eating_block_col)
-    # TODO get id
-    swallowed_block_type = GlobalVars.ID_EMPTY_TILE
+    swallowed_block_type = eating_block.get_block_type()
     eating_block = null

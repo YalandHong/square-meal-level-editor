@@ -3,6 +3,7 @@ class_name Block
 
 # GameManager 负责游戏全局的逻辑
 var game_manager: GameManager
+var sfx_player: SfxPlayer
 
 const BLOCK_SPRITE_OFFSET_Y: int = -20
 
@@ -63,6 +64,7 @@ func _init() -> void:
 
 func _ready() -> void:
     game_manager = get_parent()
+    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
 func get_block_type() -> int:
     return GlobalVars.ID_INVALID
@@ -95,24 +97,13 @@ func is_next_step_empty() -> bool:
 
 func finish_slide():
     sliding = false
-    # TODO play sfx
+    sfx_player.play_sfx("block_stops")
     slide_dir = NONE
-
-func step_position_by_speed(dir: String, speed: float):
-    match dir:
-        LEFT:
-            position.x -= speed
-        RIGHT:
-            position.x += speed
-        UP:
-            position.y -= speed
-        DOWN:
-            position.y += speed
 
 func do_move() -> void:
     if slide_dir == NONE:
         return
-    step_position_by_speed(slide_dir, slide_speed)
+    position = GlobalVars.step_position_by_speed(position, slide_dir, slide_speed)
     # TODO 更新深度和其他信息
     update_block_grid_pos()
 
