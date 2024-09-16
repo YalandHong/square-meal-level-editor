@@ -61,8 +61,7 @@ func get_empty(row: int, col: int) -> bool:
     return true
 
 func _init():
-    # 获取全局的 loaded_level_map 数据
-    level_map = get_loaded_level_map() # 假设全局有一个函数能获取 loaded_level_map
+    level_map = get_loaded_level_map("res://levels/test_level.txt")
     map_width = level_map[0].size()
     map_height = level_map.size()
 
@@ -75,18 +74,19 @@ func _ready() -> void:
     add_child(mouse_tracker)
 
 # level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
-func get_loaded_level_map() -> Array:
-    var array_2d := []
-    for i in range(10):
-        array_2d.append([])
-        for j in range(10):
-            array_2d[i].append(0)
-    array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
-    array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
-    array_2d[6][6] = GlobalVars.ID_PLAYER
-    array_2d[8][8] = GlobalVars.ID_FOOD_BLOCK[0]
-    array_2d[2][8] = GlobalVars.ID_FOOD_BLOCK[0]
-    array_2d[1][0] = GlobalVars.ID_FOOD_BLOCK[0]
+func get_loaded_level_map(file_path: String) -> Array:
+    #var array_2d := []
+    #for i in range(10):
+        #array_2d.append([])
+        #for j in range(10):
+            #array_2d[i].append(0)
+    #array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
+    #array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
+    #array_2d[6][6] = GlobalVars.ID_PLAYER
+    #array_2d[8][8] = GlobalVars.ID_FOOD_BLOCK[0]
+    #array_2d[2][8] = GlobalVars.ID_FOOD_BLOCK[0]
+    #array_2d[1][0] = GlobalVars.ID_FOOD_BLOCK[0]
+    var array_2d = read_level_map_txt_file(file_path)
     return array_2d
 
 # 用于获取行
@@ -183,3 +183,29 @@ func remove_block(row: int, col: int) -> void:
     level_map_tiles[row][col] = null
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
     block.queue_free()  # 移除方块
+
+static func read_level_map_txt_file(file_path: String) -> Array:
+    var file = FileAccess.open(file_path, FileAccess.READ)
+
+    if not file:
+        print("Error opening file!")
+        return []
+
+    var result_array: Array = []
+
+    while not file.eof_reached():
+        var line = file.get_line().strip_edges()  # 读取一行并移除首尾空格
+        if line == "":
+            continue  # 跳过空行
+
+        var values = line.split("\t", false)
+        var numeric_values = []
+
+        # 将字符串转换为数字
+        for value in values:
+            numeric_values.append(value.to_float())
+
+        result_array.append(numeric_values)  # 将每行的数字数组添加到二维数组中
+
+    file.close()
+    return result_array
