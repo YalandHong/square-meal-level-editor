@@ -40,8 +40,9 @@ var current_col: int = 0
 
 # 在 _ready() 中初始化玩家
 func _ready():
-    game_manager = get_node("../GameManager")
-    shadow_holder = get_node("../ShadowManager")
+    game_manager = get_parent()
+    # TODO 暂不支持
+    #shadow_holder = get_parent()
 
     state = PlayerState.IDLE
     dir = DOWN

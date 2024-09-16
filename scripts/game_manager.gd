@@ -60,11 +60,6 @@ func get_empty(row: int, col: int) -> bool:
     #     return !map_holder[level_map_movers[row][col]].get_stunned()
     return true
 
-# 计算某一块的深度，作为z_index
-static func calculate_depth(row: int, col: int) -> int:
-    # TODO magic numbers
-    return row * 1000 + col + 101
-
 func _init():
     # 获取全局的 loaded_level_map 数据
     level_map = get_loaded_level_map() # 假设全局有一个函数能获取 loaded_level_map
@@ -88,6 +83,7 @@ func get_loaded_level_map() -> Array:
             array_2d[i].append(0)
     array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
     array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
+    array_2d[6][6] = GlobalVars.ID_PLAYER
     return array_2d
 
 # 用于获取行
@@ -125,8 +121,9 @@ func draw_level():
             var tile = null
 
             if tile_type == GlobalVars.ID_STONE_BLOCK:
-                # 处理编号为 1 的方块
                 tile = create_stone_block(row, col)
+            elif tile_type == GlobalVars.ID_PLAYER:
+                player = create_player(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
                 print("unknown tile type: ", tile_type)
 
@@ -144,3 +141,11 @@ func create_stone_block(row: int, col: int) -> StoneBlock:
     # 将 StoneBlock 加入到当前地图场景中
     add_child(stone_block)
     return stone_block
+
+func create_player(row: int, col: int) -> Player:
+    var player_scene: PackedScene = load("res://scenes/player.tscn")
+    var player: Player = player_scene.instantiate()
+    player.set_player_init_pos(row, col)
+
+    add_child(player)
+    return player
