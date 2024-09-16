@@ -1,9 +1,6 @@
 class_name Player
 extends Sprite2D
 
-var current_block: int = 0
-var target_block: int = 0
-
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
 var game_manager: GameManager
@@ -25,8 +22,9 @@ var state: PlayerState
 var turn_count: int = 0
 const MAX_TURN_COUNT: int = 2
 
-var target_x: float
-var target_y: float
+# 移动相关
+var moving_target_x: float
+var moving_target_y: float
 
 const SIDE_WALK_SPEED: float = 5
 const WALK_SPEED: float = 5
@@ -37,11 +35,20 @@ var dir: String
 var current_row: int = 0
 var current_col: int = 0
 
+# 吃方块相关
+var swallowed_block_type: int = GlobalVars.ID_EMPTY_TILE
+var eating_block: Block
+var eating_block_row: int = -1
+var eating_block_col: int = -1
+const EATING_BLOCK_SHIFT_SPEED: float = 8
+
 # 在 _ready() 中初始化玩家
 func _ready():
     game_manager = get_parent()
     # TODO 暂不支持
     #shadow_holder = get_parent()
+
+    anim_sprite.animation_finished.connect(on_animation_finished)
 
     state = PlayerState.IDLE
     dir = DOWN
@@ -77,18 +84,20 @@ func _process(_delta):
             process_moving_or_slipping()
         PlayerState.TURNING:
             process_turning()
+        PlayerState.EATING:
+            process_eating()
 
 func process_moving_or_slipping():
     do_move()
 
     # 如果玩家到达目标位置，停止移动
-    if ((dir == LEFT and position.x <= target_x) or
-        (dir == RIGHT and position.x >= target_x) or
-       (dir == UP and position.y <= target_y) or
-       (dir == DOWN and position.y >= target_y)):
+    if ((dir == LEFT and position.x <= moving_target_x) or
+        (dir == RIGHT and position.x >= moving_target_x) or
+       (dir == UP and position.y <= moving_target_y) or
+       (dir == DOWN and position.y >= moving_target_y)):
 
-        position.x = target_x
-        position.y = target_y
+        position.x = moving_target_x
+        position.y = moving_target_y
         # TODO shadow
         # shadow_manager.update_shadow_position(player_id, position.x, position.y + 5)
 
@@ -152,23 +161,22 @@ func process_idle():
 
 # 处理吃东西或吐方块的逻辑
 func start_eat_or_spit():
-    if current_block == 0 and target_block == 0:
-        start_eat_block()
-        return
-
-    if current_block != 0:
+    if swallowed_block_type != GlobalVars.ID_EMPTY_TILE:
         start_spit_block()
+        return
+    assert(eating_block == null)
+    start_eat_block()
 
 # 停止动画
 func play_stop_animation():
-    if current_block == 0:
+    if swallowed_block_type == GlobalVars.ID_EMPTY_TILE:
         anim_sprite.play("stop_" + dir)
     else:
         anim_sprite.play("stop_" + dir + "_fat")
 
 # 行走动画
 func play_walk_animation():
-    if current_block == 0:
+    if swallowed_block_type == GlobalVars.ID_EMPTY_TILE:
         anim_sprite.play("walk_" + dir)
     else:
         anim_sprite.play("walk_" + dir + "_fat")
@@ -184,10 +192,6 @@ func get_direction_pressed() -> String:
     if Input.is_action_pressed("ui_up"):
         return UP
     return NONE
-
-# 吃东西逻辑
-func start_eat_block():
-    print("Eating block...")
 
 # 吐出方块逻辑
 func start_spit_block():
@@ -212,8 +216,8 @@ func get_target(dir_pressed: String) -> bool:
             return false # 如果没有方向按键，直接返回 false
 
     # 获取目标位置的中心坐标
-    target_x = GameManager.get_tile_center_x(target_col)
-    target_y = GameManager.get_tile_center_y(target_row)
+    moving_target_x = GameManager.get_tile_center_x(target_col)
+    moving_target_y = GameManager.get_tile_center_y(target_row)
 
     # 检查目标位置是否为空
     var is_empty = game_manager.get_empty(target_row, target_col)
@@ -285,3 +289,97 @@ func process_turning() -> void:
     turn_count += 1
     if turn_count >= MAX_TURN_COUNT:
         state = PlayerState.IDLE
+
+func start_eat_block() -> void:
+    eating_block_row = current_row
+    eating_block_col = current_col
+    match dir:
+        LEFT:
+            eating_block_col = current_col - 1
+        RIGHT:
+            eating_block_col = current_col + 1
+        UP:
+            eating_block_row = current_row - 1
+        DOWN:
+            eating_block_row = current_row + 1
+
+    # 检查目标位置的方块是否可食用
+    if game_manager.is_eatable_tile(eating_block_row, eating_block_col):
+        eating_block = game_manager.get_tile_instance(eating_block_row, eating_block_col)
+        eating_block.being_eaten = true
+
+        # 播放吞咽音效
+        # TODO 暂不支持音效
+        #GameManager.sfx.play_sound("gulp")
+
+    # 检查目标位置是否是可食用的敌人
+    # TODO 暂不支持enemy
+    #elif GameManager.get_eatable_enemy(eating_block_row, eating_block_col):
+        #eating_block = 100  # 用100表示敌人
+        #target_block_name = GameManager.get_mover(eating_block_row, eating_block_col)
+#
+        ## 调用敌人的被吃逻辑
+        #GameManager.get_enemy(target_block_name).be_eaten(self.name)
+#
+        ## 播放吞咽音效
+        #GameManager.sfx.play_sound("gulp")
+
+    # 如果目标不可食用
+    else:
+        eating_block = null
+
+    # 标记当前状态为正在吃东西
+    state = PlayerState.EATING
+
+    # 根据当前方向切换到相应的吃东西动画
+    # 在吃东西动画播放结束时，会callback相应处理函数
+    anim_sprite.loop = false
+    anim_sprite.play("eat_" + dir)
+
+func on_animation_finished():
+    if state == PlayerState.EATING:
+        swallow_block()
+        finish_eat_block()
+
+# Flash源码里叫shift block
+func process_eating():
+    match dir:
+        LEFT:
+            eating_block.position.x += EATING_BLOCK_SHIFT_SPEED
+        RIGHT:
+            eating_block.position.x -= EATING_BLOCK_SHIFT_SPEED
+        UP:
+            eating_block.position.y += EATING_BLOCK_SHIFT_SPEED
+        DOWN:
+            eating_block.position.y -= EATING_BLOCK_SHIFT_SPEED
+
+func finish_eat_block():
+    state = PlayerState.IDLE
+    anim_sprite.loop = true
+    play_stop_animation()
+
+func swallow_block():
+    if eating_block == null:
+        return
+    if eating_block is FoodBlock:
+        eat_food()
+        return
+    if eating_block is StoneBlock:
+        eat_non_food_block()
+
+func eat_food():
+    # TODO 增加分数
+    #GameManager.increment_score(50)
+    #display_points(50)
+
+    # 从地图中移除当前目标块 (食物)
+    game_manager.remove_block(eating_block_row, eating_block_col)
+
+    # 重置目标块信息
+    eating_block = null
+
+func eat_non_food_block():
+    game_manager.remove_block(eating_block_row, eating_block_col)
+    # TODO get id
+    swallowed_block_type = GlobalVars.ID_EMPTY_TILE
+    eating_block = null

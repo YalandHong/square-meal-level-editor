@@ -163,3 +163,23 @@ func create_food_block(row: int, col: int) -> Block:
 
     add_child(block_obj)
     return block_obj
+
+func is_eatable_tile(row: int, col: int) -> bool:
+    var block: Block = level_map_tiles[row][col]
+    if block == null:
+        return false
+    return block.is_eatable() and not block.is_being_eaten()
+
+func get_tile_type(row: int, col: int) -> int:
+    return level_map[row][col]
+
+func get_tile_instance(row: int, col: int) -> Block:
+    return level_map_tiles[row][col]
+
+# 移除块
+func remove_block(row: int, col: int) -> void:
+    assert(level_map[row][col] != GlobalVars.ID_EMPTY_TILE)
+    var block: Block = level_map_tiles[row][col]
+    level_map_tiles[row][col] = null
+    level_map[row][col] = GlobalVars.ID_EMPTY_TILE
+    block.queue_free()  # 移除方块

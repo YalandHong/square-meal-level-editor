@@ -10,6 +10,7 @@ var walkable: bool = false
 var eatable: bool = false
 var dangerous: bool = false
 var slippy: bool = false
+var being_eaten: bool = false
 
 func set_block_grid_pos(row: int, col: int) -> void:
     current_row = row
@@ -20,18 +21,20 @@ func set_block_grid_pos(row: int, col: int) -> void:
     var spawn_y = GameManager.get_tile_top_left_y(row)
     position = Vector2(spawn_x, spawn_y)
 
-# 获取方法
-func get_walkable() -> bool:
+func is_walkable() -> bool:
     return walkable
 
-func get_eatable() -> bool:
+func is_eatable() -> bool:
     return eatable
 
-func get_dangerous() -> bool:
+func is_dangerous() -> bool:
     return dangerous
 
-func get_slippy() -> bool:
+func is_slippy() -> bool:
     return slippy
+
+func is_being_eaten() -> bool:
+    return being_eaten
 
 func _init() -> void:
     offset.y = BLOCK_SPRITE_OFFSET_Y
