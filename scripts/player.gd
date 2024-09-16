@@ -28,7 +28,6 @@ const MAX_TURN_COUNT: int = 2
 var target_x: float
 var target_y: float
 
-# TODO 我怀疑，如果speed不是5的倍数，moving的时候可能会对不齐网格
 const SIDE_WALK_SPEED: float = 5
 const WALK_SPEED: float = 5
 

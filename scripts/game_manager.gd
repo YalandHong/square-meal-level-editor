@@ -84,6 +84,9 @@ func get_loaded_level_map() -> Array:
     array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
     array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
     array_2d[6][6] = GlobalVars.ID_PLAYER
+    array_2d[8][8] = GlobalVars.ID_FOOD_BLOCK[0]
+    array_2d[2][8] = GlobalVars.ID_FOOD_BLOCK[0]
+    array_2d[1][0] = GlobalVars.ID_FOOD_BLOCK[0]
     return array_2d
 
 # 用于获取行
@@ -124,6 +127,9 @@ func draw_level():
                 tile = create_stone_block(row, col)
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_player(row, col)
+                level_map[row][col] = GlobalVars.ID_EMPTY_TILE
+            elif tile_type in GlobalVars.ID_FOOD_BLOCK:
+                tile = create_food_block(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
                 print("unknown tile type: ", tile_type)
 
@@ -149,3 +155,11 @@ func create_player(row: int, col: int) -> Player:
 
     add_child(player)
     return player
+
+func create_food_block(row: int, col: int) -> Block:
+    var block_scene: PackedScene = load("res://scenes/tiles/food_block.tscn")
+    var block_obj: Block = block_scene.instantiate()
+    block_obj.set_block_grid_pos(row, col)
+
+    add_child(block_obj)
+    return block_obj
