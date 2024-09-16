@@ -38,3 +38,6 @@ func is_being_eaten() -> bool:
 
 func _init() -> void:
     offset.y = BLOCK_SPRITE_OFFSET_Y
+
+func get_block_type() -> int:
+    return GlobalVars.ID_INVALID

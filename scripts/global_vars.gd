@@ -1,5 +1,7 @@
 extends Node
 
+const ID_INVALID: int = -1
+
 const ID_EMPTY_TILE: int = 0
 
 const ID_PLAYER: int = 19

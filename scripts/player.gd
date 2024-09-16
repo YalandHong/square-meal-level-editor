@@ -12,28 +12,25 @@ const DOWN = "down"
 const LEFT = "left"
 const RIGHT = "right"
 const NONE = ""
+var dir: String
+var current_row: int = 0
+var current_col: int = 0
 
 enum PlayerState {MOVING, TURNING, IDLE, SLIPPING, EATING, SPITTING}
 var state: PlayerState
 
-# var moving: bool = false
-
-# var turning: bool = false
+# 转向相关
 var turn_count: int = 0
 const MAX_TURN_COUNT: int = 2
 
 # 移动相关
 var moving_target_x: float
 var moving_target_y: float
-
 const SIDE_WALK_SPEED: float = 5
 const WALK_SPEED: float = 5
+const ANIMATION_FPS_SCALE_WALK: float = 0.3
 
 var player_id: int = 1
-
-var dir: String
-var current_row: int = 0
-var current_col: int = 0
 
 # 吃方块相关
 var swallowed_block_type: int = GlobalVars.ID_EMPTY_TILE
@@ -41,6 +38,8 @@ var eating_block: Block
 var eating_block_row: int = -1
 var eating_block_col: int = -1
 const EATING_BLOCK_SHIFT_SPEED: float = 8
+const ANIMATION_FPS_SCALE_EAT: float = 1.0
+const EATING_BLOCK_START_SHIFTING_FRAME: int = 7
 
 # 在 _ready() 中初始化玩家
 func _ready():
@@ -132,7 +131,6 @@ func is_opposite_direction(new_dir: String) -> bool:
            (dir == UP and new_dir == DOWN) or
            (dir == DOWN and new_dir == UP))
 
-
 func process_idle():
     if Input.is_action_pressed("ui_select"):
         start_eat_or_spit()
@@ -176,10 +174,15 @@ func play_stop_animation():
 
 # 行走动画
 func play_walk_animation():
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
     if swallowed_block_type == GlobalVars.ID_EMPTY_TILE:
         anim_sprite.play("walk_" + dir)
     else:
         anim_sprite.play("walk_" + dir + "_fat")
+
+func play_eat_animation() -> void:
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_EAT
+    anim_sprite.play("eat_" + dir)
 
 # 模拟获取方向键的按键状态
 func get_direction_pressed() -> String:
@@ -333,8 +336,7 @@ func start_eat_block() -> void:
 
     # 根据当前方向切换到相应的吃东西动画
     # 在吃东西动画播放结束时，会callback相应处理函数
-    anim_sprite.loop = false
-    anim_sprite.play("eat_" + dir)
+    play_eat_animation()
 
 func on_animation_finished():
     if state == PlayerState.EATING:
@@ -342,7 +344,12 @@ func on_animation_finished():
         finish_eat_block()
 
 # Flash源码里叫shift block
+# 播放block吞入嘴里的动画
 func process_eating():
+    if eating_block == null:
+        return
+    if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
+        return
     match dir:
         LEFT:
             eating_block.position.x += EATING_BLOCK_SHIFT_SPEED
@@ -355,7 +362,6 @@ func process_eating():
 
 func finish_eat_block():
     state = PlayerState.IDLE
-    anim_sprite.loop = true
     play_stop_animation()
 
 func swallow_block():

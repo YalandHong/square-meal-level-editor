@@ -122,9 +122,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_ixgu1")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
-"speed": 8.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -160,9 +160,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("14_l450r")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat_down",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -198,9 +198,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_hpmnf")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat_left",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -236,9 +236,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("36_i6ouw")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat_right",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -274,31 +274,31 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("47_31yid")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat_up",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_1nm1d")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_down",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_qsxkq")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_down_fat",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_pg7pw")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_left",
 "speed": 5.0
 }, {
@@ -306,7 +306,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_roiqi")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_left_fat",
 "speed": 5.0
 }, {
@@ -314,7 +314,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_kiuvx")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_right",
 "speed": 5.0
 }, {
@@ -322,7 +322,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_q4i5s")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_right_fat",
 "speed": 5.0
 }, {
@@ -330,7 +330,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_nw1s8")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_up",
 "speed": 5.0
 }, {
@@ -338,7 +338,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_epyux")
 }],
-"loop": true,
+"loop": false,
 "name": &"stop_up_fat",
 "speed": 5.0
 }, {
@@ -363,7 +363,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_down",
-"speed": 8.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -389,7 +389,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_down_fat",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -418,7 +418,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_left",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -444,7 +444,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_left_fat",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -473,7 +473,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_right",
-"speed": 8.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -499,7 +499,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_right_fat",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -525,7 +525,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_up",
-"speed": 8.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -551,7 +551,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_up_fat",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [node name="Player" type="Sprite2D"]
@@ -560,4 +560,4 @@ script = ExtResource("1_gjiml")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -30)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"eat_right"
+animation = &"eat_left"

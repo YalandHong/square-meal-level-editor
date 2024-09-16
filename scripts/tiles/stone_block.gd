@@ -5,3 +5,6 @@ class_name StoneBlock
 func _init() -> void:
     super()
     eatable = true
+
+func get_block_type() -> int:
+    return GlobalVars.ID_STONE_BLOCK
