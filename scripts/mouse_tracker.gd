@@ -10,11 +10,11 @@ class_name MouseTracker
 
 func _process(delta: float) -> void:
     # Get the mouse position in the viewport
-    var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+    var mouse_pos: Vector2 = get_global_mouse_position()
 
     # Calculate the row and col of the tile
-    var col = int(mouse_pos.x / GameManager.TILE_WIDTH)
-    var row = int(mouse_pos.y / GameManager.TILE_HEIGHT)
+    var col = GameManager.get_col(mouse_pos.x)
+    var row = GameManager.get_row(mouse_pos.y)
 
     # Update the label text with mouse position and tile coordinates
     label.text = "Mouse: " + str(mouse_pos) + "\nTile: (" + str(row) + ", " + str(col) + ")"

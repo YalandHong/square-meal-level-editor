@@ -68,14 +68,11 @@ static func calculate_depth(row: int, col: int) -> int:
 func _init():
     # 获取全局的 loaded_level_map 数据
     level_map = get_loaded_level_map() # 假设全局有一个函数能获取 loaded_level_map
-
-    # 设定地图的宽高
     map_width = level_map[0].size()
     map_height = level_map.size()
 
-    init_scroll_bounds()
-
     draw_level()
+    init_scroll_bounds()
 
 func _ready() -> void:
     var mouse_displayer_scene: PackedScene = load("res://scenes/mouse_tracker.tscn")
@@ -144,7 +141,9 @@ func create_stone_block(row: int, col: int) -> StoneBlock:
     var stone_block = stone_block_scene.instantiate()
 
     # 设置石头方块的在地图中的位置
-    stone_block.position = Vector2(GameManager.get_tile_top_left_x(col), GameManager.get_tile_center_y(row))
+    var spawn_col = GameManager.get_tile_top_left_x(col)
+    var spawn_row = GameManager.get_tile_top_left_y(row)
+    stone_block.position = Vector2(spawn_col, spawn_row)
 
     # 将 StoneBlock 加入到当前地图场景中
     add_child(stone_block)
