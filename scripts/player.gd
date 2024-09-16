@@ -214,20 +214,6 @@ func start_spit_block():
     var target_row: int = GlobalVars.step_row_by_direction(current_row, dir)
     var target_col: int = GlobalVars.step_col_by_direction(current_col, dir)
 
-    # TODO 类似这样的代码片段太多了，重构，去重
-    #if dir == LEFT:
-        #target_row = current_row
-        #target_col = current_col - 1
-    #elif dir == RIGHT:
-        #target_row = current_row
-        #target_col = current_col + 1
-    #elif dir == UP:
-        #target_row = current_row - 1
-        #target_col = current_col
-    #elif dir == DOWN:
-        #target_row = current_row + 1
-        #target_col = current_col
-
     # 检查目标格子是否为空
     var target_tile_type = game_manager.get_tile_type(target_row, target_col)
     if target_tile_type != GlobalVars.ID_EMPTY_TILE:
@@ -260,25 +246,18 @@ func start_spit_block():
 func do_spit():
     pass
 
+func finish_spit_block():
+    play_stop_animation()
+    state = PlayerState.IDLE
+
 # 获取玩家是否可以移动到目标格子
 # Flash源码里叫get_target
 # 玩家的移动是从一个tile的center移动到另一个tile的center
 func is_next_step_empty(dir_pressed: String) -> bool:
-    var target_row = current_row
-    var target_col = current_col
-
-    match dir_pressed:
-        LEFT:
-            target_col -= 1
-        RIGHT:
-            target_col += 1
-        UP:
-            target_row -= 1
-        DOWN:
-            target_row += 1
-        _:
-            return false # 如果没有方向按键，直接返回 false
-
+    if dir_pressed == NONE:
+        return false
+    var target_row = GlobalVars.step_row_by_direction(current_row, dir_pressed)
+    var target_col = GlobalVars.step_col_by_direction(current_col, dir_pressed)
     # 获取目标位置的中心坐标
     moving_target_x = GameManager.get_tile_center_x(target_col)
     moving_target_y = GameManager.get_tile_center_y(target_row)
@@ -388,9 +367,12 @@ func start_eat_block() -> void:
     play_eat_animation()
 
 func on_animation_finished():
+    print("animation finished")
     if state == PlayerState.EATING:
         do_swallow_block()
         finish_eat_block()
+    elif state == PlayerState.SPITTING:
+        finish_spit_block()
 
 # Flash源码里叫shift block
 # 播放block吞入嘴里的动画
@@ -400,16 +382,6 @@ func process_eating():
     if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
         return
     eating_block.position = GlobalVars.back_position_by_speed(eating_block.position, dir, EATING_BLOCK_SHIFT_SPEED)
-    # TODO remove this code
-    #match dir:
-        #LEFT:
-            #eating_block.position.x += EATING_BLOCK_SHIFT_SPEED
-        #RIGHT:
-            #eating_block.position.x -= EATING_BLOCK_SHIFT_SPEED
-        #UP:
-            #eating_block.position.y += EATING_BLOCK_SHIFT_SPEED
-        #DOWN:
-            #eating_block.position.y -= EATING_BLOCK_SHIFT_SPEED
 
 func finish_eat_block():
     state = PlayerState.IDLE

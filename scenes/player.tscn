@@ -282,7 +282,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_1nm1d")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_down",
 "speed": 30.0
 }, {
@@ -290,7 +290,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_qsxkq")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_down_fat",
 "speed": 30.0
 }, {
@@ -298,7 +298,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_pg7pw")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_left",
 "speed": 5.0
 }, {
@@ -306,7 +306,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_roiqi")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_left_fat",
 "speed": 5.0
 }, {
@@ -314,7 +314,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_kiuvx")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_right",
 "speed": 5.0
 }, {
@@ -322,7 +322,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_q4i5s")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_right_fat",
 "speed": 5.0
 }, {
@@ -330,7 +330,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_nw1s8")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_up",
 "speed": 5.0
 }, {
@@ -338,7 +338,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_epyux")
 }],
-"loop": false,
+"loop": true,
 "name": &"stop_up_fat",
 "speed": 5.0
 }, {
@@ -560,4 +560,4 @@ script = ExtResource("1_gjiml")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -30)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"eat_left"
+animation = &"die"

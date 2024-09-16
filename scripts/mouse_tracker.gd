@@ -8,7 +8,7 @@ class_name MouseTracker
 # The label that will display the mouse position and tile coordinates
 @onready var label: Label = $Label
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     # Get the mouse position in the viewport
     var mouse_pos: Vector2 = get_global_mouse_position()
 

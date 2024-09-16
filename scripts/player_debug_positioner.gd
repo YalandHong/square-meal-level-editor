@@ -7,7 +7,7 @@ func _init():
     size = square_size
     color = square_color
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     var player: Player = get_node_or_null("../GameManager/Player")
     if player == null:
         visible = false

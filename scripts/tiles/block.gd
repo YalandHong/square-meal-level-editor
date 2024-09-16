@@ -26,7 +26,7 @@ var being_eaten: bool = false
 # 滑行相关
 const START_SLIDE_SPEED: float = 10;
 const SLIDE_SPEED = 10;
-const start_max_tiles_moved = 100
+const START_MAX_TILES_MOVED = 100
 var sliding: bool = false
 var tiles_moved: int = 0;
 var slide_speed: float = 10;
@@ -38,8 +38,6 @@ var moving_target_y: float
 func set_block_grid_pos(row: int, col: int) -> void:
     current_row = row
     current_col = col
-
-    # 设置石头方块的在地图中的位置
     var spawn_x = GameManager.get_tile_top_left_x(col)
     var spawn_y = GameManager.get_tile_top_left_y(row)
     position = Vector2(spawn_x, spawn_y)
@@ -66,31 +64,42 @@ func _ready() -> void:
     game_manager = get_parent()
     sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
+# Flash原版是写在GameManager的moveBlocks了
+# 也就是由game manager每帧统一对所有的block进行slide滑动
+# 我这里没这样写，因为game manager要做的事情太多太杂了
+func _process(delta: float) -> void:
+    if sliding:
+        slide()
+        print("sliding block pos: ", position)
+
 func get_block_type() -> int:
     return GlobalVars.ID_INVALID
 
 func start_slide(direction: String) -> void:
     # 初始化滑动速度和最大滑动距离
     slide_speed = START_SLIDE_SPEED
-    max_tiles_moved = start_max_tiles_moved
+    max_tiles_moved = START_MAX_TILES_MOVED
     slide_dir = direction
 
     # 检查是否可以滑动到目标位置
     if is_next_step_empty():
         sliding = true
     else:
+        # TODO 这个分支什么时候会发生？
         sliding = false
         slide_dir = NONE
 
-# 这个代码和player是一样的，预判下一个位置是否为空
+# 这个代码和player是类似的，预判下一个位置是否为空
+# 同时会把变量写入moving target x/y
+# 但是block不是从center移动到center，而是对齐网格左上角
 func is_next_step_empty() -> bool:
     # 如果滑动的距离没有超过最大移动距离
     if tiles_moved >= max_tiles_moved:
         return false
     var target_row: int = GlobalVars.step_row_by_direction(current_row, slide_dir)
     var target_col: int = GlobalVars.step_col_by_direction(current_col, slide_dir)
-    moving_target_x = GameManager.get_tile_center_x(target_col)
-    moving_target_y = GameManager.get_tile_center_y(target_row)
+    moving_target_x = GameManager.get_tile_top_left_x(target_col)
+    moving_target_y = GameManager.get_tile_top_left_y(target_row)
 
     # 检查目标位置是否为空
     return game_manager.is_empty(target_row, target_col)
@@ -117,7 +126,10 @@ func update_block_grid_pos():
     current_col = new_col
 
 # TODO 这个函数的逻辑写得些莫名其妙
+# Player的也有点奇怪，在do move之后，又检查一遍是否到达目标，然后修改position
 func slide() -> void:
+    assert(slide_dir != NONE)
+
     do_move()
     # TODO 预留的接口，检查碰撞
     #check_hit()
@@ -130,7 +142,7 @@ func slide() -> void:
 
         tiles_moved += 1
         position.x = moving_target_x
-        position.y = moving_target_x
+        position.y = moving_target_y
         update_block_grid_pos()
 
         # TODO 预留接口
