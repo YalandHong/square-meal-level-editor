@@ -1,11 +1,16 @@
 class_name GameManager
 extends Node2D
 
-# GameManager 负责游戏全局的逻辑
-
 # 假设tile的宽度和高度
 const TILE_WIDTH = 50
 const TILE_HEIGHT = 30
+
+# direction常量
+const UP = GlobalVars.UP
+const DOWN = GlobalVars.DOWN
+const LEFT = GlobalVars.LEFT
+const RIGHT = GlobalVars.RIGHT
+const NONE = GlobalVars.NONE
 
 # 关卡地图（二维）
 var map_width: int
@@ -49,7 +54,7 @@ static func get_tile_center_y(row: int) -> float:
     return get_tile_top_left_y(row) + TILE_HEIGHT / 2.0 + 10
 
 # 判断某一块是否为空
-func get_empty(row: int, col: int) -> bool:
+func is_empty(row: int, col: int) -> bool:
     # 假设有 level_map, level_map_players, level_map_movers
     if level_map[row][col] != 0:
         return false
@@ -106,6 +111,13 @@ func update_players(player_name: String, old_row: int, old_col: int, new_row: in
     # 在新位置更新玩家
     players_map[Vector2(new_row, new_col)] = player_name
 
+# 更新block位置
+func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
+    level_map[old_row][old_col] = GlobalVars.ID_EMPTY_TILE
+    level_map_tiles[old_row][old_col] = null
+    level_map[new_row][new_col] = block.get_block_type()
+    level_map_tiles[new_row][new_col] = block
+
 # 绘制地图
 func draw_level():
     level_map_movers = []
@@ -124,7 +136,8 @@ func draw_level():
             var tile = null
 
             if tile_type == GlobalVars.ID_STONE_BLOCK:
-                tile = create_stone_block(row, col)
+                tile = BlockFactory.create_block(row, col, GlobalVars.ID_STONE_BLOCK)
+                add_child(tile)
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_player(row, col)
                 level_map[row][col] = GlobalVars.ID_EMPTY_TILE
@@ -137,16 +150,6 @@ func draw_level():
             level_map_movers[row].append(mover)
             level_map_players[row].append(player)
             level_map_tiles[row].append(tile)
-
-func create_stone_block(row: int, col: int) -> StoneBlock:
-    # 动态加载 StoneBlock 预制场景
-    var stone_block_scene: PackedScene = load("res://scenes/tiles/stone_block.tscn")
-    var stone_block: StoneBlock = stone_block_scene.instantiate()
-    stone_block.set_block_grid_pos(row, col)
-
-    # 将 StoneBlock 加入到当前地图场景中
-    add_child(stone_block)
-    return stone_block
 
 func create_player(row: int, col: int) -> Player:
     var player_scene: PackedScene = load("res://scenes/player.tscn")
@@ -209,3 +212,38 @@ static func read_level_map_txt_file(file_path: String) -> Array:
 
     file.close()
     return result_array
+
+func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String) -> void:
+    # 创建新的 Block 实例 (假设通过 block_type 加载不同的预制)
+    var new_block: Block = BlockFactory.create_block(row, col, block_type)
+    add_child(new_block)
+    level_map[row][col] = block_type
+    level_map_tiles[row][col] = new_block
+
+    # 根据滑动方向初始化 Block 的位置
+    # TODO 之后再细调，我还不知道这里差了1个2个是什么作用
+    #match dir:
+        ## TODO 大量magic公式
+        #LEFT:
+            #new_block.position.x = col * TILE_WIDTH + TILE_WIDTH / 2
+            #new_block.position.y = row * TILE_HEIGHT
+            #level_map[row][col + 1] = block_type
+            #level_map_tiles[row][col + 1] = new_block
+        #RIGHT:
+            #new_block.position.x = col * TILE_WIDTH - TILE_WIDTH / 2
+            #new_block.position.y = row * TILE_HEIGHT
+            #level_map[row][col - 1] = block_type
+            #level_map_tiles[row][col - 1] = new_block
+        #UP:
+            #new_block.position.x = col * TILE_WIDTH
+            #new_block.position.y = row * TILE_HEIGHT + TILE_HEIGHT / 2
+            #level_map[row + 1][col] = block_type
+            #level_map_tiles[row + 1][col] = new_block
+        #DOWN:
+            #new_block.position.x = col * TILE_WIDTH
+            #new_block.position.y = row * TILE_HEIGHT - TILE_HEIGHT / 2
+            #level_map[row - 1][col] = block_type
+            #level_map_tiles[row - 1][col] = new_block
+
+    # 启动 Block 的滑动逻辑
+    new_block.start_slide(dir)

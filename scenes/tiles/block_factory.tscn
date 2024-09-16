@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b83fn3srqva8u"]
+
+[ext_resource type="Script" path="res://scripts/tiles/block_factory.gd" id="1_al71p"]
+
+[node name="BlockFactory" type="Node"]
+script = ExtResource("1_al71p")

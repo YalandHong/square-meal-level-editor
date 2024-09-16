@@ -7,11 +7,11 @@ var game_manager: GameManager
 var shadow_holder: ShadowManager
 
 # enum DirectionState {UP, DOWN, LEFT, RIGHT, NONE}
-const UP = "up"
-const DOWN = "down"
-const LEFT = "left"
-const RIGHT = "right"
-const NONE = ""
+const UP = GlobalVars.UP
+const DOWN = GlobalVars.DOWN
+const LEFT = GlobalVars.LEFT
+const RIGHT = GlobalVars.RIGHT
+const NONE = GlobalVars.NONE
 var dir: String
 var current_row: int = 0
 var current_col: int = 0
@@ -40,6 +40,7 @@ var eating_block_col: int = -1
 const EATING_BLOCK_SHIFT_SPEED: float = 8
 const ANIMATION_FPS_SCALE_EAT: float = 1.0
 const EATING_BLOCK_START_SHIFTING_FRAME: int = 7
+const SPITTING_BLOCK_DO_SPIT_FRAME: int = 2
 
 # 在 _ready() 中初始化玩家
 func _ready():
@@ -85,6 +86,8 @@ func _process(_delta):
             process_turning()
         PlayerState.EATING:
             process_eating()
+        PlayerState.SPITTING:
+            process_spitting()
 
 func process_moving_or_slipping():
     do_move()
@@ -118,7 +121,7 @@ func process_moving_or_slipping():
         return
 
     # 如果按键方向相反且目标可以移动
-    if is_opposite_direction(new_direction) and get_target(new_direction):
+    if is_opposite_direction(new_direction) and is_next_step_empty(new_direction):
         dir = new_direction
         # moving = true
         do_move()
@@ -152,7 +155,7 @@ func process_idle():
 
     # 执行移动动画和移动逻辑
     play_walk_animation()
-    if get_target(direction_pressed):
+    if is_next_step_empty(direction_pressed):
         # moving = true
         state = PlayerState.MOVING
         do_move()
@@ -184,6 +187,9 @@ func play_eat_animation() -> void:
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_EAT
     anim_sprite.play("eat_" + dir)
 
+func play_spit_animation() -> void:
+    play_eat_animation()
+
 # 模拟获取方向键的按键状态
 func get_direction_pressed() -> String:
     if Input.is_action_pressed("ui_right"):
@@ -196,13 +202,67 @@ func get_direction_pressed() -> String:
         return UP
     return NONE
 
+func process_spitting():
+    #if anim_sprite.get_frame() == SPITTING_BLOCK_DO_SPIT_FRAME:
+        #do_spit()
+    pass
+
 # 吐出方块逻辑
 func start_spit_block():
-    print("Spitting block...")
+    var target_row: int
+    var target_col: int
+
+    # 根据玩家的方向确定目标格子位置
+    # TODO 类似这样的代码片段太多了，重构，去重
+    if dir == LEFT:
+        target_row = current_row
+        target_col = current_col - 1
+    elif dir == RIGHT:
+        target_row = current_row
+        target_col = current_col + 1
+    elif dir == UP:
+        target_row = current_row - 1
+        target_col = current_col
+    elif dir == DOWN:
+        target_row = current_row + 1
+        target_col = current_col
+
+    # 检查目标格子是否为空
+    var target_tile_type = game_manager.get_tile_type(target_row, target_col)
+    if target_tile_type != GlobalVars.ID_EMPTY_TILE:
+        return
+    # 切换到吐方块的动画
+    play_spit_animation()
+    state = PlayerState.SPITTING
+
+    # TODO 暂无UI
+    # 更新显示玩家当前持有的方块状态 (这里假设有个 BlockDisplay 类来显示持有的方块)
+    #BlockDisplay.update_display(0)
+
+    # 如果当前方块是炸弹类型 (block ID 23)，进行相应的倒计时和状态重置
+    # TODO 不支持炸弹方块
+    #if current_block == 23:
+        #explosion_countdown = timer.get_countdown()
+        #timer.reset()
+        #ticking = false
+    #else:
+        #explosion_countdown = 100
+        #ticking = false
+
+    # 将玩家持有的方块放入目标格子，并清空玩家当前的持有方块
+    game_manager.place_and_slide_new_block(swallowed_block_type, target_row, target_col, dir)
+    swallowed_block_type = GlobalVars.ID_EMPTY_TILE
+
+# TODO 原版游戏里在frame=2时才真正吐出方块
+# 但这样会给Player增加大量临时变量，我暂时先省略掉了
+# 把do_spit逻辑写在start_spit_block的最后
+func do_spit():
+    pass
 
 # 获取玩家是否可以移动到目标格子
+# Flash源码里叫get_target
 # 玩家的移动是从一个tile的center移动到另一个tile的center
-func get_target(dir_pressed: String) -> bool:
+func is_next_step_empty(dir_pressed: String) -> bool:
     var target_row = current_row
     var target_col = current_col
 
@@ -223,7 +283,7 @@ func get_target(dir_pressed: String) -> bool:
     moving_target_y = GameManager.get_tile_center_y(target_row)
 
     # 检查目标位置是否为空
-    var is_empty = game_manager.get_empty(target_row, target_col)
+    var is_empty = game_manager.is_empty(target_row, target_col)
     return is_empty
 
     # TODO 暂不支持双人游戏
@@ -340,7 +400,7 @@ func start_eat_block() -> void:
 
 func on_animation_finished():
     if state == PlayerState.EATING:
-        swallow_block()
+        do_swallow_block()
         finish_eat_block()
 
 # Flash源码里叫shift block
@@ -364,7 +424,7 @@ func finish_eat_block():
     state = PlayerState.IDLE
     play_stop_animation()
 
-func swallow_block():
+func do_swallow_block():
     if eating_block == null:
         return
     if eating_block is FoodBlock:
