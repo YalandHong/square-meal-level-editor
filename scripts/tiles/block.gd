@@ -41,6 +41,7 @@ func set_block_grid_pos(row: int, col: int) -> void:
     var spawn_x = GameManager.get_tile_top_left_x(col)
     var spawn_y = GameManager.get_tile_top_left_y(row)
     position = Vector2(spawn_x, spawn_y)
+    z_index = GameManager.calculate_depth(position)
 
 func is_walkable() -> bool:
     return walkable
@@ -71,6 +72,7 @@ func _process(_delta: float) -> void:
     if sliding:
         slide()
         print("sliding block pos: ", position)
+    z_index = GameManager.calculate_depth(position)
 
 func get_block_type() -> int:
     return GlobalVars.ID_INVALID
@@ -91,7 +93,6 @@ func start_slide(direction: String) -> void:
 
 # 这个代码和player是类似的，预判下一个位置是否为空
 # 同时会把变量写入moving target x/y
-# 但是block不是从center移动到center，而是对齐网格左上角
 func is_next_step_empty() -> bool:
     # 如果滑动的距离没有超过最大移动距离
     if tiles_moved >= max_tiles_moved:
@@ -113,7 +114,6 @@ func do_move() -> void:
     if slide_dir == NONE:
         return
     position = GlobalVars.step_position_by_speed(position, slide_dir, slide_speed)
-    # TODO 更新深度和其他信息
     update_block_grid_pos()
 
 # 和Player的update_player_grid_pos基本一样

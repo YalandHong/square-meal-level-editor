@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bs6yfa5erg4kw" path="res://sprites/player/stop/864.png" id="4_1nm1d"]
 [ext_resource type="Texture2D" uid="uid://beee4vaeyjb6r" path="res://sprites/player/eat/down/1.png" id="4_xpg3u"]
 [ext_resource type="Texture2D" uid="uid://c2u8neau8ouwf" path="res://sprites/player/eat/down/2.png" id="5_ee5er"]
-[ext_resource type="Texture2D" uid="uid://wxsqd1uc5efn" path="res://sprites/player/stop/866flop.png" id="5_pg7pw"]
 [ext_resource type="Texture2D" uid="uid://ckdifyk0mibgq" path="res://sprites/player/stop_fat/959.png" id="5_qsxkq"]
 [ext_resource type="Texture2D" uid="uid://c1kmhipvyveo0" path="res://sprites/player/stop/866.png" id="6_kiuvx"]
 [ext_resource type="Texture2D" uid="uid://c04llch3x0q4a" path="res://sprites/player/eat/down/3.png" id="6_rqnql"]
@@ -101,6 +100,7 @@
 [ext_resource type="Texture2D" uid="uid://dvnyqrp8o4dh5" path="res://sprites/player/walk_fat/right/994.png" id="48_if5xj"]
 [ext_resource type="Texture2D" uid="uid://bwsso5gsk427k" path="res://sprites/player/walk_fat/right/996.png" id="49_0kv6p"]
 [ext_resource type="Texture2D" uid="uid://dtvkh3v5lds4u" path="res://sprites/player/walk_fat/right/998.png" id="50_qt1r7"]
+[ext_resource type="Texture2D" uid="uid://ovwh32h0uycj" path="res://sprites/player/stop/L866.png" id="50_wr48m"]
 [ext_resource type="Texture2D" uid="uid://con4qm3lbjpgj" path="res://sprites/player/walk_fat/right/1000.png" id="51_t8537"]
 [ext_resource type="Texture2D" uid="uid://bxy5txm6804ea" path="res://sprites/player/walk_fat/right/1002.png" id="52_vtamn"]
 [ext_resource type="Texture2D" uid="uid://bg6kdo732r2wa" path="res://sprites/player/walk_fat/right/1004.png" id="53_6qyx2"]
@@ -296,7 +296,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_pg7pw")
+"texture": ExtResource("50_wr48m")
 }],
 "loop": true,
 "name": &"stop_left",
@@ -555,9 +555,9 @@ animations = [{
 }]
 
 [node name="Player" type="Sprite2D"]
+centered = false
 script = ExtResource("1_gjiml")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -30)
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"die"
+animation = &"walk_down_fat"

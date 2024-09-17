@@ -3,6 +3,11 @@ extends Sprite2D
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
+# sprite offset
+const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(GameManager.TILE_WIDTH/2, GameManager.TILE_HEIGHT/2-30)
+const SPRITE_OFFSET_EAT: Vector2 = SPRITE_OFFSET_NORMAL
+const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(0, 0)
+
 var game_manager: GameManager
 var shadow_holder: ShadowManager
 var sfx_player: SfxPlayer
@@ -49,6 +54,7 @@ func _ready():
     # TODO 暂不支持
     #shadow_holder = get_parent()
 
+    anim_sprite.centered = false
     anim_sprite.animation_finished.connect(on_animation_finished)
 
     state = PlayerState.IDLE
@@ -56,9 +62,13 @@ func _ready():
     play_stop_animation()
 
 # 初始化玩家位置
+# 玩家的单步移动结束时对齐到网格左上角
+# Flash原版里，玩家单步移动结束后是对齐到tile的center
+# 而我这里之所以是tile的左上角而不是tile center，是为了和block的移动统一
 func set_player_init_pos(row: int, col: int) -> void:
-    position.x = GameManager.get_tile_center_x(col)
-    position.y = GameManager.get_tile_center_y(row)
+    position.x = GameManager.get_tile_top_left_x(col)
+    position.y = GameManager.get_tile_top_left_y(row)
+    z_index = GameManager.calculate_depth(position)
 
     current_row = row
     current_col = col
@@ -89,6 +99,7 @@ func _process(_delta):
             process_eating()
         PlayerState.SPITTING:
             process_spitting()
+    z_index = GameManager.calculate_depth(position)
 
 func process_moving_or_slipping():
     do_move()
@@ -171,6 +182,7 @@ func start_eat_or_spit():
 
 # 停止动画
 func play_stop_animation():
+    anim_sprite.offset = SPRITE_OFFSET_NORMAL
     if swallowed_block_type == GlobalVars.ID_EMPTY_TILE:
         anim_sprite.play("stop_" + dir)
     else:
@@ -179,6 +191,7 @@ func play_stop_animation():
 # 行走动画
 func play_walk_animation():
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
+    anim_sprite.offset = SPRITE_OFFSET_NORMAL
     if swallowed_block_type == GlobalVars.ID_EMPTY_TILE:
         anim_sprite.play("walk_" + dir)
     else:
@@ -186,6 +199,10 @@ func play_walk_animation():
 
 func play_eat_animation() -> void:
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_EAT
+    if dir == LEFT:
+        anim_sprite.offset = SPRITE_OFFSET_EAT_LEFT
+    else:
+        anim_sprite.offset = SPRITE_OFFSET_EAT
     anim_sprite.play("eat_" + dir)
 
 func play_spit_animation() -> void:
@@ -259,15 +276,14 @@ func finish_spit_block():
 
 # 获取玩家是否可以移动到目标格子
 # Flash源码里叫get_target
-# 玩家的移动是从一个tile的center移动到另一个tile的center
 func is_next_step_empty(dir_pressed: String) -> bool:
     if dir_pressed == NONE:
         return false
     var target_row = GlobalVars.step_row_by_direction(current_row, dir_pressed)
     var target_col = GlobalVars.step_col_by_direction(current_col, dir_pressed)
     # 获取目标位置的中心坐标
-    moving_target_x = GameManager.get_tile_center_x(target_col)
-    moving_target_y = GameManager.get_tile_center_y(target_row)
+    moving_target_x = GameManager.get_tile_top_left_x(target_col)
+    moving_target_y = GameManager.get_tile_top_left_y(target_row)
 
     # 检查目标位置是否为空
     var is_empty = game_manager.is_empty(target_row, target_col)
@@ -299,9 +315,7 @@ func is_next_step_empty(dir_pressed: String) -> bool:
 
 # 玩家移动
 func do_move():
-    if dir == NONE:
-        print("Bug: dir = NONE")
-        return
+    assert(dir != NONE)
 
     if dir == LEFT:
         position.x -= SIDE_WALK_SPEED
@@ -319,9 +333,6 @@ func do_move():
     # TODO magic number
     # shadow.position.y = position.y + 5
 
-    # 更新玩家深度和其他信息
-    var depth = GameManager.get_col(position.x)
-    z_index = depth
     update_player_grid_pos()
 
 func update_player_grid_pos() -> void:

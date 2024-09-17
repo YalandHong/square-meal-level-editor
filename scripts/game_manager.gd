@@ -97,6 +97,9 @@ static func get_row(y: float) -> int:
 static func get_col(x: float) -> int:
     return int(x / TILE_WIDTH)
 
+static func calculate_depth(pos: Vector2) -> int:
+    return get_col(pos.y)
+
 # 更新玩家位置
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
     assert(is_same(level_map_players[old_row][old_col], player))
