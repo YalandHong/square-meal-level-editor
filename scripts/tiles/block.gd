@@ -59,6 +59,7 @@ func is_being_eaten() -> bool:
     return being_eaten
 
 func _init() -> void:
+    centered = false
     offset.y = BLOCK_SPRITE_OFFSET_Y
 
 func _ready() -> void:

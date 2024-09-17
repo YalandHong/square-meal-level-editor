@@ -3,13 +3,17 @@ class_name FoodBlock
 
 const FOOD_SCORE: int = 50
 const SPRITE_PATH: String = "res://sprites/block/food/"
+const FOOD_SPRITE_OFFSET_Y: int = -10
 
 func _init() -> void:
     super()
     eatable = true
     centered = true
-    # TODO 暂不支持
-    #set_random_sprite()
+    offset.y = FOOD_SPRITE_OFFSET_Y
+
+func _ready() -> void:
+    super._ready()
+    set_random_sprite()
 
 # food的精灵图像大小不一
 # center和position不同于一般的单个网格的block
@@ -30,19 +34,18 @@ func set_random_sprite():
         return
 
     var images = []
+    dir.list_dir_begin()
     var file_name = dir.get_next()
-
     while file_name != "":
         if file_name.ends_with(".png"):  # 检查文件扩展名
             images.append(SPRITE_PATH + file_name)
         file_name = dir.get_next()
+    dir.list_dir_end()
 
-    if images.size() > 0:
-        var random_image = images[randi() % images.size()]
-        var loaded_texture = load(random_image)  # 使用不同的变量名
-        if loaded_texture:
-            texture = loaded_texture  # 给当前节点的 texture 属性赋值
-        else:
-            push_error("Failed to load texture: " + random_image)
+    assert(images.size() > 0, "No images found in directory: " + SPRITE_PATH)
+    var random_image = images[randi() % images.size()]
+    var loaded_texture = load(random_image)  # 使用不同的变量名
+    if loaded_texture:
+        texture = loaded_texture  # 给当前节点的 texture 属性赋值
     else:
-        push_error("No images found in directory: " + SPRITE_PATH)
+        push_error("Failed to load texture: " + random_image)

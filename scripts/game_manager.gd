@@ -19,7 +19,7 @@ var map_height: int
 var level_map_movers: Array
 var level_map_players: Array
 var level_map_floor: Array
-var level_map_tiles: Array
+var level_map_tiles: Array # TODO 这个或许应该叫level_map_blocks
 #var players_map: Dictionary
 
 # 滚动边界
@@ -134,14 +134,11 @@ func draw_level(level_map: Array):
             var player = null
             var tile = null
 
-            if tile_type == GlobalVars.ID_STONE_BLOCK:
-                tile = BlockFactory.create_block(row, col, GlobalVars.ID_STONE_BLOCK)
+            if BlockFactory.is_valid_block_type(tile_type):
+                tile = BlockFactory.create_block(row, col, tile_type)
                 add_child(tile)
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_player(row, col)
-                level_map[row][col] = GlobalVars.ID_EMPTY_TILE
-            elif tile_type in GlobalVars.ID_FOOD_BLOCK:
-                tile = create_food_block(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
                 print("unknown tile type: ", tile_type)
 
@@ -157,14 +154,6 @@ func create_player(row: int, col: int) -> Player:
 
     add_child(player)
     return player
-
-func create_food_block(row: int, col: int) -> Block:
-    var block_scene: PackedScene = load("res://scenes/tiles/food_block.tscn")
-    var block_obj: Block = block_scene.instantiate()
-    block_obj.set_block_grid_pos(row, col)
-
-    add_child(block_obj)
-    return block_obj
 
 func is_eatable_tile(row: int, col: int) -> bool:
     var block: Block = level_map_tiles[row][col]

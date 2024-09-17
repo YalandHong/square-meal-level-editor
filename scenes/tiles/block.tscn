@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtfhxkng0hglq"]
-
-[ext_resource type="Script" path="res://scripts/tiles/block.gd" id="1_gmehk"]
-
-[node name="Block" type="Sprite2D"]
-centered = false
-script = ExtResource("1_gmehk")

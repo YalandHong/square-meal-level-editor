@@ -392,7 +392,7 @@ func start_eat_block() -> void:
     play_eat_animation()
 
 func on_animation_finished():
-    print("animation finished")
+    #print("animation finished")
     if state == PlayerState.EATING:
         do_swallow_block()
         finish_eat_block()
