@@ -3,10 +3,11 @@ extends Node2D
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
-# sprite offset
+# Flash解包出来的sprite大小不一，懒得归一化了，这里加点offset
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(GameManager.TILE_WIDTH/2, GameManager.TILE_HEIGHT/2-30)
 const SPRITE_OFFSET_EAT: Vector2 = SPRITE_OFFSET_NORMAL
-const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(0, 0)
+const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x-15, SPRITE_OFFSET_NORMAL.y)
+const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(99-SPRITE_OFFSET_EAT_RIGHT.x, SPRITE_OFFSET_EAT_RIGHT.y)
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
@@ -199,10 +200,13 @@ func play_walk_animation():
 
 func play_eat_animation() -> void:
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_EAT
-    if dir == LEFT:
-        anim_sprite.offset = SPRITE_OFFSET_EAT_LEFT
-    else:
-        anim_sprite.offset = SPRITE_OFFSET_EAT
+    match dir:
+        LEFT:
+            anim_sprite.offset = SPRITE_OFFSET_EAT_LEFT
+        RIGHT:
+            anim_sprite.offset = SPRITE_OFFSET_EAT_RIGHT
+        _:
+            anim_sprite.offset = SPRITE_OFFSET_EAT
     anim_sprite.play("eat_" + dir)
 
 func play_spit_animation() -> void:
