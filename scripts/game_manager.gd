@@ -27,14 +27,14 @@ var scroll_x_min: int
 var scroll_x_max: int
 var scroll_y_min: int
 var scroll_y_max: int
+var camera: Camera2D
 
 # 计算滚动边界
 func init_scroll_bounds() -> void:
-    # TODO magic numbers 房间大小
-    scroll_x_min = 550 - map_width * TILE_WIDTH
-    scroll_x_max = 0
-    scroll_y_min = 400 - map_height * TILE_HEIGHT
-    scroll_y_max = 0
+    scroll_x_min = GlobalVars.VIEW_WIDTH/2
+    scroll_x_max = max(scroll_x_min, map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH/2)
+    scroll_y_min = GlobalVars.VIEW_HEIGHT/2
+    scroll_y_max = max(scroll_y_min, map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT/2)
 
 # 返回给定列的tile的左上角X坐标
 static func get_tile_top_left_x(col: int) -> float:
@@ -72,6 +72,14 @@ func _ready() -> void:
     var mouse_displayer_scene: PackedScene = load("res://scenes/mouse_tracker.tscn")
     var mouse_tracker = mouse_displayer_scene.instantiate()
     add_child(mouse_tracker)
+
+    # 创建并设置 Camera2D
+    camera = Camera2D.new()
+    add_child(camera)
+    camera.enabled = true
+
+func _process(_delta: float) -> void:
+    scroll_game()
 
 # level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
 func get_loaded_level_map(file_path: String) -> Array:
@@ -234,3 +242,19 @@ func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String)
 
     # 启动 Block 的滑动逻辑
     new_block.start_slide(dir)
+
+func scroll_game() -> void:
+    # 目前只支持1个Player
+    var player1: Player = get_node("Player")
+    var scroll_center = player1.position
+
+    #if player2 != null:
+        ## 处理双玩家
+        #var mid_x = (player1.position.x + player2.position.x) / 2
+        #var mid_y = (player1.position.y + player2.position.y) / 2
+        #scroll_x = -mid_x + viewport.size.x / 2
+        #scroll_y = -mid_y + viewport.size.y / 2
+
+    scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
+    scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
+    camera.position = scroll_center

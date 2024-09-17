@@ -1,6 +1,9 @@
 extends Node
 class_name GlobalVars
 
+const VIEW_WIDTH: int = 550
+const VIEW_HEIGHT: int = 400
+
 # 一般用作debug或者初始化为非法值，正常逻辑里不使用
 const ID_INVALID: int = -1
 
