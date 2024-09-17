@@ -217,6 +217,7 @@ func start_spit_block():
     # 检查目标格子是否为空
     var target_tile_type = game_manager.get_tile_type(target_row, target_col)
     if target_tile_type != GlobalVars.ID_EMPTY_TILE:
+        # TODO 严格来说这样的逻辑似乎不对，如果next step是敌人，其实应该是可以吐石头的
         return
     # 切换到吐方块的动画
     play_spit_animation()
@@ -242,6 +243,7 @@ func start_spit_block():
 
 # TODO 原版游戏里在frame=2时才真正吐出方块
 # 但这样会给Player增加大量临时变量，我暂时先省略掉了
+# 而且，start spit block是确认了next step为空
 # 把do_spit逻辑写在start_spit_block的最后
 func do_spit():
     pass

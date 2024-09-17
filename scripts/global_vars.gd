@@ -1,4 +1,5 @@
 extends Node
+class_name GlobalVars
 
 # 一般用作debug或者初始化为非法值，正常逻辑里不使用
 const ID_INVALID: int = -1
@@ -10,6 +11,8 @@ const ID_PLAYER: int = 19
 # block id
 const ID_STONE_BLOCK: int = 1
 const ID_FOOD_BLOCK: Array[int] = [26,27,28, 48,49,50,51,52,53]
+
+const ID_SLIDING_BLOCK_PRESERVED: int = 200
 
 # directions
 const UP = "up"

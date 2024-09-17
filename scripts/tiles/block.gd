@@ -67,7 +67,7 @@ func _ready() -> void:
 # Flash原版是写在GameManager的moveBlocks了
 # 也就是由game manager每帧统一对所有的block进行slide滑动
 # 我这里没这样写，因为game manager要做的事情太多太杂了
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     if sliding:
         slide()
         print("sliding block pos: ", position)
@@ -126,7 +126,6 @@ func update_block_grid_pos():
     current_col = new_col
 
 # TODO 这个函数的逻辑写得些莫名其妙
-# Player的也有点奇怪，在do move之后，又检查一遍是否到达目标，然后修改position
 func slide() -> void:
     assert(slide_dir != NONE)
 
@@ -135,6 +134,8 @@ func slide() -> void:
     #check_hit()
 
     # 检查是否到达目标位置
+    # 本质上是，划过了的话，要回退回来。因为moving target x/y是对齐网格左上角的
+    # 所以，如果speed不是网格tile width和tile height的倍数，会导致速度不均匀
     if ((slide_dir == LEFT and position.x <= moving_target_x) or
        (slide_dir == RIGHT and position.x >= moving_target_x) or
        (slide_dir == UP and position.y <= moving_target_y) or

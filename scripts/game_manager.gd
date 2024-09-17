@@ -113,6 +113,8 @@ func update_players(player_name: String, old_row: int, old_col: int, new_row: in
 
 # 更新block位置
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
+    assert(level_map[new_row][new_col] == GlobalVars.ID_EMPTY_TILE
+        or level_map[new_row][new_col] == GlobalVars.ID_SLIDING_BLOCK_PRESERVED)
     level_map[old_row][old_col] = GlobalVars.ID_EMPTY_TILE
     level_map_tiles[old_row][old_col] = null
     level_map[new_row][new_col] = block.get_block_type()
