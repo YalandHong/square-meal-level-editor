@@ -146,8 +146,11 @@ func draw_level(level_map: Array):
             if BlockFactory.is_valid_block_type(tile_type):
                 tile = BlockFactory.create_block(row, col, tile_type)
                 add_child(tile)
+            elif EnemyFactory.is_valid_enemy_type(tile_type):
+                mover = EnemyFactory.create_enemy(row, col, tile_type)
+                add_child(mover)
             elif tile_type == GlobalVars.ID_PLAYER:
-                player = create_player(row, col)
+                player = create_and_add_player(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
                 print("unknown tile type: ", tile_type)
 
@@ -156,7 +159,7 @@ func draw_level(level_map: Array):
             level_map_players[row].append(player)
             level_map_tiles[row].append(tile)
 
-func create_player(row: int, col: int) -> Player:
+func create_and_add_player(row: int, col: int) -> Player:
     var player_scene: PackedScene = load("res://scenes/player.tscn")
     var player: Player = player_scene.instantiate()
     player.set_player_init_pos(row, col)

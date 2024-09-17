@@ -191,3 +191,4 @@ script = ExtResource("1_aa4as")
 [node name="DumbEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gys25")
 animation = &"walk_up"
+centered = false

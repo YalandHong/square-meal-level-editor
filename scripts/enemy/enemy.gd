@@ -40,7 +40,9 @@ func _ready():
     game_manager = get_parent()
     sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+    z_index = GameManager.calculate_depth(position)
+
     if eaten:
         return  # 如果已经被吃掉，则不进行任何处理
 
@@ -49,6 +51,14 @@ func _process(delta: float) -> void:
         return
 
     handle_movement()
+
+func set_enemy_init_pos(row: int, col: int) -> void:
+    position.x = GameManager.get_tile_top_left_x(col)
+    position.y = GameManager.get_tile_top_left_y(row)
+    z_index = GameManager.calculate_depth(position)
+
+    current_row = row
+    current_col = col
 
 func handle_stunned() -> void:
     stunned_count += 1

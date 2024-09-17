@@ -1,12 +1,13 @@
 extends Enemy
 class_name DumbEnemy
 
-# Called when the node enters the scene tree for the first time.
+const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-53/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-95)
+const SPRITE_OFFSET_HIT: Vector2 = Vector2(-46/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-93)
+
 func _ready() -> void:
     anim_sprite = $DumbEnemySprite
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     pass
 
 # 获取当前方向可能的其他方向
@@ -61,14 +62,15 @@ func try_move_in_direction(possible_dir: String) -> bool:
 
 # 设置目标位置和方向
 func set_target(new_col: int, new_row: int, new_dir: String):
-    moving_target_x = game_manager.get_tile_top_left_x(new_col)
-    moving_target_y = game_manager.get_tile_top_left_y(new_row)
+    moving_target_x = GameManager.get_tile_top_left_x(new_col)
+    moving_target_y = GameManager.get_tile_top_left_y(new_row)
     #target_col = new_col
     #target_row = new_row
     dir = new_dir
     #play_animation("WALK_" + str(dir))
     play_walk_animation()
 
+# TODO 这个函数和try_move_in_direction混到一起了，重构
 func is_next_step_empty() -> bool:
     var target_row = GlobalVars.step_row_by_direction(current_row, dir)
     var target_col = GlobalVars.step_col_by_direction(current_col, dir)
@@ -77,6 +79,7 @@ func is_next_step_empty() -> bool:
     moving_target_y = GameManager.get_tile_top_left_y(target_row)
 
     # 检查目标位置是否为空
+    # TODO player、block和enemy检测逻辑是不一样的
     var is_empty = game_manager.is_empty(target_row, target_col)
     return is_empty
 
