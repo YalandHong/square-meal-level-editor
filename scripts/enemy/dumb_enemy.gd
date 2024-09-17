@@ -1,9 +1,9 @@
 extends Enemy
-class_name DummyEnemy
+class_name DumbEnemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    anim_sprite = $DummyEnemySprite
+    anim_sprite = $DumbEnemySprite
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -68,9 +68,6 @@ func set_target(new_col: int, new_row: int, new_dir: String):
     dir = new_dir
     #play_animation("WALK_" + str(dir))
     play_walk_animation()
-
-func play_walk_animation():
-    anim_sprite.play("walk_" + dir)
 
 func is_next_step_empty() -> bool:
     var target_row = GlobalVars.step_row_by_direction(current_row, dir)

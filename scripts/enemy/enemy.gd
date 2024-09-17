@@ -112,7 +112,7 @@ func finish_jump() -> void:
     jumping = false
 
 func get_next_target() -> bool:
-    push_error("calling get_next_target from abstract enemy")
+    assert(false, "calling get_next_target from abstract enemy")
     return false
 
 func change_direction() -> void:
@@ -120,8 +120,7 @@ func change_direction() -> void:
     pass
 
 func play_walk_animation() -> void:
-    assert(false, "calling from abstract enemy")
-    pass
+    anim_sprite.play("walk_" + dir)
 
 func check_hit_players() -> void:
     if jumping or stunned:
