@@ -98,7 +98,7 @@ static func get_col(x: float) -> int:
     return int(x / TILE_WIDTH)
 
 static func calculate_depth(pos: Vector2) -> int:
-    return get_col(pos.y)
+    return int(pos.y / 2)
 
 # 更新玩家位置
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
