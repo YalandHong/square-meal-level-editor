@@ -15,12 +15,12 @@ const NONE = GlobalVars.NONE
 # 关卡地图（二维）
 var map_width: int
 var map_height: int
-var level_map: Array
+#var level_map: Array
 var level_map_movers: Array
 var level_map_players: Array
 var level_map_floor: Array
 var level_map_tiles: Array
-var players_map: Dictionary
+#var players_map: Dictionary
 
 # 滚动边界
 var scroll_x_min: int
@@ -55,22 +55,17 @@ static func get_tile_center_y(row: int) -> float:
 
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
-    # 假设有 level_map, level_map_players, level_map_movers
-    if level_map[row][col] != 0:
-        return false
-    # TODO 暂未实现
-    # if level_map_players[row][col] == "player" or level_map_players[row][col] == "player2":
-    #     return false
+    return (level_map_tiles[row][col] == null
+        and level_map_players[row][col] == null)
     # if level_map_movers[row][col] != "":
     #     return !map_holder[level_map_movers[row][col]].get_stunned()
-    return true
 
 func _init():
-    level_map = get_loaded_level_map("res://levels/test_level.txt")
+    var level_map = get_loaded_level_map("res://levels/test_level.txt")
     map_width = level_map[0].size()
     map_height = level_map.size()
 
-    draw_level()
+    draw_level(level_map)
     init_scroll_bounds()
 
 func _ready() -> void:
@@ -103,25 +98,24 @@ static func get_col(x: float) -> int:
     return int(x / TILE_WIDTH)
 
 # 更新玩家位置
-func update_players(player_name: String, old_row: int, old_col: int, new_row: int, new_col: int):
-    # 将玩家从旧位置移除
-    if players_map.has(Vector2(old_row, old_col)):
-        players_map.erase(Vector2(old_row, old_col))
+func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
+    assert(is_same(level_map_players[old_row][old_col], player))
+    level_map_players[old_row][old_col] = null
 
-    # 在新位置更新玩家
-    players_map[Vector2(new_row, new_col)] = player_name
+    assert(level_map_players[new_row][new_col] == null)
+    level_map_players[new_row][new_col] = player
 
 # 更新block位置
+# 第三次出现这段update代码，就要重构了
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
-    assert(level_map[new_row][new_col] == GlobalVars.ID_EMPTY_TILE
-        or level_map[new_row][new_col] == GlobalVars.ID_SLIDING_BLOCK_PRESERVED)
-    level_map[old_row][old_col] = GlobalVars.ID_EMPTY_TILE
+    assert(is_same(level_map_tiles[old_row][old_col], block))
     level_map_tiles[old_row][old_col] = null
-    level_map[new_row][new_col] = block.get_block_type()
+
+    assert(level_map_tiles[new_row][new_col] == null)
     level_map_tiles[new_row][new_col] = block
 
 # 绘制地图
-func draw_level():
+func draw_level(level_map: Array):
     level_map_movers = []
     level_map_players = []
     level_map_tiles = []
@@ -175,18 +169,17 @@ func is_eatable_tile(row: int, col: int) -> bool:
         return false
     return block.is_eatable() and not block.is_being_eaten()
 
-func get_tile_type(row: int, col: int) -> int:
-    return level_map[row][col]
+#func get_tile_type(row: int, col: int) -> int:
+    #return get_tile_instance(row, col).get_block_type()
 
 func get_tile_instance(row: int, col: int) -> Block:
     return level_map_tiles[row][col]
 
 # 移除块
 func remove_block(row: int, col: int) -> void:
-    assert(level_map[row][col] != GlobalVars.ID_EMPTY_TILE)
+    assert(level_map_tiles[row][col] != null)
     var block: Block = level_map_tiles[row][col]
     level_map_tiles[row][col] = null
-    level_map[row][col] = GlobalVars.ID_EMPTY_TILE
     block.queue_free()  # 移除方块
 
 static func read_level_map_txt_file(file_path: String) -> Array:
@@ -219,7 +212,7 @@ func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String)
     # 创建新的 Block 实例 (假设通过 block_type 加载不同的预制)
     var new_block: Block = BlockFactory.create_block(row, col, block_type)
     add_child(new_block)
-    level_map[row][col] = block_type
+    #level_map[row][col] = block_type
     level_map_tiles[row][col] = new_block
 
     # 根据滑动方向初始化 Block 的位置

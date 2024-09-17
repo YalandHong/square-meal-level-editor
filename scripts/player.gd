@@ -208,17 +208,22 @@ func process_spitting():
         #do_spit()
     pass
 
+# TODO target row/col变量命名意义不明
+func can_spit(target_row: int, target_col: int) -> bool:
+    # 检查目标格子是否为空
+    var target_block = game_manager.get_tile_instance(target_row, target_col)
+    if target_block != null:
+        # TODO 严格来说这样的逻辑不对，如果next step是敌人，其实应该是可以吐石头的
+        return false
+    return true
+
 # 吐出方块逻辑
 func start_spit_block():
-    # 根据玩家的方向确定目标格子位置
     var target_row: int = GlobalVars.step_row_by_direction(current_row, dir)
     var target_col: int = GlobalVars.step_col_by_direction(current_col, dir)
-
-    # 检查目标格子是否为空
-    var target_tile_type = game_manager.get_tile_type(target_row, target_col)
-    if target_tile_type != GlobalVars.ID_EMPTY_TILE:
-        # TODO 严格来说这样的逻辑似乎不对，如果next step是敌人，其实应该是可以吐石头的
+    if not can_spit(target_row, target_col):
         return
+
     # 切换到吐方块的动画
     play_spit_animation()
     state = PlayerState.SPITTING
@@ -324,7 +329,7 @@ func update_player_grid_pos() -> void:
     var new_col = GameManager.get_col(position.x)
 
     # 调用 GameManager 的 update_players 方法，更新玩家的位置
-    game_manager.update_players(name, current_row, current_col, new_row, new_col)
+    game_manager.update_players(self, current_row, current_col, new_row, new_col)
 
     # 更新 Player 类的 current_row 和 current_col
     current_row = new_row
