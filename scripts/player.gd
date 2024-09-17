@@ -3,12 +3,14 @@ extends Node2D
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
-# Flash解包出来的sprite大小不一
+# Flash解包出来的sprite大小不一，而且player在stop和walk sprite中的位置不一样
 # 有些我懒得归一化了，所以设置不一样的offset
+# 在下面这些公式里，75是stop/walk的精灵宽度，99是eat right/left的精灵宽度
+# 15是为了补齐player在stop和walk sprite的位置差距
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-75/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-35)
 const SPRITE_OFFSET_EAT: Vector2 = SPRITE_OFFSET_NORMAL
-const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x-15, SPRITE_OFFSET_NORMAL.y)
-const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(99-SPRITE_OFFSET_EAT_RIGHT.x, SPRITE_OFFSET_EAT_RIGHT.y)
+const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x+15, SPRITE_OFFSET_NORMAL.y)
+const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(-99-15+75+SPRITE_OFFSET_NORMAL.x, SPRITE_OFFSET_NORMAL.y)
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
