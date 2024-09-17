@@ -1,5 +1,5 @@
 class_name Player
-extends Sprite2D
+extends Node2D
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 

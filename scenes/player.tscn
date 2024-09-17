@@ -554,10 +554,10 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="Player" type="Sprite2D"]
-centered = false
+[node name="Player" type="Node2D"]
 script = ExtResource("1_gjiml")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"walk_down_fat"
+animation = &"eat_right"
+centered = false
