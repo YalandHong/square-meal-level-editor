@@ -26,11 +26,11 @@ var being_eaten: bool = false
 # 滑行相关
 const START_SLIDE_SPEED: float = 10;
 const SLIDE_SPEED = 10;
-const START_MAX_TILES_MOVED = 100
+#const START_MAX_TILES_MOVED = 100
 var sliding: bool = false
-var tiles_moved: int = 0;
+#var tiles_moved: int = 0;
 var slide_speed: float = 10;
-var max_tiles_moved: int = 100;
+#var max_tiles_moved: int = 100;
 var slide_dir: String
 var moving_target_x: float
 var moving_target_y: float
@@ -81,7 +81,7 @@ func get_block_type() -> int:
 func start_slide(direction: String) -> void:
     # 初始化滑动速度和最大滑动距离
     slide_speed = START_SLIDE_SPEED
-    max_tiles_moved = START_MAX_TILES_MOVED
+    #max_tiles_moved = START_MAX_TILES_MOVED
     slide_dir = direction
 
     # 检查是否可以滑动到目标位置
@@ -96,8 +96,8 @@ func start_slide(direction: String) -> void:
 # 同时会把变量写入moving target x/y
 func is_next_step_empty() -> bool:
     # 如果滑动的距离没有超过最大移动距离
-    if tiles_moved >= max_tiles_moved:
-        return false
+    #if tiles_moved >= max_tiles_moved:
+        #return false
     var target_row: int = GlobalVars.step_row_by_direction(current_row, slide_dir)
     var target_col: int = GlobalVars.step_col_by_direction(current_col, slide_dir)
     moving_target_x = GameManager.get_tile_top_left_x(target_col)
@@ -127,6 +127,7 @@ func update_block_grid_pos():
     current_col = new_col
 
 # TODO 这个函数的逻辑写得些莫名其妙
+# TODO 不同种类的block的slide行为都不太一样，不应该全部怼到一个函数里
 func slide() -> void:
     assert(slide_dir != NONE)
 
@@ -142,7 +143,7 @@ func slide() -> void:
        (slide_dir == UP and position.y <= moving_target_y) or
        (slide_dir == DOWN and position.y >= moving_target_y)):
 
-        tiles_moved += 1
+        #tiles_moved += 1
         position.x = moving_target_x
         position.y = moving_target_y
         update_block_grid_pos()
@@ -152,7 +153,7 @@ func slide() -> void:
 
         # 尝试获取下一个目标位置
         if not is_next_step_empty():
-            tiles_moved = 0
+            #tiles_moved = 0
             if not check_rubber_block():  # 预留的接口
                 #check_hit()  # 再次检查撞击
                 #check_explosive_block()  # 预留的接口

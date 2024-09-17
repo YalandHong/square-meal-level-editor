@@ -26,7 +26,7 @@ var dir: String
 var current_row: int = 0
 var current_col: int = 0
 
-enum PlayerState {MOVING, TURNING, IDLE, SLIPPING, EATING, SPITTING}
+enum PlayerState {MOVING, TURNING, IDLE, SLIPPING, EATING, SPITTING, DEAD}
 var state: PlayerState
 
 # 转向相关
@@ -436,3 +436,8 @@ func eat_non_food_block():
     game_manager.remove_block(eating_block_row, eating_block_col)
     swallowed_block_type = eating_block.get_block_type()
     eating_block = null
+
+func die():
+    sfx_player.play_sfx("die")
+    state = PlayerState.DEAD
+    game_manager.remove_player(current_row, current_col)

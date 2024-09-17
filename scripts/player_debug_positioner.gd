@@ -1,7 +1,7 @@
 extends ColorRect
 
-var square_size : Vector2 = Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT)
-var square_color : Color = Color(1, 1, 1)
+const square_size : Vector2 = Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT)
+const square_color : Color = Color(1, 1, 1)
 
 func _init():
     size = square_size

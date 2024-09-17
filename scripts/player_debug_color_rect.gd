@@ -1,6 +1,6 @@
 extends ColorRect
 
-var square_size : Vector2 = Vector2(4, 4)
+var square_size : Vector2 = Vector2(10, 10)
 var square_color : Color = Color("LIGHT_GREEN")
 
 func _init():

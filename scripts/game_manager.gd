@@ -108,22 +108,23 @@ static func get_col(x: float) -> int:
 static func calculate_depth(pos: Vector2) -> int:
     return int(pos.y / 2)
 
-# 更新玩家位置
+# 我把block、enemy、player这些按照网格移动的东西统称为square
+static func update_grid_pos_for_square(map: Array, square,
+        old_row: int, old_col: int, new_row: int, new_col: int):
+    assert(is_same(map[old_row][old_col], square))
+    map[old_row][old_col] = null
+
+    assert(map[new_row][new_col] == null)
+    map[new_row][new_col] = square
+
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
-    assert(is_same(level_map_players[old_row][old_col], player))
-    level_map_players[old_row][old_col] = null
+    update_grid_pos_for_square(level_map_players, player, old_row, old_col, new_row, new_col)
 
-    assert(level_map_players[new_row][new_col] == null)
-    level_map_players[new_row][new_col] = player
-
-# 更新block位置
-# 第三次出现这段update代码，就要重构了
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
-    assert(is_same(level_map_tiles[old_row][old_col], block))
-    level_map_tiles[old_row][old_col] = null
+    update_grid_pos_for_square(level_map_tiles, block, old_row, old_col, new_row, new_col)
 
-    assert(level_map_tiles[new_row][new_col] == null)
-    level_map_tiles[new_row][new_col] = block
+func update_movers(enemy: Enemy, old_row: int, old_col: int, new_row: int, new_col: int):
+    update_grid_pos_for_square(level_map_movers, enemy, old_row, old_col, new_row, new_col)
 
 # 绘制地图
 func draw_level(level_map: Array):
@@ -169,18 +170,26 @@ func is_eatable_tile(row: int, col: int) -> bool:
         return false
     return block.is_eatable() and not block.is_being_eaten()
 
-#func get_tile_type(row: int, col: int) -> int:
-    #return get_tile_instance(row, col).get_block_type()
-
 func get_tile_instance(row: int, col: int) -> Block:
     return level_map_tiles[row][col]
 
-# 移除块
+func get_player_instance(row: int, col: int) -> Player:
+    return level_map_players[row][col]
+
+# 移除块，并且destroy
+func remove_grid_element(map: Array, row: int, col: int) -> void:
+    assert(map[row][col] != null)
+    var elem = map[row][col]
+    map[row][col] = null
+    elem.queue_free()
+
 func remove_block(row: int, col: int) -> void:
-    assert(level_map_tiles[row][col] != null)
-    var block: Block = level_map_tiles[row][col]
-    level_map_tiles[row][col] = null
-    block.queue_free()  # 移除方块
+    assert(get_tile_instance(row, col) is Block)
+    remove_grid_element(level_map_tiles, row, col)
+
+func remove_player(row: int, col: int) -> void:
+    assert(get_player_instance(row, col) is Player)
+    remove_grid_element(level_map_players, row, col)
 
 static func read_level_map_txt_file(file_path: String) -> Array:
     var file = FileAccess.open(file_path, FileAccess.READ)
