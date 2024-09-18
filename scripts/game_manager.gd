@@ -65,7 +65,7 @@ func _init():
     map_width = level_map[0].size()
     map_height = level_map.size()
 
-    draw_level(level_map)
+    init_level_maps(level_map)
     init_scroll_bounds()
 
 func _ready() -> void:
@@ -127,7 +127,7 @@ func update_movers(enemy: Enemy, old_row: int, old_col: int, new_row: int, new_c
     update_grid_pos_for_square(level_map_movers, enemy, old_row, old_col, new_row, new_col)
 
 # 绘制地图
-func draw_level(level_map: Array):
+func init_level_maps(level_map: Array):
     level_map_movers = []
     level_map_players = []
     level_map_tiles = []
