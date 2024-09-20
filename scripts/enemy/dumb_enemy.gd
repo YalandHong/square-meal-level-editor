@@ -61,7 +61,7 @@ func try_move_in_direction(possible_dir: String) -> bool:
     return false
 
 # 设置目标位置和方向
-func change_moving_target(new_col: int, new_row: int, new_dir: String):
+func change_moving_target(new_row: int, new_col: int, new_dir: String):
     moving_target_x = GameManager.get_tile_top_left_x(new_col)
     moving_target_y = GameManager.get_tile_top_left_y(new_row)
     #target_col = new_col

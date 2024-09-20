@@ -46,6 +46,7 @@ func _ready():
     # 设置初始方向
     dir = NONE
     try_change_direction()
+    assert(check_aligned_with_moving_target())
 
 func _process(_delta: float) -> void:
     z_index = GameManager.calculate_depth(position)
@@ -58,6 +59,7 @@ func _process(_delta: float) -> void:
         return
 
     handle_movement()
+    assert(check_aligned_with_moving_target())
 
 func set_enemy_init_pos(row: int, col: int) -> void:
     position.x = GameManager.get_tile_top_left_x(col)
@@ -118,10 +120,17 @@ func update_mover_grid_pos():
 
 # TODO 这个函数也在player和block里用到了
 func reached_target() -> bool:
-    return (dir == LEFT and position.x <= moving_target_x or
-            dir == RIGHT and position.x >= moving_target_x or
-            dir == UP and position.y <= moving_target_y or
-            dir == DOWN and position.y >= moving_target_y)
+    return ((dir == LEFT and position.x <= moving_target_x) or
+            (dir == RIGHT and position.x >= moving_target_x) or
+            (dir == UP and position.y <= moving_target_y) or
+            (dir == DOWN and position.y >= moving_target_y))
+
+# debug function
+func check_aligned_with_moving_target() -> bool:
+    return ((dir == UP and position.x == moving_target_x) or
+            (dir == DOWN and position.x == moving_target_x) or
+            (dir == LEFT and position.y == moving_target_y) or
+            (dir == RIGHT and position.y == moving_target_y))
 
 func finish_jump() -> void:
     # 处理完成跳跃的逻辑

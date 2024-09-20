@@ -81,7 +81,6 @@ func _ready() -> void:
     add_child(camera)
     camera.enabled = true
 
-    init_direction_of_all_enemies()
     scroll_game()
 
 func _process(_delta: float) -> void:
@@ -276,11 +275,3 @@ func scroll_game() -> void:
     scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
     scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
     camera.position = scroll_center
-
-func init_direction_of_all_enemies():
-    for row in range(map_height):
-        for col in range(map_width):
-            var enemy: Enemy = level_map_movers[row][col]
-            if enemy == null:
-                continue
-            enemy.try_change_direction()

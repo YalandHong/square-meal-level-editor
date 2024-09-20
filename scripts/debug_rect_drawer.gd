@@ -19,7 +19,7 @@ func draw_enemy_rect(level_map_movers: Array):
             draw_single_rect(
                 Vector2(
                     GameManager.get_tile_top_left_x(col),
-                    GameManager.get_tile_center_y(row)
+                    GameManager.get_tile_top_left_y(row)
                 ),
                 Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT),
                 Color(1, 0, 0)
