@@ -438,6 +438,9 @@ func eat_non_food_block():
     eating_block = null
 
 func die():
+    if state != PlayerState.IDLE:
+        return
     sfx_player.play_sfx("die")
     state = PlayerState.DEAD
-    game_manager.remove_player(current_row, current_col)
+    # TODO 一段时间之后才能remove player
+    #game_manager.remove_player(current_row, current_col)

@@ -184,6 +184,9 @@ func get_tile_instance(row: int, col: int) -> Block:
 func get_player_instance(row: int, col: int) -> Player:
     return level_map_players[row][col]
 
+func get_enemy_instance(row: int, col: int) -> Enemy:
+    return level_map_movers[row][col]
+
 # 移除块，并且destroy
 func remove_grid_element(map: Array, row: int, col: int) -> void:
     assert(map[row][col] != null)

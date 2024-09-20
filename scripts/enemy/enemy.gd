@@ -77,7 +77,7 @@ func handle_stunned() -> void:
 
 func wake_up():
     update_mover_grid_pos()
-    if not get_next_target():
+    if not try_step_forward_moving_target(dir):
         try_change_direction()
         #tiles_moved = 0
 
@@ -98,7 +98,7 @@ func handle_movement() -> void:
         return
 
     update_mover_grid_pos()
-    if not get_next_target():
+    if not try_step_forward_moving_target(dir):
         try_change_direction()
         #tiles_moved = 0
 
@@ -137,8 +137,9 @@ func finish_jump() -> void:
     # TODO
     jumping = false
 
-func get_next_target() -> bool:
-    assert(false, "calling get_next_target from abstract enemy")
+# Flash原版叫get next target
+func try_step_forward_moving_target(target_dir: String) -> bool:
+    assert(false, "calling try_step_forward_moving_target from abstract enemy")
     return false
 
 func try_change_direction() -> bool:
