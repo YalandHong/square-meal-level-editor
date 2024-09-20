@@ -61,6 +61,9 @@ func is_empty(row: int, col: int) -> bool:
     #     return !map_holder[level_map_movers[row][col]].get_stunned()
 
 func _init():
+    # debug
+    seed(0)
+
     var level_map = get_loaded_level_map("res://levels/test_level.txt")
     map_width = level_map[0].size()
     map_height = level_map.size()
@@ -77,6 +80,9 @@ func _ready() -> void:
     camera = Camera2D.new()
     add_child(camera)
     camera.enabled = true
+
+    init_direction_of_all_enemies()
+    scroll_game()
 
 func _process(_delta: float) -> void:
     scroll_game()
@@ -270,3 +276,11 @@ func scroll_game() -> void:
     scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
     scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
     camera.position = scroll_center
+
+func init_direction_of_all_enemies():
+    for row in range(map_height):
+        for col in range(map_width):
+            var enemy: Enemy = level_map_movers[row][col]
+            if enemy == null:
+                continue
+            enemy.try_change_direction()

@@ -39,7 +39,7 @@ func try_move_in_direction(possible_dir: String) -> bool:
     var target_row = GlobalVars.step_row_by_direction(current_row, possible_dir)
     var target_col = GlobalVars.step_col_by_direction(current_col, possible_dir)
     if game_manager.is_empty(target_row, target_col):
-        set_target(target_row, target_col, possible_dir)
+        change_moving_target(target_row, target_col, possible_dir)
         return true
     #match possible_dir:
         #LEFT:
@@ -61,7 +61,7 @@ func try_move_in_direction(possible_dir: String) -> bool:
     return false
 
 # 设置目标位置和方向
-func set_target(new_col: int, new_row: int, new_dir: String):
+func change_moving_target(new_col: int, new_row: int, new_dir: String):
     moving_target_x = GameManager.get_tile_top_left_x(new_col)
     moving_target_y = GameManager.get_tile_top_left_y(new_row)
     #target_col = new_col
