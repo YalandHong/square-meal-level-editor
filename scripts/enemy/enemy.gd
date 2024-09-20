@@ -15,30 +15,37 @@ const RIGHT = GlobalVars.RIGHT
 const NONE = GlobalVars.NONE
 
 # 定义相关变量
-var eaten: bool = false
+var eaten: bool
 
-var stunned: bool = false
+var stunned: bool
 var stunned_count: int
 const MAX_STUNNED_COUNT: int = 100
 
 # Flash里移过来的，意义不明的变量
 #var tiles_moved: int = 0
 
-var jumping: bool = false
+var jumping: bool
 
 var dir: String
 var moving_target_x: float
 var moving_target_y: float
-var current_row: int = 0
-var current_col: int = 0
+var current_row: int
+var current_col: int
 const MOVE_SPEED: float = 2  # 每个enemy不太一样吧？
 
 func _init() -> void:
-    dir = RIGHT  # 初始方向
+    jumping = false
+    stunned = false
+    eaten = false
 
 func _ready():
     game_manager = get_parent()
     sfx_player = game_manager.get_parent().get_node("SfxPlayer")
+    set_enemy_sprite()
+
+    # 设置初始方向
+    dir = NONE
+    try_change_direction()
 
 func _process(_delta: float) -> void:
     z_index = GameManager.calculate_depth(position)
@@ -69,7 +76,7 @@ func handle_stunned() -> void:
 func wake_up():
     update_mover_grid_pos()
     if not get_next_target():
-        change_direction()
+        try_change_direction()
         #tiles_moved = 0
 
     play_walk_animation()
@@ -90,7 +97,7 @@ func handle_movement() -> void:
 
     update_mover_grid_pos()
     if not get_next_target():
-        change_direction()
+        try_change_direction()
         #tiles_moved = 0
 
     check_hit_players()
@@ -125,9 +132,9 @@ func get_next_target() -> bool:
     assert(false, "calling get_next_target from abstract enemy")
     return false
 
-func change_direction() -> void:
+func try_change_direction() -> bool:
     assert(false, "calling change_direction from abstract enemy")
-    pass
+    return false
 
 func play_walk_animation() -> void:
     anim_sprite.play("walk_" + dir)
@@ -139,3 +146,7 @@ func check_hit_players() -> void:
     if player == null:
         return
     player.die()
+
+func set_enemy_sprite() -> void:
+    assert(false, "calling set_enemy_sprite from abstract enemy")
+    pass

@@ -4,11 +4,8 @@ class_name DumbEnemy
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-53/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-95)
 const SPRITE_OFFSET_HIT: Vector2 = Vector2(-46/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-93)
 
-func _ready() -> void:
+func set_enemy_sprite() -> void:
     anim_sprite = $DumbEnemySprite
-
-func _process(_delta: float) -> void:
-    pass
 
 # 获取当前方向可能的其他方向
 func get_possible_directions() -> Array:
@@ -25,13 +22,16 @@ func get_possible_directions() -> Array:
             return [LEFT, RIGHT, UP, DOWN]
 
 # 改变敌人方向的主逻辑
-func change_direction() -> void:
+func try_change_direction() -> bool:
     var possible_directions = get_possible_directions()
     possible_directions.shuffle()  # 打乱方向顺序
 
     for possible_dir in possible_directions:
         if try_move_in_direction(possible_dir):
-            break
+            play_walk_animation()
+            return true
+
+    return false
 
 # 尝试根据方向移动
 # TODO 这个比之前player和block里写得更好，提取并统一到grid element里
@@ -86,3 +86,7 @@ func is_next_step_empty() -> bool:
 func get_next_target() -> bool:
     assert(dir != NONE)
     return is_next_step_empty()
+
+func play_walk_animation() -> void:
+    anim_sprite.offset = SPRITE_OFFSET_NORMAL
+    anim_sprite.play("walk_" + dir)
