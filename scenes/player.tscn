@@ -559,5 +559,5 @@ script = ExtResource("1_gjiml")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"stop_left_fat"
+animation = &"die"
 centered = false

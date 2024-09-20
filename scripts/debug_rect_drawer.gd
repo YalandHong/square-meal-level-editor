@@ -3,8 +3,8 @@ extends Node2D
 var game_manager: GameManager
 
 # 封装矩形的绘制函数
-func draw_single_rect(position: Vector2, size: Vector2, color: Color):
-    draw_rect(Rect2(position, size), color)
+func draw_single_rect(pos: Vector2, size: Vector2, color: Color):
+    draw_rect(Rect2(pos, size), color)
 
 func _ready() -> void:
      game_manager = get_node("../GameManager")

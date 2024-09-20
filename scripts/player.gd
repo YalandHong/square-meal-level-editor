@@ -442,5 +442,11 @@ func die():
         return
     sfx_player.play_sfx("die")
     state = PlayerState.DEAD
+    play_dead_animation()
     # TODO 一段时间之后才能remove player
     #game_manager.remove_player(current_row, current_col)
+
+func play_dead_animation():
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
+    anim_sprite.offset = SPRITE_OFFSET_NORMAL
+    anim_sprite.play("die")

@@ -4,6 +4,8 @@ class_name DumbEnemy
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-53/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-80)
 const SPRITE_OFFSET_HIT: Vector2 = Vector2(-46/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-78)
 
+const ANIMATION_FPS_SCALE_WALK: float = 0.5
+
 func set_enemy_sprite() -> void:
     anim_sprite = $DumbEnemySprite
 
@@ -72,4 +74,5 @@ func do_change_moving_target(new_row: int, new_col: int, new_dir: String):
 
 func play_walk_animation() -> void:
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
     anim_sprite.play("walk_" + dir)
