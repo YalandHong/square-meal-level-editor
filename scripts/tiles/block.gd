@@ -61,6 +61,7 @@ func is_being_eaten() -> bool:
 func _init() -> void:
     centered = false
     offset.y = BLOCK_SPRITE_OFFSET_Y
+    sliding = false
 
 func _ready() -> void:
     game_manager = get_parent()
@@ -167,14 +168,14 @@ func check_rubber_block() -> bool:
 # 方块滑动时的碰撞检测
 func check_hit() -> void:
     # var game_manager = get_node("/root/GameManager")
-    
+
     # 检查当前格子的敌人
     var enemy: Enemy = game_manager.get_enemy(current_row, current_col)
     if enemy != null:
         enemy.do_hit_by_block(slide_dir, self)
         do_hit_object()
         return
-    
+
     # 检查当前格子的玩家
     var player: Player = game_manager.get_player(current_row, current_col)
     if player != null:
