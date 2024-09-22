@@ -1,17 +1,33 @@
 extends Node
+class_name LevelEditor
 
 var level_map: Array
 var map_height: int
 var map_width: int
 
-# Camera2D
+# 滚动边界
+var scroll_x_min: int
+var scroll_x_max: int
+var scroll_y_min: int
+var scroll_y_max: int
 @onready var camera: Camera2D = $Camera2D
+
+# 计算滚动边界
+func init_scroll_bounds() -> void:
+    scroll_x_min = GlobalVars.VIEW_WIDTH / 2
+    scroll_x_max = max(scroll_x_min,
+        map_width * GlobalVars.TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
+    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
+    scroll_y_max = max(scroll_y_min,
+        map_height * GlobalVars.TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
 func _ready():
     #request_map_size()  # 请求地图大小
-    map_height = 30
+    map_height = 20
     map_width = 30
     initialize_level_map()
+
+    camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_WIDTH / 2)
 
 ## 请求玩家输入地图大小
 #func request_map_size():
@@ -55,18 +71,25 @@ func _process(_delta):
 
 # 处理相机移动的函数
 func handle_camera_movement():
-    var speed = 200  # 设置相机移动速度
-    if Input.is_action_pressed("ui_up"):
-        camera.position.y -= speed
-    if Input.is_action_pressed("ui_down"):
-        camera.position.y += speed
-    if Input.is_action_pressed("ui_left"):
-        camera.position.x -= speed
-    if Input.is_action_pressed("ui_right"):
-        camera.position.x += speed
+    if Input.is_action_just_pressed("ui_up"):
+        camera.position.y -= GlobalVars.TILE_HEIGHT
+    if Input.is_action_just_pressed("ui_down"):
+        camera.position.y += GlobalVars.TILE_HEIGHT
+    if Input.is_action_just_pressed("ui_left"):
+        camera.position.x -= GlobalVars.TILE_WIDTH
+    if Input.is_action_just_pressed("ui_right"):
+        camera.position.x += GlobalVars.TILE_WIDTH
 
     # 确保相机不超出地图边界
-    camera.position.x = clamp(camera.position.x, 0,
-        map_width * GlobalVars.TILE_WIDTH)
-    camera.position.y = clamp(camera.position.y, 0,
-        map_height * GlobalVars.TILE_HEIGHT)
+    camera.position.x = clamp(camera.position.x, scroll_x_min, scroll_x_max)
+    camera.position.y = clamp(camera.position.y, scroll_y_min, scroll_y_max)
+
+func put_grid_element(row: int, col: int, type: int):
+    if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
+        return
+    level_map[row][col] = type
+
+func delete_grid_element(row: int, col: int, type: int):
+    if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
+        return
+    level_map[row][col] = GlobalVars.ID_EMPTY_TILE
