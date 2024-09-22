@@ -315,12 +315,11 @@ func handle_hit_down(block: Block) -> bool:
     return false
 
 # 尝试移动到指定的相对位置，并更新相关参数
+# TODO 应该命名为try jump to
 func try_move(new_dir: String, row_offset: int, col_offset: int, block: Block) -> bool:
     # var game_manager = get_node("/root/GameManager")
 
-    if (game_manager.get_empty_enemy(current_row + row_offset, current_col + col_offset, block) and
-        game_manager.get_player(current_row + row_offset, current_col + col_offset) == null):
-
+    if check_landable(current_row + row_offset, current_col + col_offset, block):
         var target_row = current_row + row_offset
         var target_col = current_col + col_offset
         do_change_moving_target(target_row, target_col, new_dir)
@@ -339,6 +338,7 @@ func fallback_movement(block: Block) -> void:
         return
     elif try_move(DOWN, 1, 0, block):
         return
+    assert(false, "no place for fallback")
 
 # 执行跳跃动作
 func perform_jump() -> void:
@@ -355,3 +355,21 @@ func do_change_moving_target(target_row: int, target_col: int, target_dir: Strin
     moving_target_x = GameManager.get_tile_top_left_x(target_col)
     moving_target_y = GameManager.get_tile_top_left_y(target_row)
     dir = target_dir
+
+func check_landable(row: int, col: int, hit_block: Block) -> bool:
+    if game_manager.is_empty(row, col):
+        for offset_row in [-1, 1]:
+            var adjacent_enemy: Enemy = game_manager.get_enemy_instance(row + offset_row, col)
+            if adjacent_enemy != null and adjacent_enemy.target_row == row and adjacent_enemy.target_col == col:
+                return false
+
+        for offset_col in [-1, 1]:
+            var adjacent_enemy: Enemy = game_manager.get_enemy_instance(row, col + offset_col)
+            if adjacent_enemy != null and adjacent_enemy.target_row == row and adjacent_enemy.target_col == col:
+                return false
+
+        return true
+    elif hit_block != null and game_manager.get_tile_instance(row, col) == hit_block:
+        return true
+
+    return false

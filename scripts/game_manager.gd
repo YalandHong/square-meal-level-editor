@@ -56,7 +56,8 @@ static func get_tile_center_y(row: int) -> float:
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
     return (level_map_tiles[row][col] == null
-        and level_map_players[row][col] == null)
+        and level_map_players[row][col] == null
+        and level_map_movers[row][col] == null)
     # if level_map_movers[row][col] != "":
     #     return !map_holder[level_map_movers[row][col]].get_stunned()
 
