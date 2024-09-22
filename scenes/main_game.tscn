@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=11 format=3 uid="uid://bf5f0nj851ygd"]
 
+[ext_resource type="Script" path="res://scripts/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/bg_drawer.gd" id="1_to2mj"]
 [ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/debug_rect_drawer.gd" id="9_yqqm4"]
@@ -11,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/player_debug_positioner.gd" id="42_35ot8"]
 
 [node name="MainGame" type="Node2D"]
+script = ExtResource("1_k6vyx")
 
 [node name="FpsManager" type="Node" parent="."]
 script = ExtResource("41_22c60")

@@ -19,7 +19,7 @@ var eaten: bool
 
 var stunned: bool
 var stunned_count: int
-const MAX_STUNNED_COUNT: int = 100
+const MAX_STUNNED_COUNT: int = 150
 
 # Flash里移过来的，意义不明的变量
 #var tiles_moved: int = 0
@@ -93,6 +93,7 @@ func wake_up():
 
 func handle_movement_or_jump() -> void:
     do_move()
+    check_hit_players()
 
     if not reached_target():
         return
@@ -109,7 +110,6 @@ func handle_movement_or_jump() -> void:
         try_change_direction()
         #tiles_moved = 0
 
-    check_hit_players()
 
 func do_move() -> void:
     if dir == NONE:
@@ -242,7 +242,7 @@ func update_position(new_dir: String) -> void:
 func do_hit_by_block(block_dir: String, block: Block) -> void:
     if jumping:
         return
-    
+
     update_mover_grid_pos()
 
     # enemy被击飞的时候，是从一个对齐网格的位置开始起飞，到另一个对齐网格的位置落地
@@ -318,15 +318,15 @@ func handle_hit_down(block: Block) -> bool:
 func try_move(new_dir: String, row_offset: int, col_offset: int, block: Block) -> bool:
     # var game_manager = get_node("/root/GameManager")
 
-    if (game_manager.get_empty_enemy(current_row + row_offset, current_col + col_offset, block) and 
+    if (game_manager.get_empty_enemy(current_row + row_offset, current_col + col_offset, block) and
         game_manager.get_player(current_row + row_offset, current_col + col_offset) == null):
-        
+
         var target_row = current_row + row_offset
         var target_col = current_col + col_offset
         do_change_moving_target(target_row, target_col, new_dir)
         update_position(new_dir)
         return true
-    
+
     return false
 
 # 移动失败时的回退逻辑

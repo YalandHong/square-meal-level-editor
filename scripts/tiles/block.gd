@@ -133,8 +133,7 @@ func slide() -> void:
     assert(slide_dir != NONE)
 
     do_move()
-    # TODO 预留的接口，检查碰撞
-    #check_hit()
+    check_hit()
 
     # 检查是否到达目标位置
     # 本质上是，划过了的话，要回退回来。因为moving target x/y是对齐网格左上角的
@@ -156,7 +155,6 @@ func slide() -> void:
         if not is_next_step_empty():
             #tiles_moved = 0
             if not check_rubber_block():  # 预留的接口
-                #check_hit()  # 再次检查撞击
                 #check_explosive_block()  # 预留的接口
                 #check_wooden_block()  # 预留的接口
                 finish_slide()  # 完成滑动
