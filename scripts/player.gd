@@ -257,8 +257,8 @@ func can_spit(target_row: int, target_col: int) -> bool:
 
 # 吐出方块逻辑
 func start_spit_block():
-    var target_row: int = GlobalVars.step_row_by_direction(current_row, dir)
-    var target_col: int = GlobalVars.step_col_by_direction(current_col, dir)
+    var target_row: int = GridHelper.step_row_by_direction(current_row, dir)
+    var target_col: int = GridHelper.step_col_by_direction(current_col, dir)
     if not can_spit(target_row, target_col):
         return
 
@@ -300,8 +300,8 @@ func finish_spit_block():
 func is_next_step_empty(dir_pressed: String) -> bool:
     if dir_pressed == NONE:
         return false
-    var target_row = GlobalVars.step_row_by_direction(current_row, dir_pressed)
-    var target_col = GlobalVars.step_col_by_direction(current_col, dir_pressed)
+    var target_row = GridHelper.step_row_by_direction(current_row, dir_pressed)
+    var target_col = GridHelper.step_col_by_direction(current_col, dir_pressed)
     # 获取目标位置的中心坐标
     moving_target_x = GridHelper.get_tile_top_left_x(target_col)
     moving_target_y = GridHelper.get_tile_top_left_y(target_row)
@@ -373,8 +373,8 @@ func process_turning() -> void:
         state = PlayerState.IDLE
 
 func start_eat_block() -> void:
-    eating_block_row = GlobalVars.step_row_by_direction(current_row, dir)
-    eating_block_col = GlobalVars.step_col_by_direction(current_col, dir)
+    eating_block_row = GridHelper.step_row_by_direction(current_row, dir)
+    eating_block_col = GridHelper.step_col_by_direction(current_col, dir)
 
     # 吃方块
     if game_manager.is_eatable_tile(eating_block_row, eating_block_col):

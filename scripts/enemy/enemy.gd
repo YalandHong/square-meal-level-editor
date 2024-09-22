@@ -114,7 +114,7 @@ func handle_movement_or_jump() -> void:
 func do_move() -> void:
     if dir == NONE:
         return
-    position = GlobalVars.step_position_by_speed(position, dir, MOVE_SPEED)
+    position = GridHelper.step_position_by_speed(position, dir, MOVE_SPEED)
     update_mover_grid_pos()
 
 func update_mover_grid_pos():

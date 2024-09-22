@@ -39,8 +39,8 @@ func try_change_direction() -> bool:
 # 尝试根据方向移动
 # TODO 这个比之前player和block里写得更好，提取并统一到grid element里
 func try_step_forward_moving_target(target_dir: String) -> bool:
-    var target_row = GlobalVars.step_row_by_direction(current_row, target_dir)
-    var target_col = GlobalVars.step_col_by_direction(current_col, target_dir)
+    var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
+    var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
     if check_target_movable(target_row, target_col):
         do_change_moving_target(target_row, target_col, target_dir)
         return true
@@ -52,8 +52,8 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
         and game_manager.get_enemy_instance(target_row, target_col) == null)
 
 #func is_next_step_empty() -> bool:
-    #var target_row = GlobalVars.step_row_by_direction(current_row, dir)
-    #var target_col = GlobalVars.step_col_by_direction(current_col, dir)
+    #var target_row = GridHelper.step_row_by_direction(current_row, dir)
+    #var target_col = GridHelper.step_col_by_direction(current_col, dir)
     ## 获取目标位置的中心坐标
     #moving_target_x = GridHelper.get_tile_top_left_x(target_col)
     #moving_target_y = GridHelper.get_tile_top_left_y(target_row)

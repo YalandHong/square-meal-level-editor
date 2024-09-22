@@ -73,7 +73,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     if sliding:
         slide()
-        print("sliding block pos: ", position)
+        # print("sliding block pos: ", position)
     z_index = GameManager.calculate_depth(position)
 
 func get_block_type() -> int:
@@ -101,7 +101,7 @@ func finish_slide():
 func do_move() -> void:
     if slide_dir == NONE:
         return
-    position = GlobalVars.step_position_by_speed(position, slide_dir, slide_speed)
+    position = GridHelper.step_position_by_speed(position, slide_dir, slide_speed)
     update_block_grid_pos()
 
 # 和Player的update_player_grid_pos基本一样
@@ -146,8 +146,8 @@ func slide() -> void:
 
 # TODO dedup
 func try_step_forward_moving_target(target_dir: String) -> bool:
-    var target_row = GlobalVars.step_row_by_direction(current_row, target_dir)
-    var target_col = GlobalVars.step_col_by_direction(current_col, target_dir)
+    var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
+    var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
     if check_target_movable(target_row, target_col):
         do_change_moving_target(target_row, target_col, target_dir)
         return true

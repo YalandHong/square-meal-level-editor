@@ -38,36 +38,3 @@ const DOWN = "down"
 const LEFT = "left"
 const RIGHT = "right"
 const NONE = ""
-
-static func step_row_by_direction(row:int, dir: String) -> int:
-    var new_row = row
-    match dir:
-        UP:
-            new_row = row - 1
-        DOWN:
-            new_row = row + 1
-    return new_row
-
-static func step_col_by_direction(col:int, dir: String) -> int:
-    var new_col = col
-    match dir:
-        LEFT:
-            new_col = col - 1
-        RIGHT:
-            new_col = col + 1
-    return new_col
-
-static func step_position_by_speed(pos: Vector2, dir: String, speed: float) -> Vector2:
-    match dir:
-        LEFT:
-            pos.x -= speed
-        RIGHT:
-            pos.x += speed
-        UP:
-            pos.y -= speed
-        DOWN:
-            pos.y += speed
-    return pos
-
-static func back_position_by_speed(pos: Vector2, dir: String, speed: float) -> Vector2:
-    return step_position_by_speed(pos, dir, -speed)

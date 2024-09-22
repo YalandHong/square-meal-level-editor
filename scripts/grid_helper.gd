@@ -37,7 +37,7 @@ static func y_to_row(y: float) -> int:
 static func x_to_col(x: float) -> int:
     return int(x / TILE_WIDTH)
 
-static func step_row_by_direction(row:int, dir: String) -> int:
+static func step_row_by_direction(row: int, dir: String) -> int:
     var new_row = row
     match dir:
         UP:
@@ -46,7 +46,7 @@ static func step_row_by_direction(row:int, dir: String) -> int:
             new_row = row + 1
     return new_row
 
-static func step_col_by_direction(col:int, dir: String) -> int:
+static func step_col_by_direction(col: int, dir: String) -> int:
     var new_col = col
     match dir:
         LEFT:
