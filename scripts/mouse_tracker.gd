@@ -13,8 +13,8 @@ func _process(_delta: float) -> void:
     var mouse_pos: Vector2 = get_global_mouse_position()
 
     # Calculate the row and col of the tile
-    var col = GameManager.get_col(mouse_pos.x)
-    var row = GameManager.get_row(mouse_pos.y)
+    var col = GridHelper.x_to_col(mouse_pos.x)
+    var row = GridHelper.y_to_row(mouse_pos.y)
 
     # Update the label text with mouse position and tile coordinates
     label.text = "Mouse: " + str(mouse_pos) + "\nTile: (" + str(row) + ", " + str(col) + ")"

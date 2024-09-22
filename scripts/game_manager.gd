@@ -37,10 +37,10 @@ var level_cleared: bool
 
 # 计算滚动边界
 func init_scroll_bounds() -> void:
-    scroll_x_min = GlobalVars.VIEW_WIDTH/2
-    scroll_x_max = max(scroll_x_min, map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH/2)
-    scroll_y_min = GlobalVars.VIEW_HEIGHT/2
-    scroll_y_max = max(scroll_y_min, map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT/2)
+    scroll_x_min = GlobalVars.VIEW_WIDTH / 2
+    scroll_x_max = max(scroll_x_min, map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
+    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
+    scroll_y_max = max(scroll_y_min, map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
 # 返回给定列的tile的左上角X坐标
 static func get_tile_top_left_x(col: int) -> float:
@@ -96,29 +96,9 @@ func _process(_delta: float) -> void:
     scroll_game()
     process_winning()
 
-# level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
 func get_loaded_level_map(file_path: String) -> Array:
-    #var array_2d := []
-    #for i in range(10):
-        #array_2d.append([])
-        #for j in range(10):
-            #array_2d[i].append(0)
-    #array_2d[5][5] = GlobalVars.ID_STONE_BLOCK
-    #array_2d[8][2] = GlobalVars.ID_STONE_BLOCK
-    #array_2d[6][6] = GlobalVars.ID_PLAYER
-    #array_2d[8][8] = GlobalVars.ID_FOOD_BLOCK[0]
-    #array_2d[2][8] = GlobalVars.ID_FOOD_BLOCK[0]
-    #array_2d[1][0] = GlobalVars.ID_FOOD_BLOCK[0]
-    var array_2d = read_level_map_txt_file(file_path)
+    var array_2d = LocalFileHelper.read_level_map_txt_file(file_path)
     return array_2d
-
-# 用于获取行
-static func get_row(y: float) -> int:
-    return int(y / TILE_HEIGHT)
-
-# 用于获取列
-static func get_col(x: float) -> int:
-    return int(x / TILE_WIDTH)
 
 static func calculate_depth(pos: Vector2) -> int:
     return int(pos.y / 2)
@@ -224,32 +204,6 @@ func remove_enemy(row: int, col: int) -> void:
     assert(get_enemy_instance(row, col) is Enemy)
     remove_grid_element(level_map_movers, row, col)
     enemy_count -= 1
-
-static func read_level_map_txt_file(file_path: String) -> Array:
-    var file = FileAccess.open(file_path, FileAccess.READ)
-
-    if not file:
-        print("Error opening file!")
-        return []
-
-    var result_array: Array = []
-
-    while not file.eof_reached():
-        var line = file.get_line().strip_edges()  # 读取一行并移除首尾空格
-        if line == "":
-            continue  # 跳过空行
-
-        var values = line.split("\t", false)
-        var numeric_values = []
-
-        # 将字符串转换为数字
-        for value in values:
-            numeric_values.append(value.to_float())
-
-        result_array.append(numeric_values)  # 将每行的数字数组添加到二维数组中
-
-    file.close()
-    return result_array
 
 func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String) -> void:
     # 创建新的 Block 实例 (假设通过 block_type 加载不同的预制)

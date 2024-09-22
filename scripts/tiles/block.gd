@@ -106,8 +106,8 @@ func do_move() -> void:
 
 # 和Player的update_player_grid_pos基本一样
 func update_block_grid_pos():
-    var new_row = GameManager.get_row(position.y)
-    var new_col = GameManager.get_col(position.x)
+    var new_row = GridHelper.y_to_row(position.y)
+    var new_col = GridHelper.x_to_col(position.x)
     game_manager.update_blocks(self, current_row, current_col, new_row, new_col)
 
     current_row = new_row
@@ -139,10 +139,10 @@ func slide() -> void:
 
         if not try_step_forward_moving_target(slide_dir):
             #tiles_moved = 0
-            if not check_rubber_block():  # 预留的接口
+            if not check_rubber_block(): # 预留的接口
                 #check_explosive_block()  # 预留的接口
                 #check_wooden_block()  # 预留的接口
-                finish_slide()  # 完成滑动
+                finish_slide() # 完成滑动
 
 # TODO dedup
 func try_step_forward_moving_target(target_dir: String) -> bool:

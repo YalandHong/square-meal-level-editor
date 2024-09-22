@@ -118,8 +118,8 @@ func do_move() -> void:
     update_mover_grid_pos()
 
 func update_mover_grid_pos():
-    var new_row = GameManager.get_row(position.y)
-    var new_col = GameManager.get_col(position.x)
+    var new_row = GridHelper.y_to_row(position.y)
+    var new_col = GridHelper.x_to_col(position.x)
     game_manager.update_movers(self, current_row, current_col, new_row, new_col)
 
     current_row = new_row

@@ -357,8 +357,8 @@ func do_move():
     update_player_grid_pos()
 
 func update_player_grid_pos() -> void:
-    var new_row = GameManager.get_row(position.y)
-    var new_col = GameManager.get_col(position.x)
+    var new_row = GridHelper.y_to_row(position.y)
+    var new_col = GridHelper.x_to_col(position.x)
 
     # 调用 GameManager 的 update_players 方法，更新玩家的位置
     game_manager.update_players(self, current_row, current_col, new_row, new_col)
