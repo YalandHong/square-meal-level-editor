@@ -41,7 +41,10 @@ func _init() -> void:
 func _ready():
     game_manager = get_parent()
     sfx_player = game_manager.get_parent().get_node("SfxPlayer")
+
     set_enemy_sprite()
+    anim_sprite.centered = false
+    # anim_sprite.animation_finished.connect(on_animation_finished)
 
     # 设置初始方向
     dir = NONE
@@ -58,8 +61,12 @@ func _process(_delta: float) -> void:
         handle_stunned()
         return
 
-    handle_movement()
+    handle_movement_or_jump()
     assert(check_aligned_with_moving_target())
+
+# func on_animation_finished():
+#     assert(jumping)
+#     finish_jump()
 
 func set_enemy_init_pos(row: int, col: int) -> void:
     position.x = GameManager.get_tile_top_left_x(col)
@@ -84,7 +91,7 @@ func wake_up():
     play_walk_animation()
     stunned = false
 
-func handle_movement() -> void:
+func handle_movement_or_jump() -> void:
     do_move()
 
     if not reached_target():
@@ -92,12 +99,12 @@ func handle_movement() -> void:
 
     #tiles_moved += 1
     position = Vector2(moving_target_x, moving_target_y)
+    update_mover_grid_pos()
 
     if jumping:
         finish_jump()
         return
 
-    update_mover_grid_pos()
     if not try_step_forward_moving_target(dir):
         try_change_direction()
         #tiles_moved = 0
@@ -133,9 +140,12 @@ func check_aligned_with_moving_target() -> bool:
             (dir == RIGHT and position.y == moving_target_y))
 
 func finish_jump() -> void:
-    # 处理完成跳跃的逻辑
-    # TODO
+    assert(jumping and not stunned and not eaten)
+
     jumping = false
+    stunned = true
+    stunned_count = 0
+    play_stunned_animation()
 
 # Flash原版叫get next target
 func try_step_forward_moving_target(target_dir: String) -> bool:
@@ -150,7 +160,11 @@ func play_walk_animation() -> void:
     anim_sprite.play("walk_" + dir)
 
 func play_jump_animation() -> void:
-    anim_sprite.play("jump_" + dir)
+    anim_sprite.play("hit_" + dir)
+
+func play_stunned_animation() -> void:
+    anim_sprite.play("stunned_" + dir)
+
 
 func check_hit_players() -> void:
     if jumping or stunned:
