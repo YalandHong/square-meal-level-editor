@@ -31,7 +31,7 @@ var moving_target_x: float
 var moving_target_y: float
 var current_row: int
 var current_col: int
-const MOVE_SPEED: float = 2  # 每个enemy不太一样吧？
+const MOVE_SPEED: float = 2 # 每个enemy不太一样吧？
 
 func _init() -> void:
     jumping = false
@@ -52,7 +52,7 @@ func _process(_delta: float) -> void:
     z_index = GameManager.calculate_depth(position)
 
     if eaten:
-        return  # 如果已经被吃掉，则不进行任何处理
+        return # 如果已经被吃掉，则不进行任何处理
 
     if stunned:
         handle_stunned()
@@ -149,6 +149,9 @@ func try_change_direction() -> bool:
 func play_walk_animation() -> void:
     anim_sprite.play("walk_" + dir)
 
+func play_jump_animation() -> void:
+    anim_sprite.play("jump_" + dir)
+
 func check_hit_players() -> void:
     if jumping or stunned:
         return
@@ -160,3 +163,181 @@ func check_hit_players() -> void:
 func set_enemy_sprite() -> void:
     assert(false, "calling set_enemy_sprite from abstract enemy")
     pass
+
+# var col: int = 0
+# var row: int = 0
+
+# 处理敌人被block击中的逻辑
+# func do_hit_by_block(block_dir: String) -> void:
+#     if jumping:
+#         return
+#     update_mover_grid_pos()
+#     force_align_position_to_grid()
+#     var target_dir = get_opposite_dir(block_dir)
+#     var target_col = game_manager.step_col_by_direction(current_col, target_dir)
+#     var target_row = game_manager.step_row_by_direction(current_row, target_dir)
+#     if GameManager.is_tile_empty(target_col, target_row):
+#         move_to_tile(target_col, target_row)
+#     else:
+#         bounce_back(block_dir)
+
+# 将敌人对齐网格
+func force_align_position_to_grid() -> void:
+    var center_x = GameManager.get_tile_top_left_x(current_col)
+    var center_y = GameManager.get_tile_top_left_y(current_row)
+    position = Vector2(center_x, center_y)
+
+# # 返回相反的方向
+# func get_opposite_dir(block_dir: String) -> String:
+#     match block_dir:
+#         UP:
+#             return DOWN
+#         DOWN:
+#             return UP
+#         LEFT:
+#             return RIGHT
+#         RIGHT:
+#             return LEFT
+#         _:
+#             return NONE
+
+# # 将敌人移动到指定的tile
+# func move_to_tile(target_col: int, target_row: int) -> void:
+#     col = target_col
+#     row = target_row
+#     var center_x = GameManager.get_center_x(col)
+#     var center_y = GameManager.get_center_y(row)
+#     position = Vector2(center_x, center_y)
+
+# # 如果目标格子不为空，执行反弹逻辑
+# func bounce_back(block_dir: String) -> void:
+#     var bounce_dir = get_opposite_dir(block_dir)
+#     # var target_col, target_row = get_target_tile(bounce_dir)
+#     move_to_tile(target_col, target_row)
+
+# 更新敌人的位置
+# TODO 这个函数是干嘛的？意义不明
+func update_position(new_dir: String) -> void:
+    pass
+    # if new_dir == LEFT or new_dir == RIGHT:
+    #     position.y = GameManager.get_tile_center_y(current_row)
+    # else:
+    #     position.x = GameManager.get_tile_center_x(current_col)
+
+
+func do_hit_by_block(block_dir: String, block: Block) -> void:
+    if jumping:
+        return
+    
+    update_mover_grid_pos()
+
+    # enemy被击飞的时候，是从一个对齐网格的位置开始起飞，到另一个对齐网格的位置落地
+    force_align_position_to_grid()
+
+    var hit_successful: bool = false
+
+    # 判断方向并尝试移动
+    match block_dir:
+        LEFT:
+            hit_successful = handle_hit_left(block)
+        RIGHT:
+            hit_successful = handle_hit_right(block)
+        UP:
+            hit_successful = handle_hit_up(block)
+        DOWN:
+            hit_successful = handle_hit_down(block)
+
+    if not hit_successful:
+        fallback_movement(block)
+
+    perform_jump()
+
+# 处理向左被击中的逻辑
+func handle_hit_left(block: Block) -> bool:
+    if try_move(RIGHT, 0, 1, block):
+        return true
+    elif try_move(DOWN, 1, 0, block):
+        return true
+    elif try_move(UP, -1, 0, block):
+        return true
+    elif try_move(RIGHT, 0, 2, block):
+        return true
+    return false
+
+# 处理向右被击中的逻辑
+func handle_hit_right(block: Block) -> bool:
+    if try_move(LEFT, 0, -1, block):
+        return true
+    elif try_move(DOWN, 1, 0, block):
+        return true
+    elif try_move(UP, -1, 0, block):
+        return true
+    elif try_move(LEFT, 0, -2, block):
+        return true
+    return false
+
+# 处理向上被击中的逻辑
+func handle_hit_up(block: Block) -> bool:
+    if try_move(DOWN, 1, 0, block):
+        return true
+    elif try_move(RIGHT, 0, 1, block):
+        return true
+    elif try_move(LEFT, 0, -1, block):
+        return true
+    elif try_move(DOWN, 2, 0, block):
+        return true
+    return false
+
+# 处理向下被击中的逻辑
+func handle_hit_down(block: Block) -> bool:
+    if try_move(UP, -1, 0, block):
+        return true
+    elif try_move(RIGHT, 0, 1, block):
+        return true
+    elif try_move(LEFT, 0, -1, block):
+        return true
+    elif try_move(UP, -2, 0, block):
+        return true
+    return false
+
+# 尝试移动到指定的相对位置，并更新相关参数
+func try_move(new_dir: String, row_offset: int, col_offset: int, block: Block) -> bool:
+    # var game_manager = get_node("/root/GameManager")
+
+    if (game_manager.get_empty_enemy(current_row + row_offset, current_col + col_offset, block) and 
+        game_manager.get_player(current_row + row_offset, current_col + col_offset) == null):
+        
+        var target_row = current_row + row_offset
+        var target_col = current_col + col_offset
+        do_change_moving_target(target_row, target_col, new_dir)
+        update_position(new_dir)
+        return true
+    
+    return false
+
+# 移动失败时的回退逻辑
+func fallback_movement(block: Block) -> void:
+    if try_move(LEFT, 0, -1, block):
+        return
+    elif try_move(RIGHT, 0, 1, block):
+        return
+    elif try_move(UP, -1, 0, block):
+        return
+    elif try_move(DOWN, 1, 0, block):
+        return
+
+# 执行跳跃动作
+func perform_jump() -> void:
+    stunned = false
+    jumping = true
+    sfx_player.play_sfx("stun")
+    play_jump_animation()
+    # TODO shadow暂不支持
+    # get_node("/root/GameManager/shadow_holder/enemy_shadow_%s" % str(enemy_id)).goto_and_play("jump")
+
+# 设置目标位置和方向
+# TODO 移动到grid element中
+func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
+    moving_target_x = GameManager.get_tile_top_left_x(target_col)
+    moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    dir = target_dir

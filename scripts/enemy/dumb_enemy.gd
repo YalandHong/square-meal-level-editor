@@ -1,8 +1,8 @@
 extends Enemy
 class_name DumbEnemy
 
-const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-53/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-80)
-const SPRITE_OFFSET_HIT: Vector2 = Vector2(-46/2+GameManager.TILE_WIDTH/2, -GameManager.TILE_HEIGHT/2-78)
+const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-53 / 2 + GameManager.TILE_WIDTH / 2, -GameManager.TILE_HEIGHT / 2 - 80)
+const SPRITE_OFFSET_HIT: Vector2 = Vector2(-46 / 2 + GameManager.TILE_WIDTH / 2, -GameManager.TILE_HEIGHT / 2 - 78)
 
 const ANIMATION_FPS_SCALE_WALK: float = 0.5
 
@@ -26,7 +26,7 @@ func get_possible_directions() -> Array:
 # 改变敌人方向的主逻辑
 func try_change_direction() -> bool:
     var possible_directions = get_possible_directions()
-    possible_directions.shuffle()  # 打乱方向顺序
+    possible_directions.shuffle() # 打乱方向顺序
 
     for possible_dir in possible_directions:
         if try_step_forward_moving_target(possible_dir):
@@ -49,12 +49,6 @@ func try_step_forward_moving_target(target_dir: String) -> bool:
 func check_target_movable(target_row: int, target_col: int) -> bool:
     return (game_manager.get_tile_instance(target_row, target_col) == null
         and game_manager.get_enemy_instance(target_row, target_col) == null)
-
-# 设置目标位置和方向
-func do_change_moving_target(new_row: int, new_col: int, new_dir: String):
-    moving_target_x = GameManager.get_tile_top_left_x(new_col)
-    moving_target_y = GameManager.get_tile_top_left_y(new_row)
-    dir = new_dir
 
 #func is_next_step_empty() -> bool:
     #var target_row = GlobalVars.step_row_by_direction(current_row, dir)
