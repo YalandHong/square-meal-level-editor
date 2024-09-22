@@ -89,7 +89,7 @@ func put_grid_element(row: int, col: int, type: int):
         return
     level_map[row][col] = type
 
-func delete_grid_element(row: int, col: int, type: int):
+func delete_grid_element(row: int, col: int):
     if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
         return
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
