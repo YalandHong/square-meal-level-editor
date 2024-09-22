@@ -4,6 +4,9 @@ class_name GlobalVars
 const VIEW_WIDTH: int = 550
 const VIEW_HEIGHT: int = 400
 
+const TILE_WIDTH: int = 50
+const TILE_HEIGHT: int = 30
+
 # 为了保持和源Flash的兼容，我这里ID都是用的解包出来的值
 # 正常来说不应该这么做，而是应该定义为枚举然后让Godot自动赋值
 # 否则，无法检查两个ID是否冲突

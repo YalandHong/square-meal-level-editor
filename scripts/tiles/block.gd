@@ -15,8 +15,8 @@ const RIGHT = GlobalVars.RIGHT
 const NONE = GlobalVars.NONE
 
 # 定义 Block 基类的通用属性和方法
-var current_row: int = 0
-var current_col: int = 0
+var current_row: int
+var current_col: int
 var walkable: bool = false
 var eatable: bool = false
 var dangerous: bool = false
@@ -79,33 +79,19 @@ func _process(_delta: float) -> void:
 func get_block_type() -> int:
     return GlobalVars.ID_INVALID
 
-func start_slide(direction: String) -> void:
+func start_slide(start_dir: String) -> void:
     # 初始化滑动速度和最大滑动距离
     slide_speed = START_SLIDE_SPEED
     #max_tiles_moved = START_MAX_TILES_MOVED
-    slide_dir = direction
+    slide_dir = start_dir
 
     # 检查是否可以滑动到目标位置
-    if is_next_step_empty():
+    if try_step_forward_moving_target(start_dir):
         sliding = true
     else:
-        # TODO 这个分支什么时候会发生？
+        # TODO 这个分支什么时候会发生？目前测试结果是，会立刻停止
         sliding = false
         slide_dir = NONE
-
-# 这个代码和player是类似的，预判下一个位置是否为空
-# 同时会把变量写入moving target x/y
-func is_next_step_empty() -> bool:
-    # 如果滑动的距离没有超过最大移动距离
-    #if tiles_moved >= max_tiles_moved:
-        #return false
-    var target_row: int = GlobalVars.step_row_by_direction(current_row, slide_dir)
-    var target_col: int = GlobalVars.step_col_by_direction(current_col, slide_dir)
-    moving_target_x = GameManager.get_tile_top_left_x(target_col)
-    moving_target_y = GameManager.get_tile_top_left_y(target_row)
-
-    # 检查目标位置是否为空
-    return game_manager.is_empty(target_row, target_col)
 
 func finish_slide():
     sliding = false
@@ -151,13 +137,31 @@ func slide() -> void:
         # TODO 预留接口
         #adjust_slide_speed()
 
-        # 尝试获取下一个目标位置
-        if not is_next_step_empty():
+        if not try_step_forward_moving_target(slide_dir):
             #tiles_moved = 0
             if not check_rubber_block():  # 预留的接口
                 #check_explosive_block()  # 预留的接口
                 #check_wooden_block()  # 预留的接口
                 finish_slide()  # 完成滑动
+
+# TODO dedup
+func try_step_forward_moving_target(target_dir: String) -> bool:
+    var target_row = GlobalVars.step_row_by_direction(current_row, target_dir)
+    var target_col = GlobalVars.step_col_by_direction(current_col, target_dir)
+    if check_target_movable(target_row, target_col):
+        do_change_moving_target(target_row, target_col, target_dir)
+        return true
+    return false
+
+# TODO dedup
+func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
+    moving_target_x = GameManager.get_tile_top_left_x(target_col)
+    moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    slide_dir = target_dir
+
+# 有东西挡住了的，不能作为目标移动位置
+func check_target_movable(target_row: int, target_col: int) -> bool:
+    return game_manager.get_tile_instance(target_row, target_col) == null
 
 # TODO 暂不支持rubber block
 func check_rubber_block() -> bool:

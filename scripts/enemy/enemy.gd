@@ -356,18 +356,18 @@ func do_change_moving_target(target_row: int, target_col: int, target_dir: Strin
     moving_target_y = GameManager.get_tile_top_left_y(target_row)
     dir = target_dir
 
+# 一般来说，敌人要选择一个空的位置作为击飞后落地的位置
+# 这个“空的位置”不仅要求没东西，还不能有其它正在移动的敌人朝这里移动
 func check_landable(row: int, col: int, hit_block: Block) -> bool:
     if game_manager.is_empty(row, col):
-        for offset_row in [-1, 1]:
-            var adjacent_enemy: Enemy = game_manager.get_enemy_instance(row + offset_row, col)
-            if adjacent_enemy != null and adjacent_enemy.target_row == row and adjacent_enemy.target_col == col:
+        for possible_dir in [UP, DOWN, LEFT, RIGHT]:
+            var adj_row = GridHelper.step_row_by_direction(row, possible_dir)
+            var adj_col = GridHelper.step_col_by_direction(col, possible_dir)
+            var adjacent_enemy: Enemy = game_manager.get_enemy_instance(adj_row, adj_col)
+            if (adjacent_enemy != null
+                and GridHelper.y_to_row(adjacent_enemy.moving_target_y) == row
+                and GridHelper.x_to_col(adjacent_enemy.moving_target_x) == col):
                 return false
-
-        for offset_col in [-1, 1]:
-            var adjacent_enemy: Enemy = game_manager.get_enemy_instance(row, col + offset_col)
-            if adjacent_enemy != null and adjacent_enemy.target_row == row and adjacent_enemy.target_col == col:
-                return false
-
         return true
     elif hit_block != null and game_manager.get_tile_instance(row, col) == hit_block:
         return true

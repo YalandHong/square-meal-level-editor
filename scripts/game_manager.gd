@@ -1,9 +1,8 @@
 class_name GameManager
 extends Node
 
-# 假设tile的宽度和高度
-const TILE_WIDTH = 50
-const TILE_HEIGHT = 30
+const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
+const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
 # direction常量
 const UP = GlobalVars.UP
