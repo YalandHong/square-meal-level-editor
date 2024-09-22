@@ -22,7 +22,7 @@ func draw_enemy_rect(level_map_movers: Array):
                     GridHelper.get_tile_top_left_y(row)
                 ),
                 Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT),
-                Color(1, 0, 0)
+                Color.RED
             )
 
 func draw_sliding_block_rect(level_map_tiles: Array):
@@ -39,7 +39,7 @@ func draw_sliding_block_rect(level_map_tiles: Array):
                     GridHelper.get_tile_top_left_y(row)
                 ),
                 Vector2(GameManager.TILE_WIDTH, GameManager.TILE_HEIGHT),
-                Color("DEEP_SKY_BLUE")
+                Color.DEEP_SKY_BLUE
             )
 
 
