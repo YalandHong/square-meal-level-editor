@@ -163,3 +163,51 @@ func slide() -> void:
 # TODO 暂不支持rubber block
 func check_rubber_block() -> bool:
     return false
+
+# 方块滑动时的碰撞检测
+func check_hit() -> void:
+    # var game_manager = get_node("/root/GameManager")
+    
+    # 检查当前格子的敌人
+    var enemy: Enemy = game_manager.get_enemy(current_row, current_col)
+    if enemy != null:
+        enemy.do_hit_by_block(slide_dir, self)
+        do_hit_object()
+        return
+    
+    # 检查当前格子的玩家
+    var player: Player = game_manager.get_player(current_row, current_col)
+    if player != null:
+        player.do_hit_by_block()
+        do_hit_object()
+        return
+
+    # 根据滑动方向检查相邻格子内的敌人，并判断方向是否相反
+    # TODO 根据get_opposite_direction和step_by_direction重构这段代码
+    if slide_dir == LEFT:
+        enemy = game_manager.get_enemy(current_row, current_col - 1)
+        if enemy != null and enemy.dir == RIGHT:
+            enemy.do_hit_by_block(slide_dir, self)
+            do_hit_object()
+            return
+    elif slide_dir == RIGHT:
+        enemy = game_manager.get_enemy(current_row, current_col + 1)
+        if enemy != null and enemy.dir == LEFT:
+            enemy.do_hit_by_block(slide_dir, self)
+            do_hit_object()
+            return
+    elif slide_dir == UP:
+        enemy = game_manager.get_enemy(current_row - 1, current_col)
+        if enemy != null and enemy.dir == DOWN:
+            enemy.do_hit_by_block(slide_dir, self)
+            do_hit_object()
+            return
+    elif slide_dir == DOWN:
+        enemy = game_manager.get_enemy(current_row + 1, current_col)
+        if enemy != null and enemy.dir == UP:
+            enemy.do_hit_by_block(slide_dir, self)
+            do_hit_object()
+            return
+
+func do_hit_object():
+    pass

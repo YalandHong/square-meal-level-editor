@@ -437,6 +437,9 @@ func eat_non_food_block():
     swallowed_block_type = eating_block.get_block_type()
     eating_block = null
 
+func do_hit_by_block():
+    die()
+
 func die():
     if state != PlayerState.IDLE:
         return
