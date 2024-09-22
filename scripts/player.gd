@@ -26,7 +26,10 @@ var dir: String
 var current_row: int = 0
 var current_col: int = 0
 
-enum PlayerState {MOVING, TURNING, IDLE, SLIPPING, EATING, SPITTING, DEAD}
+enum PlayerState {
+    MOVING, TURNING, IDLE, SLIPPING,
+    EATING, SPITTING, DEAD, WINNING
+}
 var state: PlayerState
 
 # 转向相关
@@ -40,7 +43,7 @@ const SIDE_WALK_SPEED: float = 5
 const WALK_SPEED: float = 5
 const ANIMATION_FPS_SCALE_WALK: float = 0.3
 
-var player_id: int = 1
+#var player_id: int = 1
 
 # 吃方块相关
 var swallowed_block_type: int = GlobalVars.ID_EMPTY_TILE
@@ -52,6 +55,9 @@ const EATING_BLOCK_SHIFT_SPEED: float = 8
 const ANIMATION_FPS_SCALE_EAT: float = 1.0
 const EATING_BLOCK_START_SHIFTING_FRAME: int = 7
 const SPITTING_BLOCK_DO_SPIT_FRAME: int = 2
+
+# 分数和通关相关
+const ANIMATION_FPS_SCALE_WINNING: float = 0.8
 
 func _ready():
     game_manager = get_parent()
@@ -145,6 +151,7 @@ func process_moving_or_slipping():
         play_walk_animation()
 
 # 判断是否为相反方向
+# TODO dedup GridElement
 func is_opposite_direction(new_dir: String) -> bool:
     return ((dir == LEFT and new_dir == RIGHT) or
            (dir == RIGHT and new_dir == LEFT) or
@@ -152,6 +159,12 @@ func is_opposite_direction(new_dir: String) -> bool:
            (dir == DOWN and new_dir == UP))
 
 func process_idle():
+    if game_manager.level_cleared:
+        state = PlayerState.WINNING
+        sfx_player.play_sfx("win")
+        play_win_animation()
+        return
+
     if Input.is_action_pressed("ui_select"):
         start_eat_or_spit()
         return
@@ -458,3 +471,7 @@ func play_dead_animation():
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
     anim_sprite.play("die")
+
+func play_win_animation():
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WINNING
+    anim_sprite.play("cheer")

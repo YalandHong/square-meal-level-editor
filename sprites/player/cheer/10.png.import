@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv567hf077771"
-path="res://.godot/imported/842.png-ca3fb355b70cf5554dc0e5533d65ab40.ctex"
+uid="uid://bm8x6qv5r4ys3"
+path="res://.godot/imported/10.png-991b8f885de1c2cb6726bf201f3fdfd4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/cheer/842.png"
-dest_files=["res://.godot/imported/842.png-ca3fb355b70cf5554dc0e5533d65ab40.ctex"]
+source_file="res://sprites/player/cheer/10.png"
+dest_files=["res://.godot/imported/10.png-991b8f885de1c2cb6726bf201f3fdfd4.ctex"]
 
 [params]
 

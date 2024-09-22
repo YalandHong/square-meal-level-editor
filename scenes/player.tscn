@@ -1,31 +1,44 @@
-[gd_scene load_steps=114 format=3 uid="uid://byl8usliof76p"]
+[gd_scene load_steps=127 format=3 uid="uid://byl8usliof76p"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_gjiml"]
+[ext_resource type="Texture2D" uid="uid://bnpsen2naw2l3" path="res://sprites/player/cheer/1.png" id="2_67vos"]
 [ext_resource type="Texture2D" uid="uid://bl5kqg8sa5a0m" path="res://sprites/player/die/1018.png" id="2_k8fml"]
+[ext_resource type="Texture2D" uid="uid://c740puvy8nvd4" path="res://sprites/player/cheer/2.png" id="3_78g5q"]
 [ext_resource type="Texture2D" uid="uid://bqu7pntrcyfrt" path="res://sprites/player/die/1020.png" id="3_ixgu1"]
 [ext_resource type="Texture2D" uid="uid://bs6yfa5erg4kw" path="res://sprites/player/stop/864.png" id="4_1nm1d"]
+[ext_resource type="Texture2D" uid="uid://hkvcnt0cha87" path="res://sprites/player/cheer/3.png" id="4_3xroq"]
 [ext_resource type="Texture2D" uid="uid://beee4vaeyjb6r" path="res://sprites/player/eat/down/1.png" id="4_xpg3u"]
+[ext_resource type="Texture2D" uid="uid://blldi7kyoc3di" path="res://sprites/player/cheer/4.png" id="5_d74ky"]
 [ext_resource type="Texture2D" uid="uid://c2u8neau8ouwf" path="res://sprites/player/eat/down/2.png" id="5_ee5er"]
 [ext_resource type="Texture2D" uid="uid://ckdifyk0mibgq" path="res://sprites/player/stop_fat/959.png" id="5_qsxkq"]
 [ext_resource type="Texture2D" uid="uid://c1kmhipvyveo0" path="res://sprites/player/stop/866.png" id="6_kiuvx"]
 [ext_resource type="Texture2D" uid="uid://c04llch3x0q4a" path="res://sprites/player/eat/down/3.png" id="6_rqnql"]
+[ext_resource type="Texture2D" uid="uid://dmsn716jyivpt" path="res://sprites/player/cheer/5.png" id="6_vkh8i"]
+[ext_resource type="Texture2D" uid="uid://c4ovwcx83gocv" path="res://sprites/player/cheer/6.png" id="7_me4pr"]
 [ext_resource type="Texture2D" uid="uid://11wjwure6e6r" path="res://sprites/player/stop/858.png" id="7_nw1s8"]
 [ext_resource type="Texture2D" uid="uid://b1a8jmthw0sqd" path="res://sprites/player/eat/down/4.png" id="7_oq2mi"]
 [ext_resource type="Texture2D" uid="uid://ygyqlbpk3cly" path="res://sprites/player/stop_fat/L961.png" id="7_roiqi"]
+[ext_resource type="Texture2D" uid="uid://bgxucn3gibe6w" path="res://sprites/player/cheer/7.png" id="8_hnh4w"]
 [ext_resource type="Texture2D" uid="uid://dgco5kts2lsg1" path="res://sprites/player/eat/down/5.png" id="8_o1km1"]
 [ext_resource type="Texture2D" uid="uid://b4rqe7v2hujam" path="res://sprites/player/walk/down/884.png" id="8_pyvn4"]
+[ext_resource type="Texture2D" uid="uid://uccg5ucmx4i8" path="res://sprites/player/cheer/8.png" id="9_eigk4"]
 [ext_resource type="Texture2D" uid="uid://cci8gn5la8lc4" path="res://sprites/player/eat/down/6.png" id="9_lucha"]
 [ext_resource type="Texture2D" uid="uid://cb2rtd63r7mka" path="res://sprites/player/walk/down/886.png" id="9_m1s81"]
 [ext_resource type="Texture2D" uid="uid://cglugbqe48w8i" path="res://sprites/player/stop_fat/961.png" id="9_q4i5s"]
 [ext_resource type="Texture2D" uid="uid://e4820is3egb" path="res://sprites/player/walk/down/888.png" id="10_0bwjc"]
 [ext_resource type="Texture2D" uid="uid://bsi0oujimir7y" path="res://sprites/player/eat/down/7.png" id="10_3s6eb"]
+[ext_resource type="Texture2D" uid="uid://dmdvuq4pis06i" path="res://sprites/player/cheer/9.png" id="10_ix2wl"]
 [ext_resource type="Texture2D" uid="uid://cm18gmh4o4uv8" path="res://sprites/player/stop_fat/957.png" id="11_epyux"]
 [ext_resource type="Texture2D" uid="uid://ce2erlhd8h4qe" path="res://sprites/player/walk/down/891.png" id="11_ndclt"]
 [ext_resource type="Texture2D" uid="uid://cv6hqo4h6vjgm" path="res://sprites/player/eat/down/8.png" id="11_p6amg"]
+[ext_resource type="Texture2D" uid="uid://bm8x6qv5r4ys3" path="res://sprites/player/cheer/10.png" id="11_y7so3"]
 [ext_resource type="Texture2D" uid="uid://c88lgbraejvqn" path="res://sprites/player/eat/down/9.png" id="12_44gko"]
+[ext_resource type="Texture2D" uid="uid://c0sdkqa8swoa4" path="res://sprites/player/cheer/11.png" id="12_fbxbr"]
 [ext_resource type="Texture2D" uid="uid://duvvxpd1gfrn" path="res://sprites/player/walk/down/893.png" id="12_tv6tf"]
 [ext_resource type="Texture2D" uid="uid://ctjacm2ilgoj0" path="res://sprites/player/eat/down/10.png" id="13_l2jah"]
 [ext_resource type="Texture2D" uid="uid://gvx17ncl47jx" path="res://sprites/player/walk/down/895.png" id="13_mdmjb"]
+[ext_resource type="Texture2D" uid="uid://c76x0ol4xekaa" path="res://sprites/player/cheer/12.png" id="13_scb3i"]
+[ext_resource type="Texture2D" uid="uid://djm5qgcewejd3" path="res://sprites/player/cheer/13.png" id="14_3db2e"]
 [ext_resource type="Texture2D" uid="uid://j72n63vp4dbf" path="res://sprites/player/eat/down/11.png" id="14_l450r"]
 [ext_resource type="Texture2D" uid="uid://cclh7nfnhceb3" path="res://sprites/player/walk/left/L866.png" id="14_se0cv"]
 [ext_resource type="Texture2D" uid="uid://befkae7lgi1yp" path="res://sprites/player/walk/left/L898.png" id="15_5hfvg"]
@@ -115,6 +128,50 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mcnxm"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_67vos")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_78g5q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3xroq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d74ky")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vkh8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_me4pr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hnh4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_eigk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ix2wl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_y7so3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fbxbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_scb3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_3db2e")
+}],
+"loop": true,
+"name": &"cheer",
+"speed": 30.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_k8fml")
@@ -559,5 +616,7 @@ script = ExtResource("1_gjiml")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"die"
+animation = &"cheer"
+frame = 5
+frame_progress = 0.0887028
 centered = false

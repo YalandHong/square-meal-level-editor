@@ -9,6 +9,7 @@ var sfx_files: Dictionary = {
     "die": "res://sounds/sfx/die.wav",
     "stun": "res://sounds/sfx/stun.wav",
     "block_stops": "res://sounds/sfx/block_stops.wav",
+    "win": "res://sounds/sfx/win.wav",
 }
 
 # 存储每个音效对应的 AudioStreamPlayer

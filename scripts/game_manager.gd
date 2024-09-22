@@ -28,6 +28,13 @@ var scroll_y_min: int
 var scroll_y_max: int
 var camera: Camera2D
 
+# 通关相关
+var enemy_count: int
+var winner_timer: int
+const MAX_WINNER_TIMER_BEFORE_CHEERING: int = 30
+const MAX_WINNER_TIMER_BEFORE_WINNING: int = 90
+var level_cleared: bool
+
 # 计算滚动边界
 func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.VIEW_WIDTH/2
@@ -70,6 +77,8 @@ func _init():
 
     init_level_maps(level_map)
     init_scroll_bounds()
+    level_cleared = false
+    winner_timer = 0
 
 func _ready() -> void:
     var mouse_displayer_scene: PackedScene = load("res://scenes/mouse_tracker.tscn")
@@ -85,6 +94,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
     scroll_game()
+    process_winning()
 
 # level map是二维数组，但现在Godot对于Array[Array]的类型提示支持有问题
 func get_loaded_level_map(file_path: String) -> Array:
@@ -136,6 +146,7 @@ func init_level_maps(level_map: Array):
     level_map_movers = []
     level_map_players = []
     level_map_tiles = []
+    enemy_count = 0
     for row in range(map_height):
         level_map_movers.append([])
         level_map_players.append([])
@@ -154,6 +165,7 @@ func init_level_maps(level_map: Array):
             elif EnemyFactory.is_valid_enemy_type(tile_type):
                 mover = EnemyFactory.create_enemy(row, col, tile_type)
                 add_child(mover)
+                enemy_count += 1
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_and_add_player(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
@@ -211,6 +223,7 @@ func remove_player(row: int, col: int) -> void:
 func remove_enemy(row: int, col: int) -> void:
     assert(get_enemy_instance(row, col) is Enemy)
     remove_grid_element(level_map_movers, row, col)
+    enemy_count -= 1
 
 static func read_level_map_txt_file(file_path: String) -> Array:
     var file = FileAccess.open(file_path, FileAccess.READ)
@@ -288,3 +301,9 @@ func scroll_game() -> void:
     scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
     scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
     camera.position = scroll_center
+
+func process_winning():
+    if enemy_count == 0 and winner_timer < MAX_WINNER_TIMER_BEFORE_WINNING:
+        winner_timer += 1
+    if winner_timer >= MAX_WINNER_TIMER_BEFORE_CHEERING:
+        level_cleared = true

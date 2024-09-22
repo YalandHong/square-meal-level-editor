@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c56gbsg5ojcai"
-path="res://.godot/imported/logo_arcade.wav-c4c9dae64e414a3106303d92d3abc54a.sample"
+path="res://.godot/imported/win.wav-33a813d685793b595c29053392ba1b85.sample"
 
 [deps]
 
-source_file="res://sounds/sfx/logo_arcade.wav"
-dest_files=["res://.godot/imported/logo_arcade.wav-c4c9dae64e414a3106303d92d3abc54a.sample"]
+source_file="res://sounds/sfx/win.wav"
+dest_files=["res://.godot/imported/win.wav-33a813d685793b595c29053392ba1b85.sample"]
 
 [params]
 
