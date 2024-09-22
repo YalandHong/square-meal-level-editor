@@ -25,9 +25,9 @@ func _ready():
     #request_map_size()  # 请求地图大小
     map_height = 20
     map_width = 30
+    init_scroll_bounds()
+    camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     initialize_level_map()
-
-    camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_WIDTH / 2)
 
 ## 请求玩家输入地图大小
 #func request_map_size():
@@ -73,11 +73,11 @@ func _process(_delta):
 func handle_camera_movement():
     if Input.is_action_just_pressed("ui_up"):
         camera.position.y -= GlobalVars.TILE_HEIGHT
-    if Input.is_action_just_pressed("ui_down"):
+    elif Input.is_action_just_pressed("ui_down"):
         camera.position.y += GlobalVars.TILE_HEIGHT
-    if Input.is_action_just_pressed("ui_left"):
+    elif Input.is_action_just_pressed("ui_left"):
         camera.position.x -= GlobalVars.TILE_WIDTH
-    if Input.is_action_just_pressed("ui_right"):
+    elif Input.is_action_just_pressed("ui_right"):
         camera.position.x += GlobalVars.TILE_WIDTH
 
     # 确保相机不超出地图边界

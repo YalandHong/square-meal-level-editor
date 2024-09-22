@@ -1,4 +1,5 @@
 extends Node2D
+class_name GridDrawer
 
 var tile_width: int = GameManager.TILE_WIDTH
 var tile_height: int = GameManager.TILE_HEIGHT
