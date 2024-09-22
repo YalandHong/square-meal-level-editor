@@ -178,6 +178,12 @@ func is_eatable_tile(row: int, col: int) -> bool:
         return false
     return block.is_eatable() and not block.is_being_eaten()
 
+func is_eatable_enemy(row: int, col: int) -> bool:
+    var enemy: Enemy = level_map_movers[row][col]
+    if enemy == null:
+        return false
+    return enemy.stunned and not enemy.being_eaten
+
 func get_tile_instance(row: int, col: int) -> Block:
     return level_map_tiles[row][col]
 
@@ -201,6 +207,10 @@ func remove_block(row: int, col: int) -> void:
 func remove_player(row: int, col: int) -> void:
     assert(get_player_instance(row, col) is Player)
     remove_grid_element(level_map_players, row, col)
+
+func remove_enemy(row: int, col: int) -> void:
+    assert(get_enemy_instance(row, col) is Enemy)
+    remove_grid_element(level_map_movers, row, col)
 
 static func read_level_map_txt_file(file_path: String) -> Array:
     var file = FileAccess.open(file_path, FileAccess.READ)

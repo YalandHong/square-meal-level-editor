@@ -15,7 +15,7 @@ const RIGHT = GlobalVars.RIGHT
 const NONE = GlobalVars.NONE
 
 # 定义相关变量
-var eaten: bool
+var being_eaten: bool
 
 var stunned: bool
 var stunned_count: int
@@ -36,7 +36,7 @@ const MOVE_SPEED: float = 2 # 每个enemy不太一样吧？
 func _init() -> void:
     jumping = false
     stunned = false
-    eaten = false
+    being_eaten = false
 
 func _ready():
     game_manager = get_parent()
@@ -54,7 +54,7 @@ func _ready():
 func _process(_delta: float) -> void:
     z_index = GameManager.calculate_depth(position)
 
-    if eaten:
+    if being_eaten:
         return # 如果已经被吃掉，则不进行任何处理
 
     if stunned:
@@ -140,7 +140,7 @@ func check_aligned_with_moving_target() -> bool:
             (dir == RIGHT and position.y == moving_target_y))
 
 func finish_jump() -> void:
-    assert(jumping and not stunned and not eaten)
+    assert(jumping and not stunned and not being_eaten)
 
     jumping = false
     stunned = true

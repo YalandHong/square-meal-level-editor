@@ -44,7 +44,8 @@ var player_id: int = 1
 
 # 吃方块相关
 var swallowed_block_type: int = GlobalVars.ID_EMPTY_TILE
-var eating_block: Block
+# TODO eating block有可能是enemy，不一定是block，应该改为grid element
+var eating_block: Node2D
 var eating_block_row: int = -1
 var eating_block_col: int = -1
 const EATING_BLOCK_SHIFT_SPEED: float = 8
@@ -362,25 +363,17 @@ func start_eat_block() -> void:
     eating_block_row = GlobalVars.step_row_by_direction(current_row, dir)
     eating_block_col = GlobalVars.step_col_by_direction(current_col, dir)
 
-    # 检查目标位置的方块是否可食用
+    # 吃方块
     if game_manager.is_eatable_tile(eating_block_row, eating_block_col):
         eating_block = game_manager.get_tile_instance(eating_block_row, eating_block_col)
         eating_block.being_eaten = true
         sfx_player.play_sfx("eat")
-
-    # 检查目标位置是否是可食用的敌人
-    # TODO 暂不支持enemy
-    #elif GameManager.get_eatable_enemy(eating_block_row, eating_block_col):
-        #eating_block = 100  # 用100表示敌人
-        #target_block_name = GameManager.get_mover(eating_block_row, eating_block_col)
-#
-        ## 调用敌人的被吃逻辑
-        #GameManager.get_enemy(target_block_name).be_eaten(self.name)
-#
-        ## 播放吞咽音效
-        #GameManager.sfx.play_sound("gulp")
-
-    # 如果目标不可食用
+    # 吃敌人
+    elif game_manager.is_eatable_enemy(eating_block_row, eating_block_col):
+        eating_block = game_manager.get_enemy_instance(eating_block_row, eating_block_col)
+        eating_block.being_eaten = true
+        sfx_player.play_sfx("eat")
+    # 没吃到任何东西
     else:
         eating_block = null
 
@@ -406,7 +399,7 @@ func process_eating():
         return
     if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
         return
-    eating_block.position = GlobalVars.back_position_by_speed(eating_block.position, dir, EATING_BLOCK_SHIFT_SPEED)
+    eating_block.position = GridHelper.back_position_by_speed(eating_block.position, dir, EATING_BLOCK_SHIFT_SPEED)
 
 func finish_eat_block():
     state = PlayerState.IDLE
@@ -418,18 +411,30 @@ func do_swallow_block():
     if eating_block is FoodBlock:
         eat_food()
         return
+    if eating_block is Enemy:
+        eat_enemy()
+        return
     if eating_block is StoneBlock:
         eat_non_food_block()
+        return
+    assert(false, "unknown block type" + eating_block.get_script().get_global_name())
 
 func eat_food():
     # TODO 增加分数
+    # TODO magic number
     #GameManager.increment_score(50)
     #display_points(50)
 
-    # 从地图中移除当前目标块 (食物)
     game_manager.remove_block(eating_block_row, eating_block_col)
+    eating_block = null
 
-    # 重置目标块信息
+func eat_enemy():
+    # TODO 增加分数
+    # TODO magic number
+    #GameManager.increment_score(100)
+    #display_points(100)
+
+    game_manager.remove_enemy(eating_block_row, eating_block_col)
     eating_block = null
 
 func eat_non_food_block():
