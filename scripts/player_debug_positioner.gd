@@ -13,5 +13,5 @@ func _process(_delta: float) -> void:
         visible = false
     else:
         visible = true
-        position.x = GameManager.get_tile_top_left_x(player.current_col)
-        position.y = GameManager.get_tile_top_left_y(player.current_row)
+        position.x = GridHelper.get_tile_top_left_x(player.current_col)
+        position.y = GridHelper.get_tile_top_left_y(player.current_row)

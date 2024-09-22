@@ -21,8 +21,8 @@ func set_block_grid_pos(row: int, col: int) -> void:
     current_row = row
     current_col = col
 
-    var spawn_x = GameManager.get_tile_center_x(col)
-    var spawn_y = GameManager.get_tile_center_y(row)
+    var spawn_x = GridHelper.get_tile_center_x(col)
+    var spawn_y = GridHelper.get_tile_center_y(row)
     position = Vector2(spawn_x, spawn_y)
 
 # 随机设置精灵图像

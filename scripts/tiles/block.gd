@@ -38,8 +38,8 @@ var moving_target_y: float
 func set_block_grid_pos(row: int, col: int) -> void:
     current_row = row
     current_col = col
-    var spawn_x = GameManager.get_tile_top_left_x(col)
-    var spawn_y = GameManager.get_tile_top_left_y(row)
+    var spawn_x = GridHelper.get_tile_top_left_x(col)
+    var spawn_y = GridHelper.get_tile_top_left_y(row)
     position = Vector2(spawn_x, spawn_y)
     z_index = GameManager.calculate_depth(position)
 
@@ -155,8 +155,8 @@ func try_step_forward_moving_target(target_dir: String) -> bool:
 
 # TODO dedup
 func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
-    moving_target_x = GameManager.get_tile_top_left_x(target_col)
-    moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
+    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
     slide_dir = target_dir
 
 # 有东西挡住了的，不能作为目标移动位置

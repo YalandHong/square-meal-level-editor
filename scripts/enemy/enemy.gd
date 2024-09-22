@@ -69,8 +69,8 @@ func _process(_delta: float) -> void:
 #     finish_jump()
 
 func set_enemy_init_pos(row: int, col: int) -> void:
-    position.x = GameManager.get_tile_top_left_x(col)
-    position.y = GameManager.get_tile_top_left_y(row)
+    position.x = GridHelper.get_tile_top_left_x(col)
+    position.y = GridHelper.get_tile_top_left_y(row)
     z_index = GameManager.calculate_depth(position)
 
     current_row = row
@@ -197,8 +197,8 @@ func set_enemy_sprite() -> void:
 
 # 将敌人对齐网格
 func force_align_position_to_grid() -> void:
-    var center_x = GameManager.get_tile_top_left_x(current_col)
-    var center_y = GameManager.get_tile_top_left_y(current_row)
+    var center_x = GridHelper.get_tile_top_left_x(current_col)
+    var center_y = GridHelper.get_tile_top_left_y(current_row)
     position = Vector2(center_x, center_y)
 
 # # 返回相反的方向
@@ -234,9 +234,9 @@ func force_align_position_to_grid() -> void:
 func update_position(new_dir: String) -> void:
     pass
     # if new_dir == LEFT or new_dir == RIGHT:
-    #     position.y = GameManager.get_tile_center_y(current_row)
+    #     position.y = GridHelper.get_tile_center_y(current_row)
     # else:
-    #     position.x = GameManager.get_tile_center_x(current_col)
+    #     position.x = GridHelper.get_tile_center_x(current_col)
 
 
 func do_hit_by_block(block_dir: String, block: Block) -> void:
@@ -352,8 +352,8 @@ func perform_jump() -> void:
 # 设置目标位置和方向
 # TODO 移动到grid element中
 func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
-    moving_target_x = GameManager.get_tile_top_left_x(target_col)
-    moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
+    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
     dir = target_dir
 
 # 一般来说，敌人要选择一个空的位置作为击飞后落地的位置

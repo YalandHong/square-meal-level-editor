@@ -55,8 +55,8 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
     #var target_row = GlobalVars.step_row_by_direction(current_row, dir)
     #var target_col = GlobalVars.step_col_by_direction(current_col, dir)
     ## 获取目标位置的中心坐标
-    #moving_target_x = GameManager.get_tile_top_left_x(target_col)
-    #moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    #moving_target_x = GridHelper.get_tile_top_left_x(target_col)
+    #moving_target_y = GridHelper.get_tile_top_left_y(target_row)
 #
     ## 检查目标位置是否为空
     ## TODO player、block和enemy检测逻辑是不一样的

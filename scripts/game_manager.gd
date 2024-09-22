@@ -42,23 +42,6 @@ func init_scroll_bounds() -> void:
     scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
     scroll_y_max = max(scroll_y_min, map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
-# 返回给定列的tile的左上角X坐标
-static func get_tile_top_left_x(col: int) -> float:
-    return col * TILE_WIDTH
-
-# 返回给定行的tile的左上角Y坐标
-static func get_tile_top_left_y(row: int) -> float:
-    return row * TILE_HEIGHT
-
-# 返回给定列的tile的中心X坐标
-static func get_tile_center_x(col: int) -> float:
-    return get_tile_top_left_x(col) + TILE_WIDTH / 2.0
-
-# 返回给定行的tile的中心Y坐标
-static func get_tile_center_y(row: int) -> float:
-    # TODO magic number 10
-    return get_tile_top_left_y(row) + TILE_HEIGHT / 2.0 + 10
-
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
     return (level_map_tiles[row][col] == null
@@ -103,23 +86,22 @@ func get_loaded_level_map(file_path: String) -> Array:
 static func calculate_depth(pos: Vector2) -> int:
     return int(pos.y / 2)
 
-# 我把block、enemy、player这些按照网格移动的东西统称为square
-static func update_grid_pos_for_square(map: Array, square,
+static func update_grid_pos_for_grid_element(map: Array, grid_element,
         old_row: int, old_col: int, new_row: int, new_col: int):
-    assert(is_same(map[old_row][old_col], square))
+    assert(is_same(map[old_row][old_col], grid_element))
     map[old_row][old_col] = null
 
     assert(map[new_row][new_col] == null)
-    map[new_row][new_col] = square
+    map[new_row][new_col] = grid_element
 
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
-    update_grid_pos_for_square(level_map_players, player, old_row, old_col, new_row, new_col)
+    update_grid_pos_for_grid_element(level_map_players, player, old_row, old_col, new_row, new_col)
 
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
-    update_grid_pos_for_square(level_map_tiles, block, old_row, old_col, new_row, new_col)
+    update_grid_pos_for_grid_element(level_map_tiles, block, old_row, old_col, new_row, new_col)
 
 func update_movers(enemy: Enemy, old_row: int, old_col: int, new_row: int, new_col: int):
-    update_grid_pos_for_square(level_map_movers, enemy, old_row, old_col, new_row, new_col)
+    update_grid_pos_for_grid_element(level_map_movers, enemy, old_row, old_col, new_row, new_col)
 
 # 绘制地图
 func init_level_maps(level_map: Array):

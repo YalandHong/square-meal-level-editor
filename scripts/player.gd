@@ -77,8 +77,8 @@ func _ready():
 # Flash原版里，玩家单步移动结束后是对齐到tile的center
 # 而我这里之所以是tile的左上角而不是tile center，是为了和block的移动统一
 func set_player_init_pos(row: int, col: int) -> void:
-    position.x = GameManager.get_tile_top_left_x(col)
-    position.y = GameManager.get_tile_top_left_y(row)
+    position.x = GridHelper.get_tile_top_left_x(col)
+    position.y = GridHelper.get_tile_top_left_y(row)
     z_index = GameManager.calculate_depth(position)
 
     current_row = row
@@ -303,8 +303,8 @@ func is_next_step_empty(dir_pressed: String) -> bool:
     var target_row = GlobalVars.step_row_by_direction(current_row, dir_pressed)
     var target_col = GlobalVars.step_col_by_direction(current_col, dir_pressed)
     # 获取目标位置的中心坐标
-    moving_target_x = GameManager.get_tile_top_left_x(target_col)
-    moving_target_y = GameManager.get_tile_top_left_y(target_row)
+    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
+    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
 
     # 检查目标位置是否为空
     var is_empty = game_manager.is_empty(target_row, target_col)
