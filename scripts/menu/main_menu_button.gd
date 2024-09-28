@@ -37,7 +37,10 @@ func _on_mouse_entered():
 func _on_mouse_exited():
     text_label.active = false
 
+func _on_mouse_clicked():
+    get_tree().change_scene_to_packed(scene_to_load)
+
 func _input_event(camera, event, shape_idx):
     if event is InputEventMouseButton and event.pressed and shape_idx != -1:
         # 当左键点击并在按钮上
-        get_tree().change_scene_to_packed(scene_to_load)
+        _on_mouse_clicked()

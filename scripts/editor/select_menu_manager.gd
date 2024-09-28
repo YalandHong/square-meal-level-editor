@@ -1,7 +1,7 @@
 extends ColorRect
 class_name SelectMenuManager
 
-var active_button: SelectButton = null
+var active_button: SelectButton
 
 const MENU_WIDTH: int = 120
 const MENU_HEIGHT: int = GlobalVars.VIEW_HEIGHT
@@ -13,14 +13,25 @@ func _init() -> void:
 
 func _ready():
     size = Vector2(MENU_WIDTH, MENU_HEIGHT)
-    color = Color(0.5, 0.5, 0.5)  # 灰色背景
+    color = Color.IVORY
 
 func _process(_delta: float) -> void:
     update_select_menu_position()
 
 func create_select_buttons():
-    # TODO
-    pass
+    var button_id_list = [
+        [GlobalVars.ID_DUMB_ENEMY],
+        [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK],
+        [GlobalVars.ID_DEFAULT_FOOD_BLOCK]
+    ]
+    for i in range(len(button_id_list)):
+        var button_row = button_id_list[i]
+        for j in range(len(button_row)):
+            var button_id = button_row[j]
+            var button = SelectButton.new(button_id)
+            add_child(button)
+            button.position.x = 10 + j * 54
+            button.position.y = 10 + i * 60
 
 # 当某个按钮被按下时，执行激活逻辑
 func _on_button_pressed(button: SelectButton):

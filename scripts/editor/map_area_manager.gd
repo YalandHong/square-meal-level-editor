@@ -25,7 +25,9 @@ func track_mouse():
     var mouse_col = GridHelper.x_to_col(mouse_pos.x)
 
     if Input.is_action_just_pressed("mouse_left"):
-        level_editor.put_grid_element(mouse_row, mouse_col, GlobalVars.ID_STONE_BLOCK)
+        var button = level_editor.get_node("SelectMenuManager").active_button
+        if button != null:
+            level_editor.put_grid_element(mouse_row, mouse_col, button.type)
     elif Input.is_action_just_pressed("mouse_right"):
         level_editor.delete_grid_element(mouse_row, mouse_col)
 
