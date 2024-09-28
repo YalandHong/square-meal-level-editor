@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo2rsmlfkf4un"]
+[gd_scene load_steps=7 format=3 uid="uid://bo2rsmlfkf4un"]
 
 [ext_resource type="AudioStream" uid="uid://bk15at62gqy3p" path="res://sounds/music/menu_music.wav" id="1_vcilc"]
 [ext_resource type="Texture2D" uid="uid://c6kiskinmv7hs" path="res://sprites/bg_menu.png" id="1_y6n2y"]
+[ext_resource type="Texture2D" uid="uid://chwy5nm6lvf2r" path="res://sprites/menu/main_menu_button.png" id="3_oeqpk"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu_button.gd" id="3_op2vl"]
 [ext_resource type="PackedScene" uid="uid://bf5f0nj851ygd" path="res://scenes/main_game.tscn" id="4_48fcq"]
 [ext_resource type="PackedScene" uid="uid://po6qul23l7q2" path="res://scenes/level_editor.tscn" id="5_7oihi"]
@@ -16,14 +17,22 @@ centered = false
 stream = ExtResource("1_vcilc")
 autoplay = true
 
-[node name="GotoChooseLevel" type="Area2D" parent="."]
-position = Vector2(142, 317)
+[node name="GotoChooseLevel" type="TextureButton" parent="."]
+offset_left = 94.0
+offset_top = 297.0
+offset_right = 244.0
+offset_bottom = 339.0
+texture_normal = ExtResource("3_oeqpk")
 script = ExtResource("3_op2vl")
 displayed_text = "play"
 scene_to_load = ExtResource("4_48fcq")
 
-[node name="GotoLevelEditor" type="Area2D" parent="."]
-position = Vector2(381, 314)
+[node name="GotoLevelEditor" type="TextureButton" parent="."]
+offset_left = 349.0
+offset_top = 296.0
+offset_right = 499.0
+offset_bottom = 338.0
+texture_normal = ExtResource("3_oeqpk")
 script = ExtResource("3_op2vl")
 displayed_text = "editor"
 scene_to_load = ExtResource("5_7oihi")

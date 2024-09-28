@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3x2sv30vkgp4"]
+
+[ext_resource type="Script" path="res://scripts/menu/pixel_font_label.gd" id="1_xd300"]
+[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="2_wf76g"]
+
+[node name="debug" type="Node2D"]
+
+[node name="PixelFontLabel" type="Node2D" parent="."]
+position = Vector2(275, 201)
+script = ExtResource("1_xd300")
+
+[node name="MouseTracker" parent="." instance=ExtResource("2_wf76g")]
