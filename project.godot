@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Ported-SquareMeal"
-run/main_scene="res://scenes/main_game.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-PixelFont="*res://scripts/editor/pixel_font.gd"
+PixelFont="*res://scripts/menu/pixel_font.gd"
 
 [debug]
 
