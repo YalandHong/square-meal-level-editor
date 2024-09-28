@@ -22,6 +22,9 @@ func display_special_text(x: float, y: float, text: String, font_map: Dictionary
     text = text.to_upper()
     var pos = Vector2(x, y)
     for ch in text:
+        if ch == ' ':
+            pos.x += 18 - 2
+            continue
         draw_texture(font_map[ch], pos)
         pos.x += font_map[ch].get_width() - 2  # 移动到下一个字符的位置
 

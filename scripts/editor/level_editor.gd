@@ -79,7 +79,6 @@ func create_default_level_map():
 # 处理相机移动
 func _process(_delta):
     handle_camera_movement()
-    handle_save_level_map()
 
 # 处理相机移动的函数
 func handle_camera_movement():
@@ -106,6 +105,7 @@ func delete_grid_element(row: int, col: int):
         return
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
 
-func handle_save_level_map():
-    if Input.is_action_just_pressed("ui_save"):
-        LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
+func save_level_map():
+    LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
+    var float_notification = FloatSavedNotification.new()
+    camera.add_child(float_notification)
