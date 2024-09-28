@@ -26,6 +26,7 @@ texture_normal = ExtResource("3_oeqpk")
 script = ExtResource("3_op2vl")
 displayed_text = "play"
 scene_to_load = ExtResource("4_48fcq")
+level_str = "res://levels/test_level.txt"
 
 [node name="GotoLevelEditor" type="TextureButton" parent="."]
 offset_left = 349.0

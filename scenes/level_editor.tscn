@@ -33,6 +33,7 @@ texture_normal = ExtResource("4_sscbb")
 script = ExtResource("4_mn3dv")
 displayed_text = "run"
 scene_to_load = ExtResource("5_q147q")
+level_str = "user://edit_level.tsv"
 
 [node name="SaveButton" type="TextureButton" parent="SelectMenuManager"]
 layout_mode = 0

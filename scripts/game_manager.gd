@@ -54,7 +54,7 @@ func _init():
     # debug
     seed(0)
 
-    var level_map = get_loaded_level_map("res://levels/test_level.txt")
+    var level_map = get_loaded_level_map(GlobalVarsSingleton.current_level_file)
     map_width = level_map[0].size()
     map_height = level_map.size()
 

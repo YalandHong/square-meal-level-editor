@@ -39,3 +39,5 @@ const DOWN = "down"
 const LEFT = "left"
 const RIGHT = "right"
 const NONE = ""
+
+var current_level_file: String = ""
