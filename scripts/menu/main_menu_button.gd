@@ -16,14 +16,6 @@ func _ready():
     text_label.position = texture_normal.get_size() / 2
     add_child(text_label)
 
-var timer = 0
-
-func _process(delta: float) -> void:
-    timer += 1
-    if timer == 15:
-        #print(button_control.is_hovered())
-        timer = 0
-
 # 鼠标进入事件
 func _on_mouse_entered():
     text_label.active = true
