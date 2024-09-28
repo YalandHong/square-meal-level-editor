@@ -24,7 +24,7 @@ func display_special_text(x: float, y: float, text: String, font_map: Dictionary
     for char in text:
         if char in font_map:
             draw_texture(font_map[char], pos)
-            pos.x += font_map[char].get_width()  # 移动到下一个字符的位置
+            pos.x += font_map[char].get_width() - 2  # 移动到下一个字符的位置
 
 # 居中显示文本，(x, y)为中点
 func display_special_text_centered(x: float, y: float, text: String, font_map: Dictionary):
@@ -32,10 +32,11 @@ func display_special_text_centered(x: float, y: float, text: String, font_map: D
     var total_width = 0
     for char in text:
         if char in font_map:
-            total_width += font_map[char].get_width()  # 计算总宽度
-
+            total_width += font_map[char].get_width() - 2  # 计算总宽度
     var start_x = x - total_width / 2  # 计算起始位置
-    display_special_text(start_x, y, text, font_map)
+    var total_height = font_map[text[0]].get_height()
+    var start_y = y - total_height / 2
+    display_special_text(start_x, start_y, text, font_map)
 
 func draw_active_pixel_text_centered(x: float, y: float, text: String):
     display_special_text_centered(x, y, text, PixelFont.font_map_active)

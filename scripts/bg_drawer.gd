@@ -19,7 +19,6 @@ func _draw() -> void:
         for col in range(cols):
             var pos: Vector2 = Vector2(col * texture_size.x, row * texture_size.y)
             draw_texture(background_texture, pos)
-            print("draw bg at ", pos)
 
 func _ready() -> void:
     var game_manager: GameManager = get_node("../GameManager")

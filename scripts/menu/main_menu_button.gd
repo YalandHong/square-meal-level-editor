@@ -40,4 +40,4 @@ func _on_mouse_exited():
 func _input_event(camera, event, shape_idx):
     if event is InputEventMouseButton and event.pressed and shape_idx != -1:
         # 当左键点击并在按钮上
-        get_tree().change_scene_to(scene_to_load)  # 跳转到指定场景
+        get_tree().change_scene_to_packed(scene_to_load)
