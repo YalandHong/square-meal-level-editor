@@ -80,7 +80,7 @@ func _process(_delta: float) -> void:
     process_winning()
 
 func get_loaded_level_map(file_path: String) -> Array:
-    var array_2d = LocalFileHelper.read_level_map_txt_file(file_path)
+    var array_2d = LocalFileHelper.read_level_map_tsv_file(file_path)
     return array_2d
 
 static func calculate_depth(pos: Vector2) -> int:

@@ -23,11 +23,34 @@ func init_scroll_bounds() -> void:
 
 func _ready():
     #request_map_size()  # 请求地图大小
-    map_height = 20
-    map_width = 30
+    if not try_load_existing_level_file():
+        map_height = 20
+        map_width = 30
+        create_default_level_map()
     init_scroll_bounds()
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
-    initialize_level_map()
+
+func try_load_existing_level_file() -> bool:
+    var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(
+        "user://edit_level.tsv"
+    )
+    if loaded_level_map == null:
+        return false
+    level_map = loaded_level_map
+    map_height = level_map.size()
+    map_width = level_map[0].size()
+    return true
+
+func create_default_level_map():
+    level_map = []
+    level_map.resize(map_height)
+    for i in range(map_height):
+        level_map[i] = []
+        for j in range(map_width):
+            if i == 0 or i == map_height - 1 or j == 0 or j == map_width - 1:
+                level_map[i].append(GlobalVars.ID_WALL_BLOCK)
+            else:
+                level_map[i].append(GlobalVars.ID_EMPTY_TILE)
 
 ## 请求玩家输入地图大小
 #func request_map_size():
@@ -53,21 +76,10 @@ func _ready():
 #
     #initialize_level_map()
 
-# 初始化 level_map
-func initialize_level_map():
-    level_map = []
-    level_map.resize(map_height)
-    for i in range(map_height):
-        level_map[i] = []
-        for j in range(map_width):
-            if i == 0 or i == map_height - 1 or j == 0 or j == map_width - 1:
-                level_map[i].append(GlobalVars.ID_WALL_BLOCK)
-            else:
-                level_map[i].append(GlobalVars.ID_EMPTY_TILE)
-
 # 处理相机移动
 func _process(_delta):
     handle_camera_movement()
+    handle_save_level_map()
 
 # 处理相机移动的函数
 func handle_camera_movement():
@@ -93,3 +105,7 @@ func delete_grid_element(row: int, col: int):
     if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
         return
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
+
+func handle_save_level_map():
+    if Input.is_action_just_pressed("ui_save"):
+        LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
