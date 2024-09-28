@@ -10,7 +10,7 @@ func _init() -> void:
 func _process(delta: float) -> void:
     queue_redraw()
     float_timer += 1
-    if float_timer >= 30:
+    if float_timer >= 75:
         queue_free()
 
 # 在指定相对坐标绘制逐渐消失的文本
@@ -21,6 +21,6 @@ func display_special_text(x: float, y: float, text: String, font_map: Dictionary
         if ch == ' ':
             pos.x += 18 - 2
             continue
-        var alpha = 1 - float_timer / 60.0
+        var alpha = 1 - float_timer / 100.0
         draw_texture(font_map[ch], pos, Color(1, 1, 1, alpha))
         pos.x += font_map[ch].get_width() - 2
