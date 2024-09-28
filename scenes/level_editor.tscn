@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://po6qul23l7q2"]
+[gd_scene load_steps=7 format=3 uid="uid://po6qul23l7q2"]
 
 [ext_resource type="Script" path="res://scripts/editor/select_menu_manager.gd" id="1_kst68"]
 [ext_resource type="Script" path="res://scripts/editor/level_editor.gd" id="1_nbeij"]
 [ext_resource type="Script" path="res://scripts/editor/map_area_manager.gd" id="2_r4wt1"]
 [ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="4_osxih"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="5_4t7wh"]
+[ext_resource type="AudioStream" uid="uid://bk15at62gqy3p" path="res://sounds/music/menu_music.wav" id="6_oqoey"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_nbeij")
@@ -21,3 +22,6 @@ script = ExtResource("1_kst68")
 
 [node name="GridDrawer" type="Node2D" parent="."]
 script = ExtResource("5_4t7wh")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_oqoey")
