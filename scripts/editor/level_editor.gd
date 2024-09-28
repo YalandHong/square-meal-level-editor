@@ -109,3 +109,4 @@ func save_level_map():
     LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
     var float_notification = FloatSavedNotification.new()
     camera.add_child(float_notification)
+    float_notification.z_index = 1000
