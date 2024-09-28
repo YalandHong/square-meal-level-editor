@@ -19,12 +19,10 @@ func _ready():
 # 鼠标进入事件
 func _on_mouse_entered():
     text_label.active = true
-    print("Enter")
 
 # 鼠标离开事件
 func _on_mouse_exited():
     text_label.active = false
-    print("Exit")
 
 func _on_mouse_clicked():
     get_tree().change_scene_to_packed(scene_to_load)

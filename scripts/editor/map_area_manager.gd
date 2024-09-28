@@ -73,8 +73,12 @@ func draw_full_map_area():
             assert(loaded_texture != null)
             var pos = Vector2(
                 GridHelper.get_tile_top_left_x(col),
-                GridHelper.get_tile_top_left_y(row) + Block.BLOCK_SPRITE_OFFSET_Y
+                GridHelper.get_tile_top_left_y(row)
             )
+            if type == GlobalVars.ID_PLAYER:
+                pos += Player.SPRITE_OFFSET_NORMAL
+            else:
+                pos += Vector2(0, Block.BLOCK_SPRITE_OFFSET_Y)
             draw_texture(loaded_texture, pos)
 
 func get_or_create_texture(type: int) -> Texture2D:

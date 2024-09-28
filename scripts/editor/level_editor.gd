@@ -12,6 +12,9 @@ var scroll_y_min: int
 var scroll_y_max: int
 @onready var camera: Camera2D = $Camera2D
 
+var player_row
+var player_col
+
 # 计算滚动边界
 func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.VIEW_WIDTH / 2
@@ -98,11 +101,19 @@ func handle_camera_movement():
 func put_grid_element(row: int, col: int, type: int):
     if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
         return
+    if type == GlobalVars.ID_PLAYER:
+        if player_row != null:
+            level_map[player_row][player_col] = GlobalVars.ID_EMPTY_TILE
+        player_row = row
+        player_col = col
     level_map[row][col] = type
 
 func delete_grid_element(row: int, col: int):
     if row == 0 or row == map_height - 1 or col == 0 or col == map_width - 1:
         return
+    if level_map[row][col] == GlobalVars.ID_PLAYER:
+        player_row = null
+        player_col = null
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
 
 func save_level_map():
