@@ -121,11 +121,6 @@ func finish_jump() -> void:
     stunned_count = 0
     play_stunned_animation()
 
-# Flash原版叫get next target
-func try_step_forward_moving_target(target_dir: String) -> bool:
-    assert(false, "calling try_step_forward_moving_target from abstract enemy")
-    return false
-
 func try_change_direction() -> bool:
     assert(false, "calling change_direction from abstract enemy")
     return false
@@ -138,7 +133,6 @@ func play_jump_animation() -> void:
 
 func play_stunned_animation() -> void:
     anim_sprite.play("stunned_" + dir)
-
 
 func check_hit_players() -> void:
     if jumping or stunned:

@@ -13,7 +13,10 @@ var moving_target_y: float
 var current_row: int
 var current_col: int
 
+# 选择下一个格子作为移动目标
+# Flash源码里叫get_target
 func try_step_forward_moving_target(target_dir: String) -> bool:
+    assert(target_dir != NONE)
     var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
     var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
     if check_target_movable(target_row, target_col):

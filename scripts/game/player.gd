@@ -128,9 +128,9 @@ func process_moving_or_slipping():
         return
 
     # 如果按键方向相反且目标可以移动
+    # TODO 这个分支可以触发吗？
     if (GridHelper.is_opposite_direction(dir, new_direction)
-            and is_next_step_empty(new_direction)):
-        dir = new_direction
+            and try_step_forward_moving_target(new_direction)):
         # moving = true
         do_move()
         play_walk_animation()
@@ -162,7 +162,7 @@ func process_idle():
 
     # 执行移动动画和移动逻辑
     play_walk_animation()
-    if is_next_step_empty(direction_pressed):
+    if try_step_forward_moving_target(direction_pressed):
         # moving = true
         state = PlayerState.MOVING
         do_move()
@@ -272,44 +272,10 @@ func finish_spit_block():
     play_stop_animation()
     state = PlayerState.IDLE
 
-# 获取玩家是否可以移动到目标格子
-# Flash源码里叫get_target
-func is_next_step_empty(dir_pressed: String) -> bool:
-    if dir_pressed == NONE:
-        return false
-    var target_row = GridHelper.step_row_by_direction(current_row, dir_pressed)
-    var target_col = GridHelper.step_col_by_direction(current_col, dir_pressed)
-    # 获取目标位置的中心坐标
-    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
-    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
-
-    # 检查目标位置是否为空
+# TODO 这个逻辑并不对，玩家是可以撞敌人自杀的
+func check_target_movable(target_row: int, target_col: int) -> bool:
     var is_empty = game_manager.is_empty(target_row, target_col)
     return is_empty
-
-    # TODO 暂不支持双人游戏
-    # if player_count == 1:
-    #     return is_empty
-    # elif player_count == 2:
-        # var other_player_row, other_player_col
-
-        # if player_id == 1:
-        #     other_player_row = game_manager.get_player_row(2)
-        #     other_player_col = game_manager.get_player_col(2)
-        # else:
-        #     other_player_row = game_manager.get_player_row(1)
-        #     other_player_col = game_manager.get_player_col(1)
-
-        # var row_diff = abs(target_row - other_player_row)
-        # var col_diff = abs(target_col - other_player_col)
-
-        # # TODO magic number
-        # if row_diff > 13 or col_diff > 11:
-        #     return false
-        # return is_empty
-
-    # return false
-
 
 # 玩家移动
 func do_move():

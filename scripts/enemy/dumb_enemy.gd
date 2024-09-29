@@ -36,16 +36,6 @@ func try_change_direction() -> bool:
     assert(false, "try change direction failed")
     return false
 
-# 尝试根据方向移动
-# TODO 这个比之前player和block里写得更好，提取并统一到grid element里
-func try_step_forward_moving_target(target_dir: String) -> bool:
-    var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
-    var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
-    if check_target_movable(target_row, target_col):
-        do_change_moving_target(target_row, target_col, target_dir)
-        return true
-    return false
-
 # 有东西挡住了的，不能作为目标移动位置
 func check_target_movable(target_row: int, target_col: int) -> bool:
     return (game_manager.get_tile_instance(target_row, target_col) == null
