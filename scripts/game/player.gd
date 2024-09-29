@@ -1,5 +1,5 @@
+extends GridElement
 class_name Player
-extends Node2D
 
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
@@ -16,16 +16,6 @@ var game_manager: GameManager
 var shadow_holder: ShadowManager
 var sfx_player: SfxPlayer
 
-# enum DirectionState {UP, DOWN, LEFT, RIGHT, NONE}
-const UP = GlobalVars.UP
-const DOWN = GlobalVars.DOWN
-const LEFT = GlobalVars.LEFT
-const RIGHT = GlobalVars.RIGHT
-const NONE = GlobalVars.NONE
-var dir: String
-var current_row: int = 0
-var current_col: int = 0
-
 enum PlayerState {
     MOVING, TURNING, IDLE, SLIPPING,
     EATING, SPITTING, DEAD, WINNING
@@ -37,8 +27,6 @@ var turn_count: int = 0
 const MAX_TURN_COUNT: int = 2
 
 # 移动相关
-var moving_target_x: float
-var moving_target_y: float
 const SIDE_WALK_SPEED: float = 5
 const WALK_SPEED: float = 5
 const ANIMATION_FPS_SCALE_WALK: float = 0.3
@@ -116,11 +104,7 @@ func process_moving_or_slipping():
     do_move()
 
     # 如果玩家到达目标位置，停止移动
-    if ((dir == LEFT and position.x <= moving_target_x) or
-        (dir == RIGHT and position.x >= moving_target_x) or
-       (dir == UP and position.y <= moving_target_y) or
-       (dir == DOWN and position.y >= moving_target_y)):
-
+    if reached_target():
         position.x = moving_target_x
         position.y = moving_target_y
         # TODO shadow

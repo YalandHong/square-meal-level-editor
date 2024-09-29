@@ -1,4 +1,4 @@
-extends Sprite2D
+extends GridElement
 class_name Block
 
 # GameManager 负责游戏全局的逻辑
@@ -7,16 +7,7 @@ var sfx_player: SfxPlayer
 
 const BLOCK_SPRITE_OFFSET_Y: int = -20
 
-# direction常量
-const UP = GlobalVars.UP
-const DOWN = GlobalVars.DOWN
-const LEFT = GlobalVars.LEFT
-const RIGHT = GlobalVars.RIGHT
-const NONE = GlobalVars.NONE
-
 # 定义 Block 基类的通用属性和方法
-var current_row: int
-var current_col: int
 var walkable: bool = false
 var eatable: bool = false
 var dangerous: bool = false
@@ -31,9 +22,8 @@ var sliding: bool = false
 #var tiles_moved: int = 0;
 var slide_speed: float = 10;
 #var max_tiles_moved: int = 100;
-var slide_dir: String
-var moving_target_x: float
-var moving_target_y: float
+
+var block_sprite: Sprite2D
 
 func set_block_grid_pos(row: int, col: int) -> void:
     current_row = row
@@ -59,8 +49,9 @@ func is_being_eaten() -> bool:
     return being_eaten
 
 func _init() -> void:
-    centered = false
-    offset.y = BLOCK_SPRITE_OFFSET_Y
+    block_sprite = Sprite2D.new()
+    block_sprite.centered = false
+    block_sprite.offset.y = BLOCK_SPRITE_OFFSET_Y
     sliding = false
 
 func _ready() -> void:
@@ -83,7 +74,7 @@ func start_slide(start_dir: String) -> void:
     # 初始化滑动速度和最大滑动距离
     slide_speed = START_SLIDE_SPEED
     #max_tiles_moved = START_MAX_TILES_MOVED
-    slide_dir = start_dir
+    dir = start_dir
 
     # 检查是否可以滑动到目标位置
     if try_step_forward_moving_target(start_dir):
@@ -91,17 +82,17 @@ func start_slide(start_dir: String) -> void:
     else:
         # TODO 这个分支什么时候会发生？目前测试结果是，会立刻停止
         sliding = false
-        slide_dir = NONE
+        dir = NONE
 
 func finish_slide():
     sliding = false
     sfx_player.play_sfx("block_stops")
-    slide_dir = NONE
+    dir = NONE
 
 func do_move() -> void:
-    if slide_dir == NONE:
+    if dir == NONE:
         return
-    position = GridHelper.step_position_by_speed(position, slide_dir, slide_speed)
+    position = GridHelper.step_position_by_speed(position, dir, slide_speed)
     update_block_grid_pos()
 
 # 和Player的update_player_grid_pos基本一样
@@ -116,19 +107,15 @@ func update_block_grid_pos():
 # TODO 这个函数的逻辑写得些莫名其妙
 # TODO 不同种类的block的slide行为都不太一样，不应该全部怼到一个函数里
 func slide() -> void:
-    assert(slide_dir != NONE)
+    assert(dir != NONE)
 
     do_move()
     check_hit()
 
     # 检查是否到达目标位置
     # 本质上是，划过了的话，要回退回来。因为moving target x/y是对齐网格左上角的
-    # 所以，如果speed不是网格tile width和tile height的倍数，会导致速度不均匀
-    if ((slide_dir == LEFT and position.x <= moving_target_x) or
-       (slide_dir == RIGHT and position.x >= moving_target_x) or
-       (slide_dir == UP and position.y <= moving_target_y) or
-       (slide_dir == DOWN and position.y >= moving_target_y)):
-
+    # 所以，如果tile width或tile height不是speed的倍数，会导致速度不均匀
+    if reached_target():
         #tiles_moved += 1
         position.x = moving_target_x
         position.y = moving_target_y
@@ -137,27 +124,12 @@ func slide() -> void:
         # TODO 预留接口
         #adjust_slide_speed()
 
-        if not try_step_forward_moving_target(slide_dir):
+        if not try_step_forward_moving_target(dir):
             #tiles_moved = 0
             if not check_rubber_block(): # 预留的接口
                 #check_explosive_block()  # 预留的接口
                 #check_wooden_block()  # 预留的接口
                 finish_slide() # 完成滑动
-
-# TODO dedup
-func try_step_forward_moving_target(target_dir: String) -> bool:
-    var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
-    var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
-    if check_target_movable(target_row, target_col):
-        do_change_moving_target(target_row, target_col, target_dir)
-        return true
-    return false
-
-# TODO dedup
-func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
-    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
-    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
-    slide_dir = target_dir
 
 # 有东西挡住了的，不能作为目标移动位置
 func check_target_movable(target_row: int, target_col: int) -> bool:
@@ -169,12 +141,10 @@ func check_rubber_block() -> bool:
 
 # 方块滑动时的碰撞检测
 func check_hit() -> void:
-    # var game_manager = get_node("/root/GameManager")
-
     # 检查当前格子的敌人
     var enemy: Enemy = game_manager.get_enemy_instance(current_row, current_col)
     if enemy != null:
-        enemy.do_hit_by_block(slide_dir, self)
+        enemy.do_hit_by_block(dir, self)
         do_hit_object()
         return
 
@@ -187,28 +157,29 @@ func check_hit() -> void:
 
     # 根据滑动方向检查相邻格子内的敌人，并判断方向是否相反
     # TODO 根据get_opposite_direction和step_by_direction重构这段代码
-    if slide_dir == LEFT:
+    # TODO 这一大段代码意义不明
+    if dir == LEFT:
         enemy = game_manager.get_enemy_instance(current_row, current_col - 1)
         if enemy != null and enemy.dir == RIGHT:
-            enemy.do_hit_by_block(slide_dir, self)
+            enemy.do_hit_by_block(dir, self)
             do_hit_object()
             return
-    elif slide_dir == RIGHT:
+    elif dir == RIGHT:
         enemy = game_manager.get_enemy_instance(current_row, current_col + 1)
         if enemy != null and enemy.dir == LEFT:
-            enemy.do_hit_by_block(slide_dir, self)
+            enemy.do_hit_by_block(dir, self)
             do_hit_object()
             return
-    elif slide_dir == UP:
+    elif dir == UP:
         enemy = game_manager.get_enemy_instance(current_row - 1, current_col)
         if enemy != null and enemy.dir == DOWN:
-            enemy.do_hit_by_block(slide_dir, self)
+            enemy.do_hit_by_block(dir, self)
             do_hit_object()
             return
-    elif slide_dir == DOWN:
+    elif dir == DOWN:
         enemy = game_manager.get_enemy_instance(current_row + 1, current_col)
         if enemy != null and enemy.dir == UP:
-            enemy.do_hit_by_block(slide_dir, self)
+            enemy.do_hit_by_block(dir, self)
             do_hit_object()
             return
 

@@ -1,4 +1,4 @@
-extends Node2D
+extends GridElement
 class_name Enemy
 
 var game_manager: GameManager
@@ -6,13 +6,6 @@ var shadow_holder: ShadowManager
 var sfx_player: SfxPlayer
 
 var anim_sprite: AnimatedSprite2D
-
-# direction常量
-const UP = GlobalVars.UP
-const DOWN = GlobalVars.DOWN
-const LEFT = GlobalVars.LEFT
-const RIGHT = GlobalVars.RIGHT
-const NONE = GlobalVars.NONE
 
 # 定义相关变量
 var being_eaten: bool
@@ -26,11 +19,6 @@ const MAX_STUNNED_COUNT: int = 150
 
 var jumping: bool
 
-var dir: String
-var moving_target_x: float
-var moving_target_y: float
-var current_row: int
-var current_col: int
 const MOVE_SPEED: float = 2 # 每个enemy不太一样吧？
 
 func _init() -> void:
@@ -124,20 +112,6 @@ func update_mover_grid_pos():
 
     current_row = new_row
     current_col = new_col
-
-# TODO 这个函数也在player和block里用到了
-func reached_target() -> bool:
-    return ((dir == LEFT and position.x <= moving_target_x) or
-            (dir == RIGHT and position.x >= moving_target_x) or
-            (dir == UP and position.y <= moving_target_y) or
-            (dir == DOWN and position.y >= moving_target_y))
-
-# debug function
-func check_aligned_with_moving_target() -> bool:
-    return ((dir == UP and position.x == moving_target_x) or
-            (dir == DOWN and position.x == moving_target_x) or
-            (dir == LEFT and position.y == moving_target_y) or
-            (dir == RIGHT and position.y == moving_target_y))
 
 func finish_jump() -> void:
     assert(jumping and not stunned and not being_eaten)
@@ -348,13 +322,6 @@ func perform_jump() -> void:
     play_jump_animation()
     # TODO shadow暂不支持
     # get_node("/root/GameManager/shadow_holder/enemy_shadow_%s" % str(enemy_id)).goto_and_play("jump")
-
-# 设置目标位置和方向
-# TODO 移动到grid element中
-func do_change_moving_target(target_row: int, target_col: int, target_dir: String):
-    moving_target_x = GridHelper.get_tile_top_left_x(target_col)
-    moving_target_y = GridHelper.get_tile_top_left_y(target_row)
-    dir = target_dir
 
 # 一般来说，敌人要选择一个空的位置作为击飞后落地的位置
 # 这个“空的位置”不仅要求没东西，还不能有其它正在移动的敌人朝这里移动

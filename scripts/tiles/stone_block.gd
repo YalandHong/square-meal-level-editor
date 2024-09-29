@@ -9,7 +9,7 @@ func _init() -> void:
 func _ready() -> void:
     super._ready()
     var loaded_texture = load("res://sprites/block/stone.png")
-    texture = loaded_texture
+    block_sprite.texture = loaded_texture
 
 func get_block_type() -> int:
     return GlobalVars.ID_STONE_BLOCK
