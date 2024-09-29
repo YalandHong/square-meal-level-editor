@@ -60,32 +60,6 @@ func _ready():
     dir = DOWN
     play_stop_animation()
 
-# 初始化玩家位置
-# 玩家的单步移动结束时对齐到网格左上角
-# Flash原版里，玩家单步移动结束后是对齐到tile的center
-# 而我这里之所以是tile的左上角而不是tile center，是为了和block的移动统一
-func set_player_init_pos(row: int, col: int) -> void:
-    position.x = GridHelper.get_tile_top_left_x(col)
-    position.y = GridHelper.get_tile_top_left_y(row)
-    z_index = GameManager.calculate_depth(position)
-
-    current_row = row
-    current_col = col
-
-    # 设置玩家ID
-    # TODO 暂不支持多人游戏
-    # if name == "player":
-    #     player_id = 1
-    # else:
-    #     player_id = 2
-
-    # 添加阴影并更新位置
-    # TODO 暂不支持
-    # shadow_holder.add_player_shadow(player_id)
-    # var shadow = shadow_holder.get_node("shadow_" + str(player_id))
-    # shadow.position.x = position.x
-    # shadow.position.y = position.y + 5
-
 func _process(_delta):
     match state:
         PlayerState.IDLE:

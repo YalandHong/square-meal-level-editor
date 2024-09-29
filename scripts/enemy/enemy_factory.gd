@@ -11,5 +11,5 @@ static func is_valid_enemy_type(type: int) -> bool:
 static func create_enemy(row: int, col: int, type: int) -> Enemy:
     var enemy_scene = load(ENEMY_TYPE_TO_SCENE_MAP[type])
     var enemy: Enemy = enemy_scene.instantiate()
-    enemy.set_enemy_init_pos(row, col)
+    enemy.set_init_pos(row, col)
     return enemy

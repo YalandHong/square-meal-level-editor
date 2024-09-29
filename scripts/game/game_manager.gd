@@ -141,7 +141,7 @@ func init_level_maps(level_map: Array):
 func create_and_add_player(row: int, col: int) -> Player:
     var player_scene: PackedScene = load("res://scenes/player.tscn")
     var player: Player = player_scene.instantiate()
-    player.set_player_init_pos(row, col)
+    player.set_init_pos(row, col)
 
     add_child(player)
     return player

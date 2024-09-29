@@ -12,7 +12,7 @@ static func create_block(row: int, col: int, type: int) -> Block:
         block_obj = FoodBlock.new()
     else:
         block_obj = allocate_non_food_block(type)
-    block_obj.set_block_grid_pos(row, col)
+    block_obj.set_init_pos(row, col)
     return block_obj
 
 static func allocate_non_food_block(type: int) -> Block:

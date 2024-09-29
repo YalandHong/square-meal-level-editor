@@ -45,3 +45,14 @@ func check_aligned_with_moving_target() -> bool:
             (dir == DOWN and position.x == moving_target_x) or
             (dir == LEFT and position.y == moving_target_y) or
             (dir == RIGHT and position.y == moving_target_y))
+
+# 初始化位置
+# grid element单步移动结束时对齐到网格左上角
+# Flash原版里，单步移动结束后是对齐到tile的center
+# 而我这里之所以是tile的左上角而不是tile center，是为了方便debug和sprite绘制
+# 因为场景、control和sprite等很多组件的原点都是左上角
+func set_init_pos(row: int, col: int) -> void:
+    position.x = GridHelper.get_tile_top_left_x(col)
+    position.y = GridHelper.get_tile_top_left_y(row)
+    current_row = row
+    current_col = col

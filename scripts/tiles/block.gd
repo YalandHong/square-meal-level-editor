@@ -25,14 +25,6 @@ var slide_speed: float = 10;
 
 var block_sprite: Sprite2D
 
-func set_block_grid_pos(row: int, col: int) -> void:
-    current_row = row
-    current_col = col
-    var spawn_x = GridHelper.get_tile_top_left_x(col)
-    var spawn_y = GridHelper.get_tile_top_left_y(row)
-    position = Vector2(spawn_x, spawn_y)
-    z_index = GameManager.calculate_depth(position)
-
 func is_walkable() -> bool:
     return walkable
 

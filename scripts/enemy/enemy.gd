@@ -56,14 +56,6 @@ func _process(_delta: float) -> void:
 #     assert(jumping)
 #     finish_jump()
 
-func set_enemy_init_pos(row: int, col: int) -> void:
-    position.x = GridHelper.get_tile_top_left_x(col)
-    position.y = GridHelper.get_tile_top_left_y(row)
-    z_index = GameManager.calculate_depth(position)
-
-    current_row = row
-    current_col = col
-
 func handle_stunned() -> void:
     stunned_count += 1
     if stunned_count < MAX_STUNNED_COUNT:
