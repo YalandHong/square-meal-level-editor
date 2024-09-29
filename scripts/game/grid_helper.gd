@@ -69,3 +69,9 @@ static func step_position_by_speed(pos: Vector2, dir: String, speed: float) -> V
 
 static func back_position_by_speed(pos: Vector2, dir: String, speed: float) -> Vector2:
     return step_position_by_speed(pos, dir, -speed)
+
+static func is_opposite_direction(curr_dir: String, new_dir: String) -> bool:
+    return ((curr_dir == LEFT and new_dir == RIGHT) or
+           (curr_dir == RIGHT and new_dir == LEFT) or
+           (curr_dir == UP and new_dir == DOWN) or
+           (curr_dir == DOWN and new_dir == UP))

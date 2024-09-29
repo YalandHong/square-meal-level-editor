@@ -128,19 +128,12 @@ func process_moving_or_slipping():
         return
 
     # 如果按键方向相反且目标可以移动
-    if is_opposite_direction(new_direction) and is_next_step_empty(new_direction):
+    if (GridHelper.is_opposite_direction(dir, new_direction)
+            and is_next_step_empty(new_direction)):
         dir = new_direction
         # moving = true
         do_move()
         play_walk_animation()
-
-# 判断是否为相反方向
-# TODO dedup GridElement
-func is_opposite_direction(new_dir: String) -> bool:
-    return ((dir == LEFT and new_dir == RIGHT) or
-           (dir == RIGHT and new_dir == LEFT) or
-           (dir == UP and new_dir == DOWN) or
-           (dir == DOWN and new_dir == UP))
 
 func process_idle():
     if game_manager.level_cleared:
