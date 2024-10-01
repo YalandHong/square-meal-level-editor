@@ -35,8 +35,9 @@ func _ready():
     # anim_sprite.animation_finished.connect(on_animation_finished)
 
     # 设置初始方向
-    dir = NONE
-    try_change_direction()
+    dir = DOWN
+    play_walk_animation()
+    #try_change_direction()
     assert(check_aligned_with_moving_target())
 
 func _process(_delta: float) -> void:
@@ -231,55 +232,54 @@ func do_hit_by_block(block_dir: String, block: Block) -> void:
 
 # 处理向左被击中的逻辑
 func handle_hit_left(block: Block) -> bool:
-    if try_move(RIGHT, 0, 1, block):
+    if try_jump_to(RIGHT, 0, 1, block):
         return true
-    elif try_move(DOWN, 1, 0, block):
+    elif try_jump_to(DOWN, 1, 0, block):
         return true
-    elif try_move(UP, -1, 0, block):
+    elif try_jump_to(UP, -1, 0, block):
         return true
-    elif try_move(RIGHT, 0, 2, block):
+    elif try_jump_to(RIGHT, 0, 2, block):
         return true
     return false
 
 # 处理向右被击中的逻辑
 func handle_hit_right(block: Block) -> bool:
-    if try_move(LEFT, 0, -1, block):
+    if try_jump_to(LEFT, 0, -1, block):
         return true
-    elif try_move(DOWN, 1, 0, block):
+    elif try_jump_to(DOWN, 1, 0, block):
         return true
-    elif try_move(UP, -1, 0, block):
+    elif try_jump_to(UP, -1, 0, block):
         return true
-    elif try_move(LEFT, 0, -2, block):
+    elif try_jump_to(LEFT, 0, -2, block):
         return true
     return false
 
 # 处理向上被击中的逻辑
 func handle_hit_up(block: Block) -> bool:
-    if try_move(DOWN, 1, 0, block):
+    if try_jump_to(DOWN, 1, 0, block):
         return true
-    elif try_move(RIGHT, 0, 1, block):
+    elif try_jump_to(RIGHT, 0, 1, block):
         return true
-    elif try_move(LEFT, 0, -1, block):
+    elif try_jump_to(LEFT, 0, -1, block):
         return true
-    elif try_move(DOWN, 2, 0, block):
+    elif try_jump_to(DOWN, 2, 0, block):
         return true
     return false
 
 # 处理向下被击中的逻辑
 func handle_hit_down(block: Block) -> bool:
-    if try_move(UP, -1, 0, block):
+    if try_jump_to(UP, -1, 0, block):
         return true
-    elif try_move(RIGHT, 0, 1, block):
+    elif try_jump_to(RIGHT, 0, 1, block):
         return true
-    elif try_move(LEFT, 0, -1, block):
+    elif try_jump_to(LEFT, 0, -1, block):
         return true
-    elif try_move(UP, -2, 0, block):
+    elif try_jump_to(UP, -2, 0, block):
         return true
     return false
 
 # 尝试移动到指定的相对位置，并更新相关参数
-# TODO 应该命名为try jump to
-func try_move(new_dir: String, row_offset: int, col_offset: int, block: Block) -> bool:
+func try_jump_to(new_dir: String, row_offset: int, col_offset: int, block: Block) -> bool:
     # var game_manager = get_node("/root/GameManager")
 
     if check_landable(current_row + row_offset, current_col + col_offset, block):
@@ -293,13 +293,13 @@ func try_move(new_dir: String, row_offset: int, col_offset: int, block: Block) -
 
 # 移动失败时的回退逻辑
 func fallback_movement(block: Block) -> void:
-    if try_move(LEFT, 0, -1, block):
+    if try_jump_to(LEFT, 0, -1, block):
         return
-    elif try_move(RIGHT, 0, 1, block):
+    elif try_jump_to(RIGHT, 0, 1, block):
         return
-    elif try_move(UP, -1, 0, block):
+    elif try_jump_to(UP, -1, 0, block):
         return
-    elif try_move(DOWN, 1, 0, block):
+    elif try_jump_to(DOWN, 1, 0, block):
         return
     assert(false, "no place for fallback")
 
@@ -325,7 +325,10 @@ func check_landable(row: int, col: int, hit_block: Block) -> bool:
                 and GridHelper.x_to_col(adjacent_enemy.moving_target_x) == col):
                 return false
         return true
-    elif hit_block != null and game_manager.get_tile_instance(row, col) == hit_block:
+
+    # [row][col] is not empty
+    assert(hit_block != null)
+    if game_manager.get_tile_instance(row, col) == hit_block:
         return true
 
     return false

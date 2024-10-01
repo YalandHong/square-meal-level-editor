@@ -33,13 +33,26 @@ func try_change_direction() -> bool:
         if try_step_forward_moving_target(possible_dir):
             play_walk_animation()
             return true
-    assert(false, "try change direction failed")
+    #assert(false, "try change direction failed")
+    # 如果四个方向都被堵住了，那就什么都不做
     return false
 
 # 有东西挡住了的，不能作为目标移动位置
+# 目标位置已经是其它敌人的移动目标了，也不行
 func check_target_movable(target_row: int, target_col: int) -> bool:
-    return (game_manager.get_tile_instance(target_row, target_col) == null
-        and game_manager.get_enemy_instance(target_row, target_col) == null)
+    if (game_manager.get_tile_instance(target_row, target_col) != null):
+        return false
+    if (game_manager.get_enemy_instance(target_row, target_col) != null):
+        return false
+    for possible_dir in [UP, DOWN, LEFT, RIGHT]:
+        var adj_row = GridHelper.get_next_row_in_direction(target_row, possible_dir)
+        var adj_col = GridHelper.get_next_col_in_direction(target_col, possible_dir)
+        var adjacent_enemy: Enemy = game_manager.get_enemy_instance(adj_row, adj_col)
+        if (adjacent_enemy != null
+            and GridHelper.y_to_row(adjacent_enemy.moving_target_y) == target_row
+            and GridHelper.x_to_col(adjacent_enemy.moving_target_x) == target_col):
+            return false
+    return true
 
 #func is_next_step_empty() -> bool:
     #var target_row = GridHelper.get_next_row_in_direction(current_row, dir)

@@ -32,6 +32,8 @@ func _ready():
         create_default_level_map()
     init_scroll_bounds()
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
+    $GridDrawer.map_width = map_width
+    $GridDrawer.map_height = map_height
 
 func try_load_existing_level_file() -> bool:
     var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(

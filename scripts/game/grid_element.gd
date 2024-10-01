@@ -54,5 +54,7 @@ func check_aligned_with_moving_target() -> bool:
 func set_init_pos(row: int, col: int) -> void:
     position.x = GridHelper.get_tile_top_left_x(col)
     position.y = GridHelper.get_tile_top_left_y(row)
+    moving_target_x = position.x
+    moving_target_y = position.y
     current_row = row
     current_col = col
