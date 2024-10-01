@@ -53,15 +53,12 @@ func handle_movement_or_jump() -> void:
         try_change_direction()
 
 # 从walk状态切换到duck状态
-# 有1/3的概率尝试改变方向
 func do_duck():
-    if randi() % 3 == 0:
-        try_change_direction()
     ducking = true
     duck_timer = randi_range(30, 150)
     play_duck_animation()
 
-# Flash原版里叫do_duck
+# Flash原版里叫doDuck
 func handle_duck():
     check_hit_players()
     duck_timer -= 1
@@ -69,11 +66,18 @@ func handle_duck():
         do_stand_up()
 
 # 从duck状态切换到walk状态
+# 有1/3的概率尝试改变方向
 func do_stand_up():
+    if randi() % 3 == 0:
+        try_change_direction()
     ducking = false
     duck_timer = randi_range(30, 150)
     play_walk_animation()
-    pass
+
+func do_hit_by_block(block: Block) -> void:
+    if ducking:
+        return
+    super.do_hit_by_block(block)
 
 func play_duck_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL

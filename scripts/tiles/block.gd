@@ -136,7 +136,7 @@ func check_hit() -> void:
     # 检查当前格子的敌人
     var enemy: Enemy = game_manager.get_enemy_instance(current_row, current_col)
     if enemy != null:
-        enemy.do_hit_by_block(dir, self)
+        enemy.do_hit_by_block(self)
         do_hit_object()
         return
 
@@ -148,30 +148,29 @@ func check_hit() -> void:
         return
 
     # 根据滑动方向检查相邻格子内的敌人，并判断方向是否相反
-    # TODO 根据get_opposite_direction和step_by_direction重构这段代码
-    # TODO 这一大段代码意义不明
+    # 看样子，原版Flash在判定滑动方块和敌人碰撞的时候，会向direction方向再多判断一格
     if dir == LEFT:
         enemy = game_manager.get_enemy_instance(current_row, current_col - 1)
         if enemy != null and enemy.dir == RIGHT:
-            enemy.do_hit_by_block(dir, self)
+            enemy.do_hit_by_block(self)
             do_hit_object()
             return
     elif dir == RIGHT:
         enemy = game_manager.get_enemy_instance(current_row, current_col + 1)
         if enemy != null and enemy.dir == LEFT:
-            enemy.do_hit_by_block(dir, self)
+            enemy.do_hit_by_block(self)
             do_hit_object()
             return
     elif dir == UP:
         enemy = game_manager.get_enemy_instance(current_row - 1, current_col)
         if enemy != null and enemy.dir == DOWN:
-            enemy.do_hit_by_block(dir, self)
+            enemy.do_hit_by_block(self)
             do_hit_object()
             return
     elif dir == DOWN:
         enemy = game_manager.get_enemy_instance(current_row + 1, current_col)
         if enemy != null and enemy.dir == UP:
-            enemy.do_hit_by_block(dir, self)
+            enemy.do_hit_by_block(self)
             do_hit_object()
             return
 

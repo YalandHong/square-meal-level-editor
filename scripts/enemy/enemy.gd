@@ -176,7 +176,7 @@ func force_align_position_to_grid() -> void:
     #     position.x = GridHelper.get_tile_center_x(current_col)
 
 
-func do_hit_by_block(block_dir: String, block: Block) -> void:
+func do_hit_by_block(block: Block) -> void:
     if jumping:
         return
 
@@ -185,10 +185,9 @@ func do_hit_by_block(block_dir: String, block: Block) -> void:
     # enemy被击飞的时候，是从一个对齐网格的位置开始起飞，到另一个对齐网格的位置落地
     force_align_position_to_grid()
 
-    var hit_successful: bool = false
-
     # 判断方向并尝试移动
-    match block_dir:
+    var hit_successful: bool = false
+    match block.dir:
         LEFT:
             hit_successful = handle_hit_left(block)
         RIGHT:
@@ -197,13 +196,11 @@ func do_hit_by_block(block_dir: String, block: Block) -> void:
             hit_successful = handle_hit_up(block)
         DOWN:
             hit_successful = handle_hit_down(block)
-
     # TODO 这么做并不是一种正确的做法
     # 敌人很密集的时候，有可能会找不到落地的地方，那就只能原地蹦然后原地落地
     assert(hit_successful)
     #if not hit_successful:
         #fallback_movement(block)
-
     perform_jump()
 
 # 处理向左被击中的逻辑
