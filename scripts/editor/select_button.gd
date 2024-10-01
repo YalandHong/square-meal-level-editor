@@ -10,6 +10,7 @@ const BUTTON_TYPE_ID_TO_SPRITE_FILE_MAP: Dictionary = {
     GlobalVars.ID_WALL_BLOCK: "wall.png",
     GlobalVars.ID_STONE_BLOCK: "stone.png",
     GlobalVars.ID_DEFAULT_FOOD_BLOCK: "food.png",
+    GlobalVars.ID_WOOD_BLOCK: "wood.png",
 }
 
 var type: int

@@ -166,7 +166,7 @@ func get_enemy_instance(row: int, col: int) -> Enemy:
 # 从网格中移除块，但不会free
 func remove_grid_element(map: Array, row: int, col: int) -> void:
     assert(map[row][col] != null)
-    var elem = map[row][col]
+    #var elem = map[row][col]
     map[row][col] = null
     #elem.queue_free()
 
@@ -183,7 +183,7 @@ func remove_enemy(row: int, col: int) -> void:
     remove_grid_element(level_map_movers, row, col)
     enemy_count -= 1
 
-func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String) -> void:
+func place_and_slide_new_block(block_type: int, row: int, col: int, start_dir: String) -> void:
     # 创建新的 Block 实例 (假设通过 block_type 加载不同的预制)
     var new_block: Block = BlockFactory.create_block(row, col, block_type)
     add_child(new_block)
@@ -216,7 +216,7 @@ func place_and_slide_new_block(block_type: int, row: int, col: int, dir: String)
             #level_map_tiles[row - 1][col] = new_block
 
     # 启动 Block 的滑动逻辑
-    new_block.start_slide(dir)
+    new_block.start_slide(start_dir)
 
 func scroll_game() -> void:
     # 目前只支持1个Player
