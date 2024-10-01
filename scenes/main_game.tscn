@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=10 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -6,11 +6,9 @@
 [ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/game/debug_rect_drawer.gd" id="9_yqqm4"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
-[ext_resource type="Script" path="res://scripts/game/player_debug_color_rect.gd" id="25_utrei"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
 [ext_resource type="Script" path="res://scripts/fps_manager.gd" id="41_22c60"]
-[ext_resource type="Script" path="res://scripts/game/player_debug_positioner.gd" id="42_35ot8"]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_k6vyx")
@@ -33,16 +31,6 @@ script = ExtResource("27_fconu")
 
 [node name="GridDrawer" type="Node2D" parent="."]
 script = ExtResource("26_pxk8i")
-
-[node name="PlayerDebugPositioner" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("42_35ot8")
-
-[node name="PlayerDebugColorRect" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("25_utrei")
 
 [node name="SfxPlayer" type="Node" parent="."]
 script = ExtResource("7_2pbga")
