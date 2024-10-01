@@ -7,6 +7,10 @@ func is_eatable():
 func is_walkable():
     return false
 
+func _init() -> void:
+    super()
+    start_slide_speed = 5
+
 func _ready() -> void:
     super._ready()
     var loaded_texture = load("res://sprites/block/metal.png")

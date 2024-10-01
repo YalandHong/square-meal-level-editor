@@ -15,8 +15,7 @@ const BLOCK_SPRITE_OFFSET_Y: int = -20
 var being_eaten: bool = false
 
 # 滑行相关
-const START_SLIDE_SPEED: float = 10;
-const SLIDE_SPEED = 10;
+var start_slide_speed: float = 10;
 #const START_MAX_TILES_MOVED = 100
 var sliding: bool = false
 #var tiles_moved: int = 0;
@@ -65,7 +64,7 @@ func get_block_type() -> int:
 
 func start_slide(start_dir: String) -> void:
     # 初始化滑动速度和最大滑动距离
-    slide_speed = START_SLIDE_SPEED
+    slide_speed = start_slide_speed
     #max_tiles_moved = START_MAX_TILES_MOVED
     dir = start_dir
 
