@@ -7,6 +7,12 @@ const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
 var loaded_element_textures: Dictionary = {}
 
+static func editor_mouse_y_to_row(y: float) -> int:
+    return int(y / TILE_HEIGHT)
+
+static func editor_mouse_x_to_col(x: float) -> int:
+    return int(x / TILE_WIDTH)
+
 func _process(_delta):
     track_mouse()
     queue_redraw()
@@ -21,8 +27,8 @@ func track_mouse():
     var mouse_pos = get_global_mouse_position()
     if not is_mouse_within_bounds(mouse_pos):
         return
-    var mouse_row = GridHelper.y_to_row(mouse_pos.y)
-    var mouse_col = GridHelper.x_to_col(mouse_pos.x)
+    var mouse_row = editor_mouse_y_to_row(mouse_pos.y)
+    var mouse_col = editor_mouse_x_to_col(mouse_pos.x)
 
     if Input.is_action_just_pressed("mouse_left"):
         var button = level_editor.get_node("SelectMenuManager").active_button
@@ -53,8 +59,8 @@ func highlight_mouse_area():
     var mouse_pos = get_global_mouse_position()
     if not is_mouse_within_bounds(mouse_pos):
         return
-    var mouse_row = GridHelper.y_to_row(mouse_pos.y)
-    var mouse_col = GridHelper.x_to_col(mouse_pos.x)
+    var mouse_row = editor_mouse_y_to_row(mouse_pos.y)
+    var mouse_col = editor_mouse_x_to_col(mouse_pos.x)
     var highlight_color: Color = Color(1, 1, 1, 0.4)  # 半透明白色
     var tile_rect = Rect2(
         mouse_col * TILE_WIDTH, mouse_row * TILE_HEIGHT,

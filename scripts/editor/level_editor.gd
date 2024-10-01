@@ -1,6 +1,9 @@
 extends Node
 class_name LevelEditor
 
+const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
+const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
+
 var level_map: Array
 var map_height: int
 var map_width: int
@@ -19,10 +22,10 @@ var player_col
 func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.VIEW_WIDTH / 2
     scroll_x_max = max(scroll_x_min,
-        map_width * GlobalVars.TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
+        map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2 + SelectMenuManager.MENU_WIDTH)
     scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
     scroll_y_max = max(scroll_y_min,
-        map_height * GlobalVars.TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
+        map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
 func _ready():
     #request_map_size()  # 请求地图大小
@@ -88,13 +91,13 @@ func _process(_delta):
 # 处理相机移动的函数
 func handle_camera_movement():
     if Input.is_action_just_pressed("ui_up"):
-        camera.position.y -= GlobalVars.TILE_HEIGHT
+        camera.position.y -= TILE_HEIGHT
     elif Input.is_action_just_pressed("ui_down"):
-        camera.position.y += GlobalVars.TILE_HEIGHT
+        camera.position.y += TILE_HEIGHT
     elif Input.is_action_just_pressed("ui_left"):
-        camera.position.x -= GlobalVars.TILE_WIDTH
+        camera.position.x -= TILE_WIDTH
     elif Input.is_action_just_pressed("ui_right"):
-        camera.position.x += GlobalVars.TILE_WIDTH
+        camera.position.x += TILE_WIDTH
 
     # 确保相机不超出地图边界
     camera.position.x = clamp(camera.position.x, scroll_x_min, scroll_x_max)
