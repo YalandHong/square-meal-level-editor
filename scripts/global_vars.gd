@@ -20,6 +20,7 @@ const ID_PLAYER: int = 19
 
 # block id
 const ID_STONE_BLOCK: int = 1
+const ID_WOOD_BLOCK: int = 3
 const ID_DEFAULT_FOOD_BLOCK: int = 26
 const ID_FOOD_BLOCK: Array[int] = [26,27,28, 48,49,50,51,52,53]
 # Flash原版里30~36都是wall block，这里我偷懒暂时先不处理

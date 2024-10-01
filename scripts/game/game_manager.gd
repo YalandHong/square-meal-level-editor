@@ -163,12 +163,12 @@ func get_player_instance(row: int, col: int) -> Player:
 func get_enemy_instance(row: int, col: int) -> Enemy:
     return level_map_movers[row][col]
 
-# 移除块，并且destroy
+# 从网格中移除块，但不会free
 func remove_grid_element(map: Array, row: int, col: int) -> void:
     assert(map[row][col] != null)
     var elem = map[row][col]
     map[row][col] = null
-    elem.queue_free()
+    #elem.queue_free()
 
 func remove_block(row: int, col: int) -> void:
     assert(get_tile_instance(row, col) is Block)

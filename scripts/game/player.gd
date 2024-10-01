@@ -345,10 +345,7 @@ func do_swallow_block():
     if eating_block is Enemy:
         eat_enemy()
         return
-    if eating_block is StoneBlock:
-        eat_non_food_block()
-        return
-    assert(false, "unknown block type" + eating_block.get_script().get_global_name())
+    eat_non_food_block()
 
 func eat_food():
     # TODO 增加分数
@@ -357,6 +354,7 @@ func eat_food():
     #display_points(50)
 
     game_manager.remove_block(eating_block_row, eating_block_col)
+    eating_block.queue_free()
     eating_block = null
 
 func eat_enemy():
@@ -366,11 +364,13 @@ func eat_enemy():
     #display_points(100)
 
     game_manager.remove_enemy(eating_block_row, eating_block_col)
+    eating_block.queue_free()
     eating_block = null
 
 func eat_non_food_block():
     game_manager.remove_block(eating_block_row, eating_block_col)
     swallowed_block_type = eating_block.get_block_type()
+    eating_block.queue_free()
     eating_block = null
 
 func do_hit_by_block():

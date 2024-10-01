@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://fnv00atgjmgk"]
+
+[ext_resource type="Script" path="res://scripts/tiles/wood_block.gd" id="1_k3y4d"]
+[ext_resource type="Texture2D" uid="uid://dypfifjmddd26" path="res://sprites/block/wood_break/78.png" id="2_h1ljq"]
+[ext_resource type="Texture2D" uid="uid://d1rwadpda85y0" path="res://sprites/block/wood_break/80.png" id="3_1t836"]
+[ext_resource type="Texture2D" uid="uid://b5qcuw2eqsasq" path="res://sprites/block/wood_break/82.png" id="4_jma4b"]
+[ext_resource type="Texture2D" uid="uid://o2cjpmdi4rsv" path="res://sprites/block/wood_break/84.png" id="5_wrtkh"]
+[ext_resource type="Texture2D" uid="uid://tdse6gaoxlym" path="res://sprites/block/wood_break/86.png" id="6_biise"]
+[ext_resource type="Texture2D" uid="uid://dp0y1gbkuw1hf" path="res://sprites/block/76.png" id="7_3urc4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3swke"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h1ljq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1t836")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jma4b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_wrtkh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_biise")
+}],
+"loop": false,
+"name": &"break",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_3urc4")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 5.0
+}]
+
+[node name="WoodBlock" type="Node2D"]
+script = ExtResource("1_k3y4d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3swke")
+animation = &"normal"
