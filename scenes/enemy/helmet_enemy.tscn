@@ -1,6 +1,7 @@
-[gd_scene load_steps=162 format=3 uid="uid://dha34njpu3tvg"]
+[gd_scene load_steps=163 format=3 uid="uid://dha34njpu3tvg"]
 
 [ext_resource type="Texture2D" uid="uid://burd021bs7n6c" path="res://sprites/enemy/helmet/duck/111.png" id="1_01wsr"]
+[ext_resource type="Script" path="res://scripts/enemy/helmet_enemy.gd" id="1_8rmdk"]
 [ext_resource type="Texture2D" uid="uid://b2v45m7qklyhw" path="res://sprites/enemy/helmet/hit/down/71.png" id="1_i13tr"]
 [ext_resource type="Texture2D" uid="uid://c8hldqgp5trse" path="res://sprites/enemy/helmet/duck/81.png" id="2_020v4"]
 [ext_resource type="Texture2D" uid="uid://do5irt7lvq5uh" path="res://sprites/enemy/helmet/hit/down/72.png" id="2_xcwbg"]
@@ -725,6 +726,7 @@ animations = [{
 }]
 
 [node name="HelmetEnemy" type="Node2D"]
+script = ExtResource("1_8rmdk")
 
 [node name="HelmetEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fxqi5")

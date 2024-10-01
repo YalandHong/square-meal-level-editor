@@ -14,9 +14,6 @@ var stunned: bool
 var stunned_count: int
 const MAX_STUNNED_COUNT: int = 150
 
-# Flash里移过来的，意义不明的变量
-#var tiles_moved: int = 0
-
 var jumping: bool
 
 const MOVE_SPEED: float = 2 # 每个enemy不太一样吧？
@@ -75,21 +72,15 @@ func wake_up():
 func handle_movement_or_jump() -> void:
     do_move()
     check_hit_players()
-
     if not reached_target():
         return
-
-    #tiles_moved += 1
     position = Vector2(moving_target_x, moving_target_y)
     update_mover_grid_pos()
-
     if jumping:
         finish_jump()
         return
-
     if not try_step_forward_moving_target(dir):
         try_change_direction()
-        #tiles_moved = 0
 
 
 func do_move() -> void:
@@ -119,13 +110,13 @@ func try_change_direction() -> bool:
     return false
 
 func play_walk_animation() -> void:
-    anim_sprite.play("walk_" + dir)
+    assert(false)
 
 func play_jump_animation() -> void:
-    anim_sprite.play("hit_" + dir)
+    assert(false)
 
 func play_stunned_animation() -> void:
-    anim_sprite.play("stunned_" + dir)
+    assert(false)
 
 func check_hit_players() -> void:
     if jumping or stunned:
@@ -139,50 +130,12 @@ func set_enemy_sprite() -> void:
     assert(false, "calling set_enemy_sprite from abstract enemy")
     pass
 
-# var col: int = 0
-# var row: int = 0
-
-# 处理敌人被block击中的逻辑
-# func do_hit_by_block(block_dir: String) -> void:
-#     if jumping:
-#         return
-#     update_mover_grid_pos()
-#     force_align_position_to_grid()
-#     var target_dir = get_opposite_dir(block_dir)
-#     var target_col = game_manager.get_next_col_in_direction(current_col, target_dir)
-#     var target_row = game_manager.get_next_row_in_direction(current_row, target_dir)
-#     if GameManager.is_tile_empty(target_col, target_row):
-#         move_to_tile(target_col, target_row)
-#     else:
-#         bounce_back(block_dir)
-
 # 将敌人对齐网格
 func force_align_position_to_grid() -> void:
     var center_x = GridHelper.get_tile_top_left_x(current_col)
     var center_y = GridHelper.get_tile_top_left_y(current_row)
     position = Vector2(center_x, center_y)
 
-# # 返回相反的方向
-# func get_opposite_dir(block_dir: String) -> String:
-#     match block_dir:
-#         UP:
-#             return DOWN
-#         DOWN:
-#             return UP
-#         LEFT:
-#             return RIGHT
-#         RIGHT:
-#             return LEFT
-#         _:
-#             return NONE
-
-# # 将敌人移动到指定的tile
-# func move_to_tile(target_col: int, target_row: int) -> void:
-#     col = target_col
-#     row = target_row
-#     var center_x = GameManager.get_center_x(col)
-#     var center_y = GameManager.get_center_y(row)
-#     position = Vector2(center_x, center_y)
 
 # # 如果目标格子不为空，执行反弹逻辑
 # func bounce_back(block_dir: String) -> void:
@@ -192,8 +145,8 @@ func force_align_position_to_grid() -> void:
 
 # 更新敌人的位置
 # TODO 这个函数是干嘛的？意义不明
-func update_position(new_dir: String) -> void:
-    pass
+#func update_position(new_dir: String) -> void:
+    #pass
     # if new_dir == LEFT or new_dir == RIGHT:
     #     position.y = GridHelper.get_tile_center_y(current_row)
     # else:
@@ -286,7 +239,6 @@ func try_jump_to(new_dir: String, row_offset: int, col_offset: int, block: Block
         var target_row = current_row + row_offset
         var target_col = current_col + col_offset
         do_change_moving_target(target_row, target_col, new_dir)
-        update_position(new_dir)
         return true
 
     return false
@@ -311,6 +263,23 @@ func perform_jump() -> void:
     play_jump_animation()
     # TODO shadow暂不支持
     # get_node("/root/GameManager/shadow_holder/enemy_shadow_%s" % str(enemy_id)).goto_and_play("jump")
+
+# 有东西挡住了的，不能作为目标移动位置
+# 目标位置已经是其它敌人的移动目标了，也不行
+func check_target_movable(target_row: int, target_col: int) -> bool:
+    if (game_manager.get_tile_instance(target_row, target_col) != null):
+        return false
+    if (game_manager.get_enemy_instance(target_row, target_col) != null):
+        return false
+    for possible_dir in [UP, DOWN, LEFT, RIGHT]:
+        var adj_row = GridHelper.get_next_row_in_direction(target_row, possible_dir)
+        var adj_col = GridHelper.get_next_col_in_direction(target_col, possible_dir)
+        var adjacent_enemy: Enemy = game_manager.get_enemy_instance(adj_row, adj_col)
+        if (adjacent_enemy != null
+            and GridHelper.y_to_row(adjacent_enemy.moving_target_y) == target_row
+            and GridHelper.x_to_col(adjacent_enemy.moving_target_x) == target_col):
+            return false
+    return true
 
 # 一般来说，敌人要选择一个空的位置作为击飞后落地的位置
 # 这个“空的位置”不仅要求没东西，还不能有其它正在移动的敌人朝这里移动
