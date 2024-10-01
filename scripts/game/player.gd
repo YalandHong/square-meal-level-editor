@@ -246,10 +246,11 @@ func finish_spit_block():
     play_stop_animation()
     state = PlayerState.IDLE
 
-# TODO 这个逻辑并不对，玩家是可以撞敌人自杀的
 func check_target_movable(target_row: int, target_col: int) -> bool:
-    var is_empty = game_manager.is_empty(target_row, target_col)
-    return is_empty
+    var block: Block = game_manager.get_tile_instance(target_row, target_col)
+    if block != null and not block.is_walkable():
+        return false
+    return true
 
 # 玩家移动
 func do_move():

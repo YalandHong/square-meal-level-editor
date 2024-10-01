@@ -7,7 +7,7 @@ func _init() -> void:
     super("level saved")
     float_timer = 0
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     queue_redraw()
     float_timer += 1
     if float_timer >= 75:

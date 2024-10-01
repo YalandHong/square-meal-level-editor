@@ -8,10 +8,10 @@ var sfx_player: SfxPlayer
 const BLOCK_SPRITE_OFFSET_Y: int = -20
 
 # 定义 Block 基类的通用属性和方法
-var walkable: bool = false
-var eatable: bool = false
-var dangerous: bool = false
-var slippy: bool = false
+#var walkable: bool = false
+#var eatable: bool = false
+#var dangerous: bool = false
+#var slippy: bool = false
 var being_eaten: bool = false
 
 # 滑行相关
@@ -26,16 +26,16 @@ var slide_speed: float = 10;
 var block_sprite: Sprite2D
 
 func is_walkable() -> bool:
-    return walkable
+    return sliding
 
 func is_eatable() -> bool:
-    return eatable
+    return false
 
 func is_dangerous() -> bool:
-    return dangerous
+    return false
 
 func is_slippy() -> bool:
-    return slippy
+    return false
 
 func is_being_eaten() -> bool:
     return being_eaten
