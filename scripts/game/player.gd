@@ -4,7 +4,7 @@ class_name Player
 @onready var anim_sprite: AnimatedSprite2D = $PlayerSprite
 
 # Flash解包出来的sprite大小不一，而且player在stop和walk sprite中的位置不一样
-# 有些我懒得归一化了，所以设置不一样的offset
+# 有些我懒得resize了，所以设置不一样的offset
 # 在下面这些公式里，75是stop/walk的精灵宽度，99是eat right/left的精灵宽度
 # 15是为了补齐player在stop和walk sprite的位置差距
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-75 / 2 + GameManager.TILE_WIDTH / 2, -GameManager.TILE_HEIGHT / 2 - 35)
@@ -70,8 +70,6 @@ func _process(_delta):
             process_turning()
         PlayerState.EATING:
             process_eating()
-        PlayerState.SPITTING:
-            process_spitting()
     z_index = GameManager.calculate_depth(position)
 
 func process_moving_or_slipping():
@@ -192,12 +190,6 @@ func get_direction_pressed() -> String:
         return UP
     return NONE
 
-func process_spitting():
-    #if anim_sprite.get_frame() == SPITTING_BLOCK_DO_SPIT_FRAME:
-        #do_spit()
-    pass
-
-# TODO target row/col变量命名意义不明
 func can_spit(target_row: int, target_col: int) -> bool:
     # 检查目标格子是否为空
     var target_block = game_manager.get_tile_instance(target_row, target_col)
@@ -207,6 +199,10 @@ func can_spit(target_row: int, target_col: int) -> bool:
     return true
 
 # 吐出方块逻辑
+# 原版Flash里在frame=2时才真正吐出方块
+# 但这样会给Player增加大量临时变量，我就没这么做，直接在frame=0就开始spit block
+# 而且，start spit block是确认了next step为空
+# 把do_spit逻辑写在start_spit_block的最后
 func start_spit_block():
     var target_row: int = GridHelper.get_next_row_in_direction(current_row, dir)
     var target_col: int = GridHelper.get_next_col_in_direction(current_col, dir)
@@ -234,13 +230,6 @@ func start_spit_block():
     # 将玩家持有的方块放入目标格子，并清空玩家当前的持有方块
     game_manager.place_and_slide_new_block(swallowed_block_type, target_row, target_col, dir)
     swallowed_block_type = GlobalVars.ID_EMPTY_TILE
-
-# TODO 原版游戏里在frame=2时才真正吐出方块
-# 但这样会给Player增加大量临时变量，我暂时先省略掉了
-# 而且，start spit block是确认了next step为空
-# 把do_spit逻辑写在start_spit_block的最后
-func do_spit():
-    pass
 
 func finish_spit_block():
     play_stop_animation()
