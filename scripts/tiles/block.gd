@@ -45,6 +45,7 @@ func _init() -> void:
     block_sprite.centered = false
     block_sprite.offset.y = BLOCK_SPRITE_OFFSET_Y
     sliding = false
+    add_child(block_sprite)
 
 func _ready() -> void:
     game_manager = get_parent()

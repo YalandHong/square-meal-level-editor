@@ -8,8 +8,8 @@ const FOOD_SPRITE_OFFSET_Y: int = -10
 func _init() -> void:
     super()
     eatable = true
-    centered = true
-    offset.y = FOOD_SPRITE_OFFSET_Y
+    block_sprite.centered = true
+    block_sprite.offset.y = FOOD_SPRITE_OFFSET_Y
 
 func _ready() -> void:
     super._ready()
@@ -17,7 +17,7 @@ func _ready() -> void:
 
 # food的精灵图像大小不一
 # center和position不同于一般的单个网格的block
-func set_block_grid_pos(row: int, col: int) -> void:
+func set_init_pos(row: int, col: int) -> void:
     current_row = row
     current_col = col
 
@@ -46,6 +46,6 @@ func set_random_sprite():
     var random_image = images[randi() % images.size()]
     var loaded_texture = load(random_image)  # 使用不同的变量名
     if loaded_texture:
-        texture = loaded_texture  # 给当前节点的 texture 属性赋值
+        block_sprite.texture = loaded_texture  # 给当前节点的 texture 属性赋值
     else:
         push_error("Failed to load texture: " + random_image)
