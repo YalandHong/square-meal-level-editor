@@ -1,4 +1,4 @@
-[gd_scene load_steps=163 format=3 uid="uid://dha34njpu3tvg"]
+[gd_scene load_steps=175 format=3 uid="uid://dha34njpu3tvg"]
 
 [ext_resource type="Texture2D" uid="uid://burd021bs7n6c" path="res://sprites/enemy/helmet/duck/111.png" id="1_01wsr"]
 [ext_resource type="Script" path="res://scripts/enemy/helmet_enemy.gd" id="1_8rmdk"]
@@ -136,11 +136,17 @@
 [ext_resource type="Texture2D" uid="uid://jua4oifweydr" path="res://sprites/enemy/helmet/walk/left/3.png" id="129_lnan2"]
 [ext_resource type="Texture2D" uid="uid://cn2mmedpksouu" path="res://sprites/enemy/helmet/walk/left/4.png" id="130_imy46"]
 [ext_resource type="Texture2D" uid="uid://c0xny8gkd76rh" path="res://sprites/enemy/helmet/walk/left/5.png" id="131_kusrg"]
+[ext_resource type="Texture2D" uid="uid://basrpv8k64uyo" path="res://sprites/enemy/helmet/walk/down_flop/33.png" id="132_k5c3q"]
 [ext_resource type="Texture2D" uid="uid://1rj81qwxwcwk" path="res://sprites/enemy/helmet/walk/left/6.png" id="132_p8xel"]
+[ext_resource type="Texture2D" uid="uid://bb0at1g8j2unq" path="res://sprites/enemy/helmet/walk/down_flop/34.png" id="133_ss06s"]
 [ext_resource type="Texture2D" uid="uid://em8fea8uabqf" path="res://sprites/enemy/helmet/walk/left/7.png" id="133_y5r5g"]
+[ext_resource type="Texture2D" uid="uid://dgwevqdkphadr" path="res://sprites/enemy/helmet/walk/down_flop/35.png" id="134_4oc4g"]
 [ext_resource type="Texture2D" uid="uid://bymx7rmofe2lg" path="res://sprites/enemy/helmet/walk/left/8.png" id="134_wc3yb"]
+[ext_resource type="Texture2D" uid="uid://g1qhjgicglxu" path="res://sprites/enemy/helmet/walk/down_flop/36.png" id="135_0us8s"]
 [ext_resource type="Texture2D" uid="uid://bupepjw3ib1le" path="res://sprites/enemy/helmet/walk/left/9.png" id="135_m1i2l"]
+[ext_resource type="Texture2D" uid="uid://ciggfig7x2g67" path="res://sprites/enemy/helmet/walk/down_flop/37.png" id="136_0g7h1"]
 [ext_resource type="Texture2D" uid="uid://dovhtxy4g4mcc" path="res://sprites/enemy/helmet/walk/left/10.png" id="136_ac1ux"]
+[ext_resource type="Texture2D" uid="uid://drq75w6p30bxr" path="res://sprites/enemy/helmet/walk/down_flop/38.png" id="137_jmk5a"]
 [ext_resource type="Texture2D" uid="uid://x5hueef0i7r4" path="res://sprites/enemy/helmet/walk/right/11.png" id="137_r8lu3"]
 [ext_resource type="Texture2D" uid="uid://bx8gv6bjqr5ui" path="res://sprites/enemy/helmet/walk/right/12.png" id="138_6cyrh"]
 [ext_resource type="Texture2D" uid="uid://beu7s371r41k1" path="res://sprites/enemy/helmet/walk/right/13.png" id="139_qnosq"]
@@ -161,6 +167,12 @@
 [ext_resource type="Texture2D" uid="uid://cvblm10ml5v6p" path="res://sprites/enemy/helmet/walk/up/28.png" id="154_81pd7"]
 [ext_resource type="Texture2D" uid="uid://dijt8idh8jgb2" path="res://sprites/enemy/helmet/walk/up/29.png" id="155_qqvs2"]
 [ext_resource type="Texture2D" uid="uid://d4hcnbtfyh3as" path="res://sprites/enemy/helmet/walk/up/30.png" id="156_81afh"]
+[ext_resource type="Texture2D" uid="uid://cx53fxvj8urs2" path="res://sprites/enemy/helmet/walk/up_flop/23.png" id="168_182td"]
+[ext_resource type="Texture2D" uid="uid://8yysh6khtfn1" path="res://sprites/enemy/helmet/walk/up_flop/24.png" id="169_xgntr"]
+[ext_resource type="Texture2D" uid="uid://cvy2a76atbbnb" path="res://sprites/enemy/helmet/walk/up_flop/25.png" id="170_det6h"]
+[ext_resource type="Texture2D" uid="uid://tcw8qllwps2c" path="res://sprites/enemy/helmet/walk/up_flop/26.png" id="171_uyjoa"]
+[ext_resource type="Texture2D" uid="uid://ugnkg86ln3hr" path="res://sprites/enemy/helmet/walk/up_flop/27.png" id="172_d6bni"]
+[ext_resource type="Texture2D" uid="uid://cqlsc76kdslji" path="res://sprites/enemy/helmet/walk/up_flop/28.png" id="173_q0pjs"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fxqi5"]
 animations = [{
@@ -614,6 +626,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("126_h7heb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_k5c3q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_ss06s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_4oc4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_0us8s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_0g7h1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_jmk5a")
 }],
 "loop": true,
 "name": &"walk_down",
@@ -719,6 +749,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("156_81afh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168_182td")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_xgntr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_det6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_uyjoa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_d6bni")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_q0pjs")
 }],
 "loop": true,
 "name": &"walk_up",
@@ -730,5 +778,7 @@ script = ExtResource("1_8rmdk")
 
 [node name="HelmetEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fxqi5")
-animation = &"duck_down"
+animation = &"walk_down"
+frame = 8
+frame_progress = 0.168565
 centered = false

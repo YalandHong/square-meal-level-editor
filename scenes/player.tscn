@@ -616,7 +616,5 @@ script = ExtResource("1_gjiml")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mcnxm")
-animation = &"cheer"
-frame = 5
-frame_progress = 0.0887028
+animation = &"walk_right"
 centered = false

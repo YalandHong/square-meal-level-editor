@@ -3,6 +3,7 @@ class_name EnemyFactory
 
 const ENEMY_TYPE_TO_SCENE_MAP = {
     GlobalVars.ID_DUMB_ENEMY: "res://scenes/enemy/dumb_enemy.tscn",
+    GlobalVars.ID_HELMET_ENEMY: "res://scenes/enemy/helmet_enemy.tscn",
 }
 
 static func is_valid_enemy_type(type: int) -> bool:

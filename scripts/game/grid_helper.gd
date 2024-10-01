@@ -83,5 +83,4 @@ static func get_opposite_direction(curr_dir: String) -> String:
             return RIGHT
         RIGHT:
             return LEFT
-        _:
-            return NONE
+    return NONE
