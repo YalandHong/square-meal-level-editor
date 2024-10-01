@@ -250,6 +250,9 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
     var block: Block = game_manager.get_tile_instance(target_row, target_col)
     if block != null and not block.is_walkable():
         return false
+    var enemy: Enemy = game_manager.get_enemy_instance(target_row, target_col)
+    if enemy != null and enemy.stunned:
+        return false
     return true
 
 # 玩家移动
