@@ -55,7 +55,7 @@ func handle_movement_or_jump() -> void:
 # 从walk状态切换到duck状态
 func do_duck():
     ducking = true
-    duck_timer = randi_range(90, 150)
+    duck_timer = randi_range(30, 150)
     play_duck_animation()
 
 # Flash原版里叫do_duck
@@ -68,7 +68,7 @@ func handle_duck():
 # 从duck状态切换到walk状态
 func do_stand_up():
     ducking = false
-    duck_timer = randi_range(90, 150)
+    duck_timer = randi_range(30, 150)
     play_walk_animation()
     pass
 

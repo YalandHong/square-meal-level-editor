@@ -125,6 +125,9 @@ func slide() -> void:
 
 # 有东西挡住了的，不能作为目标移动位置
 func check_target_movable(target_row: int, target_col: int) -> bool:
+    var enemy = game_manager.get_enemy_instance(target_row, target_col)
+    if enemy != null and enemy is HelmetEnemy and enemy.ducking:
+        return false
     return game_manager.get_tile_instance(target_row, target_col) == null
 
 # TODO 暂不支持rubber block
