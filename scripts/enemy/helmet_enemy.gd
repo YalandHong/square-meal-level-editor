@@ -53,7 +53,10 @@ func handle_movement_or_jump() -> void:
         try_change_direction()
 
 # 从walk状态切换到duck状态
+# 有1/3的概率尝试改变方向
 func do_duck():
+    if randi() % 3 == 0:
+        try_change_direction()
     ducking = true
     duck_timer = randi_range(30, 150)
     play_duck_animation()

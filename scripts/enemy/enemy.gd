@@ -129,7 +129,7 @@ func try_change_direction() -> bool:
             play_walk_animation()
             return true
     #assert(false, "try change direction failed")
-    # 如果四个方向都被堵住了，那就什么都不做
+    # 如果所有方向都被堵住了，那就什么都不做
     return false
 
 func play_walk_animation() -> void:

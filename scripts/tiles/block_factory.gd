@@ -7,6 +7,7 @@ static func is_valid_block_type(type: int) -> bool:
         or (type == GlobalVars.ID_STONE_BLOCK)
         or (type == GlobalVars.ID_WALL_BLOCK)
         or (type == GlobalVars.ID_WOOD_BLOCK)
+        or (type == GlobalVars.ID_METAL_BLOCK)
     )
 
 static func create_block(row: int, col: int, type: int) -> Block:
@@ -28,4 +29,6 @@ static func allocate_non_food_block(type: int) -> Block:
         GlobalVars.ID_WOOD_BLOCK:
             var block_scene: PackedScene = load("res://scenes/tile/wood_block.tscn")
             block_obj = block_scene.instantiate()
+        GlobalVars.ID_METAL_BLOCK:
+            block_obj = MetalBlock.new()
     return block_obj
