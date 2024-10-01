@@ -208,8 +208,8 @@ func can_spit(target_row: int, target_col: int) -> bool:
 
 # 吐出方块逻辑
 func start_spit_block():
-    var target_row: int = GridHelper.step_row_by_direction(current_row, dir)
-    var target_col: int = GridHelper.step_col_by_direction(current_col, dir)
+    var target_row: int = GridHelper.get_next_row_in_direction(current_row, dir)
+    var target_col: int = GridHelper.get_next_col_in_direction(current_col, dir)
     if not can_spit(target_row, target_col):
         return
 
@@ -290,8 +290,8 @@ func process_turning() -> void:
         state = PlayerState.IDLE
 
 func start_eat_block() -> void:
-    eating_block_row = GridHelper.step_row_by_direction(current_row, dir)
-    eating_block_col = GridHelper.step_col_by_direction(current_col, dir)
+    eating_block_row = GridHelper.get_next_row_in_direction(current_row, dir)
+    eating_block_col = GridHelper.get_next_col_in_direction(current_col, dir)
 
     # 吃方块
     if game_manager.is_eatable_tile(eating_block_row, eating_block_col):

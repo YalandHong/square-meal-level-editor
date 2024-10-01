@@ -17,8 +17,8 @@ var current_col: int
 # Flash源码里叫get_target
 func try_step_forward_moving_target(target_dir: String) -> bool:
     assert(target_dir != NONE)
-    var target_row = GridHelper.step_row_by_direction(current_row, target_dir)
-    var target_col = GridHelper.step_col_by_direction(current_col, target_dir)
+    var target_row = GridHelper.get_next_row_in_direction(current_row, target_dir)
+    var target_col = GridHelper.get_next_col_in_direction(current_col, target_dir)
     if check_target_movable(target_row, target_col):
         do_change_moving_target(target_row, target_col, target_dir)
         return true

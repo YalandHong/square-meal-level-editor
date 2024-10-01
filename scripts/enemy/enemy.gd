@@ -148,8 +148,8 @@ func set_enemy_sprite() -> void:
 #     update_mover_grid_pos()
 #     force_align_position_to_grid()
 #     var target_dir = get_opposite_dir(block_dir)
-#     var target_col = game_manager.step_col_by_direction(current_col, target_dir)
-#     var target_row = game_manager.step_row_by_direction(current_row, target_dir)
+#     var target_col = game_manager.get_next_col_in_direction(current_col, target_dir)
+#     var target_row = game_manager.get_next_row_in_direction(current_row, target_dir)
 #     if GameManager.is_tile_empty(target_col, target_row):
 #         move_to_tile(target_col, target_row)
 #     else:
@@ -221,8 +221,11 @@ func do_hit_by_block(block_dir: String, block: Block) -> void:
         DOWN:
             hit_successful = handle_hit_down(block)
 
-    if not hit_successful:
-        fallback_movement(block)
+    # TODO 这么做并不是一种正确的做法
+    # 敌人很密集的时候，有可能会找不到落地的地方，那就只能原地蹦然后原地落地
+    assert(hit_successful)
+    #if not hit_successful:
+        #fallback_movement(block)
 
     perform_jump()
 
@@ -314,8 +317,8 @@ func perform_jump() -> void:
 func check_landable(row: int, col: int, hit_block: Block) -> bool:
     if game_manager.is_empty(row, col):
         for possible_dir in [UP, DOWN, LEFT, RIGHT]:
-            var adj_row = GridHelper.step_row_by_direction(row, possible_dir)
-            var adj_col = GridHelper.step_col_by_direction(col, possible_dir)
+            var adj_row = GridHelper.get_next_row_in_direction(row, possible_dir)
+            var adj_col = GridHelper.get_next_col_in_direction(col, possible_dir)
             var adjacent_enemy: Enemy = game_manager.get_enemy_instance(adj_row, adj_col)
             if (adjacent_enemy != null
                 and GridHelper.y_to_row(adjacent_enemy.moving_target_y) == row

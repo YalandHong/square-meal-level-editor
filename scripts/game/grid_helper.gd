@@ -31,13 +31,13 @@ static func get_tile_center_y(row: int) -> float:
 
 # 用于获取行
 static func y_to_row(y: float) -> int:
-    return int(y / TILE_HEIGHT)
+    return int((y + TILE_HEIGHT / 2.0) / TILE_HEIGHT)
 
 # 用于获取列
 static func x_to_col(x: float) -> int:
-    return int(x / TILE_WIDTH)
+    return int((x + TILE_WIDTH / 2.0) / TILE_WIDTH)
 
-static func step_row_by_direction(row: int, dir: String) -> int:
+static func get_next_row_in_direction(row: int, dir: String) -> int:
     var new_row = row
     match dir:
         UP:
@@ -46,7 +46,7 @@ static func step_row_by_direction(row: int, dir: String) -> int:
             new_row = row + 1
     return new_row
 
-static func step_col_by_direction(col: int, dir: String) -> int:
+static func get_next_col_in_direction(col: int, dir: String) -> int:
     var new_col = col
     match dir:
         LEFT:

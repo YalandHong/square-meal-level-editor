@@ -42,8 +42,8 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
         and game_manager.get_enemy_instance(target_row, target_col) == null)
 
 #func is_next_step_empty() -> bool:
-    #var target_row = GridHelper.step_row_by_direction(current_row, dir)
-    #var target_col = GridHelper.step_col_by_direction(current_col, dir)
+    #var target_row = GridHelper.get_next_row_in_direction(current_row, dir)
+    #var target_col = GridHelper.get_next_col_in_direction(current_col, dir)
     ## 获取目标位置的中心坐标
     #moving_target_x = GridHelper.get_tile_top_left_x(target_col)
     #moving_target_y = GridHelper.get_tile_top_left_y(target_row)
