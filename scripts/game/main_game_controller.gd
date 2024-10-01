@@ -10,3 +10,8 @@ func _process(_delta: float) -> void:
 func restart_scene() -> void:
     var scene_tree = get_tree()
     scene_tree.reload_current_scene()
+
+func _ready() -> void:
+    var game_manager: GameManager = $GameManager
+    $GridDrawer.map_width = game_manager.map_width
+    $GridDrawer.map_height = game_manager.map_height

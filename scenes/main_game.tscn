@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=11 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
 [ext_resource type="AudioStream" uid="uid://svahvtrdw5wk" path="res://sounds/music/game_music.wav" id="2_pcsd5"]
 [ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/game/debug_rect_drawer.gd" id="9_yqqm4"]
+[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="10_f4e46"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
@@ -37,3 +38,5 @@ script = ExtResource("7_2pbga")
 
 [node name="DebugRectDrawer" type="Node2D" parent="."]
 script = ExtResource("9_yqqm4")
+
+[node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]

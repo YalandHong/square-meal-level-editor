@@ -64,10 +64,6 @@ func _init():
     winner_timer = 0
 
 func _ready() -> void:
-    var mouse_displayer_scene: PackedScene = load("res://scenes/mouse_tracker.tscn")
-    var mouse_tracker = mouse_displayer_scene.instantiate()
-    add_child(mouse_tracker)
-
     # 创建并设置 Camera2D
     camera = Camera2D.new()
     add_child(camera)
