@@ -1,0 +1,114 @@
+[gd_scene load_steps=25 format=3 uid="uid://cte01xdwh7e70"]
+
+[ext_resource type="Script" path="res://scripts/tiles/rubber_block.gd" id="1_lrouj"]
+[ext_resource type="Texture2D" uid="uid://jjs1wd8sfbxg" path="res://sprites/block/rubber_wobble/1.png" id="3_grevk"]
+[ext_resource type="Texture2D" uid="uid://bn0uqtm4fvqq5" path="res://sprites/block/rubber_wobble/2.png" id="4_tssnd"]
+[ext_resource type="Texture2D" uid="uid://y6ed3ekq5gei" path="res://sprites/block/rubber_wobble/3.png" id="5_2ontw"]
+[ext_resource type="Texture2D" uid="uid://d0vsp2rh8wyju" path="res://sprites/block/rubber_wobble/4.png" id="6_wtavy"]
+[ext_resource type="Texture2D" uid="uid://bw0cyquv0jll0" path="res://sprites/block/rubber_wobble/5.png" id="7_avppi"]
+[ext_resource type="Texture2D" uid="uid://cmj4vp2u8m0ok" path="res://sprites/block/rubber_wobble/6.png" id="8_xu783"]
+[ext_resource type="Texture2D" uid="uid://ct0wor1awl1tj" path="res://sprites/block/rubber_wobble/7.png" id="9_3q3bf"]
+[ext_resource type="Texture2D" uid="uid://28kmrbevhj3t" path="res://sprites/block/rubber_wobble/8.png" id="10_e3b1o"]
+[ext_resource type="Texture2D" uid="uid://cf4kog0p1cy8l" path="res://sprites/block/rubber_wobble/9.png" id="11_2rb5o"]
+[ext_resource type="Texture2D" uid="uid://bcl6by37a3aes" path="res://sprites/block/rubber_wobble/10.png" id="12_ifedc"]
+[ext_resource type="Texture2D" uid="uid://5i0exbp5wqyo" path="res://sprites/block/rubber_wobble/11.png" id="13_tqsph"]
+[ext_resource type="Texture2D" uid="uid://1b6uobsr4i3n" path="res://sprites/block/rubber_wobble/12.png" id="14_t2wc6"]
+[ext_resource type="Texture2D" uid="uid://cksmbff8nd87d" path="res://sprites/block/rubber_wobble/13.png" id="15_5kcgh"]
+[ext_resource type="Texture2D" uid="uid://bvd4uasj5858" path="res://sprites/block/rubber_wobble/14.png" id="16_1bbt5"]
+[ext_resource type="Texture2D" uid="uid://xhgwsnletrx1" path="res://sprites/block/rubber_wobble/15.png" id="17_7etgh"]
+[ext_resource type="Texture2D" uid="uid://b7s87p5cfoq1l" path="res://sprites/block/rubber_wobble/16.png" id="18_cnvml"]
+[ext_resource type="Texture2D" uid="uid://6r5n683usc43" path="res://sprites/block/rubber_wobble/17.png" id="19_y613r"]
+[ext_resource type="Texture2D" uid="uid://dd8lq2opjwl82" path="res://sprites/block/rubber_wobble/18.png" id="20_t3bhu"]
+[ext_resource type="Texture2D" uid="uid://kx1ihv02vd3j" path="res://sprites/block/rubber_wobble/19.png" id="21_l0l7w"]
+[ext_resource type="Texture2D" uid="uid://utj6mpr4k7gl" path="res://sprites/block/rubber_wobble/20.png" id="22_i1l7n"]
+[ext_resource type="Texture2D" uid="uid://ccw3pk00gtm3c" path="res://sprites/block/rubber_wobble/21.png" id="23_ueyem"]
+[ext_resource type="Texture2D" uid="uid://decpukuemcxld" path="res://sprites/block/rubber_wobble/22.png" id="24_a2w0t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_egdot"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_grevk")
+}],
+"loop": false,
+"name": &"normal",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_grevk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tssnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2ontw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wtavy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_avppi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xu783")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_3q3bf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_e3b1o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_2rb5o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ifedc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_tqsph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_t2wc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_5kcgh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_1bbt5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_7etgh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_cnvml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_y613r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_t3bhu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_l0l7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_i1l7n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ueyem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_a2w0t")
+}],
+"loop": false,
+"name": &"wobble",
+"speed": 30.0
+}]
+
+[node name="RubberBlock" type="Node2D"]
+script = ExtResource("1_lrouj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_egdot")
+animation = &"normal"

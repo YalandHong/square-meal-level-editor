@@ -11,6 +11,7 @@ var sfx_files: Dictionary = {
     "block_stops": "res://sounds/sfx/block_stops.wav",
     "win": "res://sounds/sfx/win.wav",
     "wood_break": "res://sounds/sfx/wood_break.wav",
+    "rubble_bounce": "res://sounds/sfx/rubble_bounce.wav",
 }
 
 # 存储每个音效对应的 AudioStreamPlayer

@@ -67,14 +67,10 @@ func start_slide(start_dir: String) -> void:
     slide_speed = start_slide_speed
     #max_tiles_moved = START_MAX_TILES_MOVED
     dir = start_dir
-
-    # 检查是否可以滑动到目标位置
-    if try_step_forward_moving_target(start_dir):
-        sliding = true
-    else:
-        # TODO 这个分支什么时候会发生？目前测试结果是，会立刻停止
-        sliding = false
-        dir = NONE
+    # 即使一开始滑动的时候前面就被挡住了也没关系，此时这个函数什么都不会做
+    # 在下一帧process中会再次判定前方是否有障碍物，并做出相应处理
+    try_step_forward_moving_target(start_dir)
+    sliding = true
 
 func finish_slide():
     sliding = false
@@ -113,7 +109,7 @@ func slide() -> void:
     update_block_grid_pos()
     if try_step_forward_moving_target(dir):
         return
-    if check_rubber_block(): # 预留的接口
+    if check_hit_rubber_block(): # 预留的接口
         return
     #check_explosive_block()  # 预留的接口
     check_hit_wooden_block()
@@ -125,10 +121,6 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
     if enemy != null and enemy is HelmetEnemy and enemy.ducking:
         return false
     return game_manager.get_tile_instance(target_row, target_col) == null
-
-# TODO 暂不支持rubber block
-func check_rubber_block() -> bool:
-    return false
 
 # 方块滑动时的碰撞检测
 func check_hit() -> void:
@@ -183,3 +175,21 @@ func check_hit_wooden_block():
     var block = game_manager.get_tile_instance(row, col)
     if block != null and block is WoodBlock:
         block.do_break()
+
+# 以一定速度撞到rubber block上会反弹
+func check_hit_rubber_block() -> bool:
+    var row = GridHelper.get_next_row_in_direction(current_row, dir)
+    var col = GridHelper.get_next_col_in_direction(current_col, dir)
+    var block = game_manager.get_tile_instance(row, col)
+    if block == null or block is not RubberBlock:
+        return false
+    if slide_speed <= 2:
+        return false
+    start_bounce(GridHelper.get_opposite_direction(dir))
+    block.do_wobble()
+    return true
+
+func start_bounce(bounce_dir: String):
+    slide_speed -= 2
+    dir = bounce_dir
+    try_step_forward_moving_target(dir)

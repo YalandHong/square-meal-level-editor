@@ -22,11 +22,13 @@ const ID_PLAYER: int = 19
 const ID_STONE_BLOCK: int = 1
 const ID_METAL_BLOCK: int = 2
 const ID_WOOD_BLOCK: int = 3
+const ID_RUBBER_BLOCK: int = 22
 const ID_DEFAULT_FOOD_BLOCK: int = 26
 const ID_FOOD_BLOCK: Array[int] = [26,27,28, 48,49,50,51,52,53]
 # Flash原版里30~36都是wall block，这里我偷懒暂时先不处理
 const ID_WALL_BLOCK: int = 30
 
+# 目前未用到
 const ID_SLIDING_BLOCK_PRESERVED: int = 200
 
 # enemy id

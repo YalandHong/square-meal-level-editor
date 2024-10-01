@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brhcr58g5ut2c"
-path="res://.godot/imported/139.png-2d0503436c395cc107274adf12b9fb6d.ctex"
+uid="uid://bcl6by37a3aes"
+path="res://.godot/imported/10.png-398944646e6a1ca87ab14bd2c38419eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/block/rubber_bounce/139.png"
-dest_files=["res://.godot/imported/139.png-2d0503436c395cc107274adf12b9fb6d.ctex"]
+source_file="res://sprites/block/rubber_wobble/10.png"
+dest_files=["res://.godot/imported/10.png-398944646e6a1ca87ab14bd2c38419eb.ctex"]
 
 [params]
 

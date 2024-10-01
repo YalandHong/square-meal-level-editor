@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dewf3gsc2y6cg"
-path="res://.godot/imported/143.png-015ea17d24801c545f11d7f69c0a0e7b.ctex"
+uid="uid://dybclv5p7ofly"
+path="res://.godot/imported/rubber.png-23447d88bb27f8880051c9c99262268e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/block/rubber_bounce/143.png"
-dest_files=["res://.godot/imported/143.png-015ea17d24801c545f11d7f69c0a0e7b.ctex"]
+source_file="res://sprites/editor/button/rubber.png"
+dest_files=["res://.godot/imported/rubber.png-23447d88bb27f8880051c9c99262268e.ctex"]
 
 [params]
 
