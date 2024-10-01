@@ -101,28 +101,27 @@ func update_block_grid_pos():
 # TODO 不同种类的block的slide行为都不太一样，不应该全部怼到一个函数里
 func slide() -> void:
     assert(dir != NONE)
-
     do_move()
     check_hit()
-
     # 检查是否到达目标位置
     # 本质上是，划过了的话，要回退回来。因为moving target x/y是对齐网格左上角的
     # 所以，如果tile width或tile height不是speed的倍数，会导致速度不均匀
-    if reached_target():
-        #tiles_moved += 1
-        position.x = moving_target_x
-        position.y = moving_target_y
-        update_block_grid_pos()
-
-        # TODO 预留接口
-        #adjust_slide_speed()
-
-        if not try_step_forward_moving_target(dir):
-            #tiles_moved = 0
-            if not check_rubber_block(): # 预留的接口
-                #check_explosive_block()  # 预留的接口
-                #check_wooden_block()  # 预留的接口
-                finish_slide() # 完成滑动
+    if not reached_target():
+        return
+    #tiles_moved += 1
+    position.x = moving_target_x
+    position.y = moving_target_y
+    update_block_grid_pos()
+    # TODO 预留接口
+    #adjust_slide_speed()
+    if try_step_forward_moving_target(dir):
+        return
+    #tiles_moved = 0
+    if check_rubber_block(): # 预留的接口
+        return
+    #check_explosive_block()  # 预留的接口
+    check_wooden_block()
+    finish_slide() # 完成滑动
 
 # 有东西挡住了的，不能作为目标移动位置
 func check_target_movable(target_row: int, target_col: int) -> bool:
@@ -178,3 +177,11 @@ func check_hit() -> void:
 
 func do_hit_object():
     pass
+
+# 撞到wood block上会把对方撞碎
+func check_wooden_block():
+    var row = GridHelper.get_next_row_in_direction(current_row, dir)
+    var col = GridHelper.get_next_col_in_direction(current_col, dir)
+    var block = game_manager.get_tile_instance(row, col)
+    if block != null and block is WoodBlock:
+        block.do_break()
