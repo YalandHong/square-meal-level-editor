@@ -239,3 +239,6 @@ func process_winning():
         winner_timer += 1
     if winner_timer >= MAX_WINNER_TIMER_BEFORE_CHEERING:
         level_cleared = true
+
+func is_valid_row_col(row: int, col: int) -> bool:
+    return row >= 0 and row < map_height and col >= 0 and col < map_width
