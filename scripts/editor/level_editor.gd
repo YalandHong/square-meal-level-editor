@@ -122,7 +122,9 @@ func delete_grid_element(row: int, col: int):
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
 
 func save_level_map():
-    LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
-    var float_notification = FloatSavedNotification.new()
+    var ok = LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
+    if not ok:
+        print("save failed")
+        return
+    var float_notification = FloatingNotification.new("level saved")
     camera.add_child(float_notification)
-    float_notification.z_index = 1000

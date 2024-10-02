@@ -68,13 +68,11 @@ func try_chase_player() -> bool:
             play_walk_animation()
             return true
         if try_leap(possible_dir):
-            print("now leap to ", possible_dir)
             return true
     return false
 
 # 前方3格以内有空位置，则可以起飞
 func try_leap(target_dir: String) -> bool:
-    print("try leap to ", target_dir)
     for i in range(1, 4):
         var target_row = GridHelper.get_farther_row_in_direction(current_row, target_dir, i)
         var target_col = GridHelper.get_farther_col_in_direction(current_col, target_dir, i)
@@ -98,7 +96,6 @@ func end_leap():
     play_leap_end_animation()
 
 func _on_animation_finished():
-    print("anim end")
     if leap_starting:
         leap_starting = false
         leaping = true
@@ -107,6 +104,8 @@ func _on_animation_finished():
         leap_ending = false
         play_walk_animation()
 
+# 原版双人模式里，leaping enemy会选择两个玩家中的一个
+# 但在单人游戏下，只有一个可以追逐的玩家
 func get_closest_player() -> Player:
     return game_manager.get_node("Player")
 

@@ -1,11 +1,12 @@
 extends PixelFontLabel
-class_name FloatSavedNotification
+class_name FloatingNotification
 
 var float_timer: int
 
-func _init() -> void:
-    super("level saved")
+func _init(text: String) -> void:
+    super(text)
     float_timer = 0
+    z_index = 1000
 
 func _process(_delta: float) -> void:
     queue_redraw()

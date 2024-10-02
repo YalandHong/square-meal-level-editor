@@ -29,13 +29,13 @@ static func read_level_map_tsv_file(file_path: String):
     return result_array
 
 # 静态函数保存 level_map 为 TSV 文件
-static func save_level_map_to_tsv_file(level_map: Array, file_path: String):
+static func save_level_map_to_tsv_file(level_map: Array, file_path: String) -> bool:
     var file = FileAccess.open(file_path, FileAccess.WRITE)
 
     # 尝试打开文件进行写入
     if file == null:
         printerr("Error opening file: ", FileAccess.get_open_error())
-        return
+        return false
 
     # 遍历 level_map 的每一行
     for row in level_map:
@@ -46,3 +46,4 @@ static func save_level_map_to_tsv_file(level_map: Array, file_path: String):
     # 关闭文件
     file.close()
     print("Level map saved to: ", file_path)
+    return true
