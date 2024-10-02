@@ -62,6 +62,7 @@ func try_chase_player() -> bool:
     var player_row = player.current_row
     var player_col = player.current_col
     var possible_directions = get_directions_towards_player(player_row, player_col)
+    possible_directions.shuffle()
     for possible_dir in possible_directions:
         if try_step_forward_moving_target(possible_dir):
             play_walk_animation()
@@ -143,9 +144,6 @@ func play_leap_animation():
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
     anim_sprite.play("leap_" + dir)
 
-# leap end的动画其实就是leap start倒过来
-# 但Godot的play backwards似乎有bug，无法触发animation_finished信号
-# 所以只能手动把png frame倒过来作为1个新的animation
 func play_leap_end_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
