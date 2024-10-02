@@ -29,12 +29,10 @@ func _ready():
 
     set_enemy_sprite()
     anim_sprite.centered = false
-    # anim_sprite.animation_finished.connect(on_animation_finished)
 
     # 设置初始方向
     dir = DOWN
     play_walk_animation()
-    #try_change_direction()
     assert(check_aligned_with_moving_target())
 
 func _process(_delta: float) -> void:
@@ -159,26 +157,10 @@ func force_align_position_to_grid() -> void:
     var center_y = GridHelper.get_tile_top_left_y(current_row)
     position = Vector2(center_x, center_y)
 
-
-# # 如果目标格子不为空，执行反弹逻辑
-# func bounce_back(block_dir: String) -> void:
-#     var bounce_dir = get_opposite_dir(block_dir)
-#     # var target_col, target_row = get_target_tile(bounce_dir)
-#     move_to_tile(target_col, target_row)
-
-# 更新敌人的位置
-# TODO 这个函数是干嘛的？意义不明
-#func update_position(new_dir: String) -> void:
-    #pass
-    # if new_dir == LEFT or new_dir == RIGHT:
-    #     position.y = GridHelper.get_tile_center_y(current_row)
-    # else:
-    #     position.x = GridHelper.get_tile_center_x(current_col)
-
-
-func do_hit_by_block(block: Block) -> void:
+# 已经被击飞在空中的敌人不会被击中
+func do_hit_by_block(block: Block) -> bool:
     if jumping:
-        return
+        return false
 
     update_mover_grid_pos()
 
@@ -202,6 +184,7 @@ func do_hit_by_block(block: Block) -> void:
     #if not hit_successful:
         #fallback_movement(block)
     perform_jump()
+    return true
 
 # 处理向左被击中的逻辑
 func handle_hit_left(block: Block) -> bool:

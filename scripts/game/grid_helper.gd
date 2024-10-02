@@ -38,22 +38,10 @@ static func x_to_col(x: float) -> int:
     return int((x + TILE_WIDTH / 2.0) / TILE_WIDTH)
 
 static func get_next_row_in_direction(row: int, dir: String) -> int:
-    var new_row = row
-    match dir:
-        UP:
-            new_row = row - 1
-        DOWN:
-            new_row = row + 1
-    return new_row
+    return get_farther_row_in_direction(row, dir, 1)
 
 static func get_next_col_in_direction(col: int, dir: String) -> int:
-    var new_col = col
-    match dir:
-        LEFT:
-            new_col = col - 1
-        RIGHT:
-            new_col = col + 1
-    return new_col
+    return get_farther_col_in_direction(col, dir, 1)
 
 static func step_position_by_speed(pos: Vector2, dir: String, speed: float) -> Vector2:
     match dir:
@@ -87,3 +75,21 @@ static func get_opposite_direction(curr_dir: String) -> String:
 
 static func get_manhattan_dis(pos1: Vector2i, pos2: Vector2i) -> int:
     return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
+
+static func get_farther_row_in_direction(row: int, dir: String, step: int) -> int:
+    var new_row = row
+    match dir:
+        UP:
+            new_row = row - step
+        DOWN:
+            new_row = row + step
+    return new_row
+
+static func get_farther_col_in_direction(col: int, dir: String, step: int) -> int:
+    var new_col = col
+    match dir:
+        LEFT:
+            new_col = col - 1
+        RIGHT:
+            new_col = col + 1
+    return new_col

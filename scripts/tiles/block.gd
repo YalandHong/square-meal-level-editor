@@ -123,11 +123,11 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
     return game_manager.get_tile_instance(target_row, target_col) == null
 
 # 方块滑动时的碰撞检测
+# TODO 这个函数写得比较矬，因为是直接chatgpt生成的
 func check_hit() -> void:
     # 检查当前格子的敌人
     var enemy: Enemy = game_manager.get_enemy_instance(current_row, current_col)
-    if enemy != null:
-        enemy.do_hit_by_block(self)
+    if enemy != null and enemy.do_hit_by_block(self):
         do_hit_object()
         return
 
@@ -142,26 +142,22 @@ func check_hit() -> void:
     # 看样子，原版Flash在判定滑动方块和敌人碰撞的时候，会向direction方向再多判断一格
     if dir == LEFT:
         enemy = game_manager.get_enemy_instance(current_row, current_col - 1)
-        if enemy != null and enemy.dir == RIGHT:
-            enemy.do_hit_by_block(self)
+        if enemy != null and enemy.dir == RIGHT and enemy.do_hit_by_block(self):
             do_hit_object()
             return
     elif dir == RIGHT:
         enemy = game_manager.get_enemy_instance(current_row, current_col + 1)
-        if enemy != null and enemy.dir == LEFT:
-            enemy.do_hit_by_block(self)
+        if enemy != null and enemy.dir == LEFT and enemy.do_hit_by_block(self):
             do_hit_object()
             return
     elif dir == UP:
         enemy = game_manager.get_enemy_instance(current_row - 1, current_col)
-        if enemy != null and enemy.dir == DOWN:
-            enemy.do_hit_by_block(self)
+        if enemy != null and enemy.dir == DOWN and enemy.do_hit_by_block(self):
             do_hit_object()
             return
     elif dir == DOWN:
         enemy = game_manager.get_enemy_instance(current_row + 1, current_col)
-        if enemy != null and enemy.dir == UP:
-            enemy.do_hit_by_block(self)
+        if enemy != null and enemy.dir == UP and enemy.do_hit_by_block(self):
             do_hit_object()
             return
 

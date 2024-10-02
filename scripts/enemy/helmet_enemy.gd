@@ -74,10 +74,10 @@ func do_stand_up():
     duck_timer = randi_range(30, 150)
     play_walk_animation()
 
-func do_hit_by_block(block: Block) -> void:
+func do_hit_by_block(block: Block) -> bool:
     if ducking:
-        return
-    super.do_hit_by_block(block)
+        return true
+    return super.do_hit_by_block(block)
 
 func play_duck_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
