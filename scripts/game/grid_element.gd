@@ -14,7 +14,7 @@ var current_row: int
 var current_col: int
 
 # 选择下一个格子作为移动目标
-# Flash源码里叫get_target
+# Flash源码里叫get_target或者get next target
 func try_step_forward_moving_target(target_dir: String) -> bool:
     assert(target_dir != NONE)
     var target_row = GridHelper.get_next_row_in_direction(current_row, target_dir)

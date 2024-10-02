@@ -16,7 +16,7 @@ const MAX_STUNNED_COUNT: int = 150
 
 var jumping: bool
 
-const MOVE_SPEED: float = 2 # 每个enemy不太一样吧？
+const MOVE_SPEED: float = 2
 
 func _init() -> void:
     jumping = false

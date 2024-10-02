@@ -84,3 +84,6 @@ static func get_opposite_direction(curr_dir: String) -> String:
         RIGHT:
             return LEFT
     return NONE
+
+static func get_manhattan_dis(pos1: Vector2i, pos2: Vector2i) -> int:
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
