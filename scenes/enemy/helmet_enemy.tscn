@@ -778,7 +778,5 @@ script = ExtResource("1_8rmdk")
 
 [node name="HelmetEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fxqi5")
-animation = &"walk_down"
-frame = 8
-frame_progress = 0.168565
+animation = &"duck_up"
 centered = false

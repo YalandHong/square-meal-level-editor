@@ -2,8 +2,8 @@ extends Enemy
 class_name ChargingEnemy
 
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(
-    -63 / 2 + GameManager.TILE_WIDTH / 2,
-    -GameManager.TILE_HEIGHT / 2 - 87
+    -71 / 2 + GameManager.TILE_WIDTH / 2,
+    -GameManager.TILE_HEIGHT / 2 - 78
 )
 
 const ANIMATION_FPS_SCALE_WALK: float = 0.5
