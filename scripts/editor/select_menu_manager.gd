@@ -29,7 +29,7 @@ func create_select_buttons():
         [GlobalVars.ID_PLAYER],
 
         [GlobalVars.ID_DUMB_ENEMY, GlobalVars.ID_HELMET_ENEMY],
-        [GlobalVars.ID_CHARGING_ENEMY],
+        [GlobalVars.ID_CHARGING_ENEMY, GlobalVars.ID_LEAPING_ENEMY],
 
         [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK],
         [GlobalVars.ID_DEFAULT_FOOD_BLOCK, GlobalVars.ID_WOOD_BLOCK],
