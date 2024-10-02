@@ -21,7 +21,9 @@ func _ready() -> void:
     anim_sprite.animation_finished.connect(_on_animation_finished)
 
 func handle_movement_or_jump():
-    if not leap_starting and not leap_ending:
+    if leap_ending:
+        return
+    if not leap_starting:
         do_move()
     check_hit_players()
     if not reached_target():
@@ -36,6 +38,7 @@ func handle_reached_moving_target():
         return
     if leaping:
         end_leap()
+        return
     if try_chase_player():
         return
     try_change_direction()
@@ -55,9 +58,9 @@ func get_directions_towards_player(player_row: int, player_col: int) -> Array:
 # leaping enemy会根据玩家的位置选择下一步要移动的目标位置
 # 如果遇到障碍物，会试图越过去
 func try_chase_player() -> bool:
-    var player_pos = get_closest_player_grid_pos()
-    var player_row = player_pos.y
-    var player_col = player_pos.x
+    var player = get_closest_player()
+    var player_row = player.current_row
+    var player_col = player.current_col
     var possible_directions = get_directions_towards_player(player_row, player_col)
     for possible_dir in possible_directions:
         if try_step_forward_moving_target(possible_dir):
@@ -92,6 +95,7 @@ func end_leap():
     play_leap_end_animation()
 
 func _on_animation_finished():
+    print("anim end")
     if leap_starting:
         leap_starting = false
         leaping = true
@@ -100,9 +104,8 @@ func _on_animation_finished():
         leap_ending = false
         play_walk_animation()
 
-func get_closest_player_grid_pos() -> Vector2i:
-    var player: Player = game_manager.get_node("Player")
-    return Vector2i(player.current_row, player.current_col)
+func get_closest_player() -> Player:
+    return game_manager.get_node("Player")
 
 # 飞行状态的敌人是不会被击中的
 func do_hit_by_block(block: Block) -> bool:
@@ -146,4 +149,4 @@ func play_leap_animation():
 func play_leap_end_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
-    anim_sprite.play("leap_end_" + dir)
+    anim_sprite.play_backwards("leap_start_" + dir)
