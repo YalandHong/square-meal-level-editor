@@ -27,6 +27,10 @@ func handle_movement_or_jump():
         return
     handle_reached_moving_target()
 
+# 在这个函数涉及到的各种状态中，jumping优先级最高
+# charging和detouring最多只能生效一个
+# 冲刺状态会把绕路过程打断
+# 撞到障碍物会把冲刺状态打断
 func handle_reached_moving_target():
     position = Vector2(moving_target_x, moving_target_y)
     update_mover_grid_pos()
@@ -34,27 +38,35 @@ func handle_reached_moving_target():
         assert(not charging)
         finish_jump()
         return
-    if can_see_player():
+    if not charging and can_see_player():
         # 这一帧只负责进入charge状态
         # 下一帧再选择moving target
         charging = true
-        return
-
-    # charging enemy在转方向的时候有跟踪玩家和绕路的行为
-    # 但绕路状态只持续1格
-    if detouring:
         detouring = false
-        if try_change_back_to_expected_dir():
-            return
-    else:
-        if try_step_forward_moving_target(dir):
-            return
-        if try_detour():
-            return
+        play_charge_animation()
+        return
+    if detouring:
+        handle_detouring()
+        return
+    if try_step_forward_moving_target(dir):
+        return
+    # walking或charging时撞到障碍物
+    charging = false
+    if try_detour():
+        return
+    try_change_direction()
+
+# charging enemy在转方向的时候有跟踪玩家和绕路的行为
+# 但绕路状态只持续1格
+func handle_detouring():
+    assert(not charging)
+    detouring = false
+    if try_change_back_to_expected_dir():
+        return
     try_change_direction()
 
 func do_charge():
-    assert(not jumping)
+    assert(not jumping and not stunned and not detouring)
     if dir == NONE:
         return
     position = GridHelper.step_position_by_speed(position, dir, CHARGE_SPEED)
@@ -122,7 +134,10 @@ func try_detour() -> bool:
 
 # 尝试从绕路状态切回到正常方向
 func try_change_back_to_expected_dir() -> bool:
-    return try_step_forward_moving_target(expected_dir)
+    var ok = try_step_forward_moving_target(expected_dir)
+    if ok:
+        play_walk_animation()
+    return ok
 
 # 被方块击晕时会打断冲刺状态
 func do_hit_by_block(block: Block) -> void:
