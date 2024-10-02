@@ -68,11 +68,13 @@ func try_chase_player() -> bool:
             play_walk_animation()
             return true
         if try_leap(possible_dir):
+            print("now leap to ", possible_dir)
             return true
     return false
 
 # 前方3格以内有空位置，则可以起飞
 func try_leap(target_dir: String) -> bool:
+    print("try leap to ", target_dir)
     for i in range(1, 4):
         var target_row = GridHelper.get_farther_row_in_direction(current_row, target_dir, i)
         var target_col = GridHelper.get_farther_col_in_direction(current_col, target_dir, i)

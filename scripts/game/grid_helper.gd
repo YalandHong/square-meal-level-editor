@@ -89,7 +89,7 @@ static func get_farther_col_in_direction(col: int, dir: String, step: int) -> in
     var new_col = col
     match dir:
         LEFT:
-            new_col = col - 1
+            new_col = col - step
         RIGHT:
-            new_col = col + 1
+            new_col = col + step
     return new_col
