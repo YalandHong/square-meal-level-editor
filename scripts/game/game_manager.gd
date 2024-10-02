@@ -82,25 +82,23 @@ func get_loaded_level_map(file_path: String) -> Array:
 static func calculate_depth(pos: Vector2) -> int:
     return int(pos.y / 2)
 
-static func update_grid_pos_for_grid_element(map: Array, grid_element: GridElement,
-        old_row: int, old_col: int, new_row: int, new_col: int):
-    map[old_row][old_col] = null
-    map[new_row][new_col] = grid_element
-
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
     assert(is_same(level_map_players[old_row][old_col], player))
+    level_map_players[old_row][old_col] = null
     assert(level_map_players[new_row][new_col] == null)
-    update_grid_pos_for_grid_element(level_map_players, player, old_row, old_col, new_row, new_col)
+    level_map_players[new_row][new_col] = player
 
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
     assert(is_same(level_map_tiles[old_row][old_col], block))
+    level_map_tiles[old_row][old_col] = null
     assert(level_map_tiles[new_row][new_col] == null)
-    update_grid_pos_for_grid_element(level_map_tiles, block, old_row, old_col, new_row, new_col)
+    level_map_tiles[new_row][new_col] = block
 
 # TODO 某些敌人可能会叠在一起，比如leaping enemy
 # 这时候mover map里的内容可能会相互覆盖，导致block/player等碰撞检测不准确
 func update_movers(enemy: Enemy, old_row: int, old_col: int, new_row: int, new_col: int):
-    update_grid_pos_for_grid_element(level_map_movers, enemy, old_row, old_col, new_row, new_col)
+    level_map_movers[old_row][old_col] = null
+    level_map_movers[new_row][new_col] = enemy
 
 # 绘制地图
 func init_level_maps(level_map: Array):

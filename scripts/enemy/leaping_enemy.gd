@@ -102,7 +102,7 @@ func do_hit_by_block(block: Block) -> bool:
     return super.do_hit_by_block(block)
 
 func set_enemy_sprite() -> void:
-    anim_sprite = $ChargingEnemySprite
+    anim_sprite = $LeapingEnemySprite
 
 func play_walk_animation() -> void:
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
