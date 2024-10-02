@@ -23,7 +23,6 @@ func _ready() -> void:
 func handle_movement_or_jump():
     if not leap_starting and not leap_ending:
         do_move()
-        return
     check_hit_players()
     if not reached_target():
         return
@@ -36,17 +35,22 @@ func handle_reached_moving_target():
         finish_jump()
         return
     if leaping:
-        finish_leap()
+        end_leap()
     if try_chase_player():
         return
     try_change_direction()
 
-# 如果敌人和玩家位于同一行，则只需要考虑左右移动
-# 否则，会优先试图和玩家走到同一行
-func get_direction_towards_player(player_row: int, player_col: int) -> String:
-    if player_row == current_row:
-        return LEFT if player_col < current_col else RIGHT
-    return UP if player_row < current_row else DOWN
+func get_directions_towards_player(player_row: int, player_col: int) -> Array:
+    var ans = []
+    if player_row < current_row:
+        ans.append(UP)
+    if player_row > current_row:
+        ans.append(DOWN)
+    if player_col < current_col:
+        ans.append(LEFT)
+    if player_col > current_col:
+        ans.append(RIGHT)
+    return ans
 
 # leaping enemy会根据玩家的位置选择下一步要移动的目标位置
 # 如果遇到障碍物，会试图越过去
@@ -54,10 +58,14 @@ func try_chase_player() -> bool:
     var player_pos = get_closest_player_grid_pos()
     var player_row = player_pos.y
     var player_col = player_pos.x
-    var possible_dir = get_direction_towards_player(player_row, player_col)
-    if try_step_forward_moving_target(possible_dir):
-        return true
-    return try_leap(possible_dir)
+    var possible_directions = get_directions_towards_player(player_row, player_col)
+    for possible_dir in possible_directions:
+        if try_step_forward_moving_target(possible_dir):
+            play_walk_animation()
+            return true
+        if try_leap(possible_dir):
+            return true
+    return false
 
 # 前方3格以内有空位置，则可以起飞
 func try_leap(target_dir: String) -> bool:
@@ -77,8 +85,11 @@ func start_leap():
     leap_starting = true
     play_leap_start_animation()
 
-func finish_leap():
-    pass
+# 飞过障碍物，落地
+func end_leap():
+    leaping = false
+    leap_ending = true
+    play_leap_end_animation()
 
 func _on_animation_finished():
     if leap_starting:
@@ -129,7 +140,10 @@ func play_leap_animation():
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
     anim_sprite.play("leap_" + dir)
 
+# leap end的动画其实就是leap start倒过来
+# 但Godot的play backwards似乎有bug，无法触发animation_finished信号
+# 所以只能手动把png frame倒过来作为1个新的animation
 func play_leap_end_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
-    anim_sprite.play_backwards("leap_start_" + dir)
+    anim_sprite.play("leap_end_" + dir)

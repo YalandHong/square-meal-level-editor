@@ -1,4 +1,4 @@
-[gd_scene load_steps=215 format=3 uid="uid://cusxh8lx83urn"]
+[gd_scene load_steps=247 format=3 uid="uid://cusxh8lx83urn"]
 
 [ext_resource type="Script" path="res://scripts/enemy/leaping_enemy.gd" id="1_2u77a"]
 [ext_resource type="Texture2D" uid="uid://dwhjdvvg358sw" path="res://sprites/enemy/leap/hit/down/71.png" id="1_wjk8n"]
@@ -88,36 +88,68 @@
 [ext_resource type="Texture2D" uid="uid://bfejctbdlps4k" path="res://sprites/enemy/leap/leaping/right/131.png" id="82_uoe8s"]
 [ext_resource type="Texture2D" uid="uid://c03tso8j0dko3" path="res://sprites/enemy/leap/leaping/right/140.png" id="83_6ryox"]
 [ext_resource type="Texture2D" uid="uid://djtked3qshgj" path="res://sprites/enemy/leap/leap_start/down/151.png" id="84_2c83q"]
+[ext_resource type="Texture2D" uid="uid://b7yk5fpa8im05" path="res://sprites/enemy/leap/leap_end/down_rev/151.png" id="84_pyjms"]
+[ext_resource type="Texture2D" uid="uid://cyk5muniog86w" path="res://sprites/enemy/leap/leap_end/down_rev/152.png" id="85_672hi"]
 [ext_resource type="Texture2D" uid="uid://ijjuh4wlfopr" path="res://sprites/enemy/leap/leap_start/down/152.png" id="85_ddx0s"]
 [ext_resource type="Texture2D" uid="uid://ymhehyuilr71" path="res://sprites/enemy/leap/leap_start/down/153.png" id="86_kobi7"]
+[ext_resource type="Texture2D" uid="uid://b7pd66alwjghj" path="res://sprites/enemy/leap/leap_end/down_rev/153.png" id="86_yw8g8"]
+[ext_resource type="Texture2D" uid="uid://46pi2i31rjjf" path="res://sprites/enemy/leap/leap_end/down_rev/154.png" id="87_cykb0"]
 [ext_resource type="Texture2D" uid="uid://dvontt21dxbuw" path="res://sprites/enemy/leap/leap_start/down/154.png" id="87_wsyxd"]
+[ext_resource type="Texture2D" uid="uid://b6l8vi7jigemm" path="res://sprites/enemy/leap/leap_end/down_rev/155.png" id="88_ldrvt"]
 [ext_resource type="Texture2D" uid="uid://ds30u3qndhdxm" path="res://sprites/enemy/leap/leap_start/down/155.png" id="88_qf5ri"]
 [ext_resource type="Texture2D" uid="uid://b2jqqy8t8bwvh" path="res://sprites/enemy/leap/leap_start/down/156.png" id="89_5f265"]
+[ext_resource type="Texture2D" uid="uid://b5b3j0egq5de" path="res://sprites/enemy/leap/leap_end/down_rev/156.png" id="89_7ctok"]
 [ext_resource type="Texture2D" uid="uid://cr5iotp0dij8w" path="res://sprites/enemy/leap/leap_start/down/157.png" id="90_7mddq"]
+[ext_resource type="Texture2D" uid="uid://babeg8lqyn4en" path="res://sprites/enemy/leap/leap_end/down_rev/157.png" id="90_u1ans"]
 [ext_resource type="Texture2D" uid="uid://bqxvh0ae1vb0m" path="res://sprites/enemy/leap/leap_start/down/158.png" id="91_a6iqs"]
+[ext_resource type="Texture2D" uid="uid://cnhy7cqkh48dy" path="res://sprites/enemy/leap/leap_end/down_rev/158.png" id="91_rqv6l"]
+[ext_resource type="Texture2D" uid="uid://dtsj6kr2e7mr4" path="res://sprites/enemy/leap/leap_end/left_rev/121.png" id="92_0ghxv"]
 [ext_resource type="Texture2D" uid="uid://cegbn1yuguqjb" path="res://sprites/enemy/leap/leap_start/left/121.png" id="92_kupju"]
 [ext_resource type="Texture2D" uid="uid://bc5bda7jv0cg6" path="res://sprites/enemy/leap/leap_start/left/122.png" id="93_bvvbh"]
+[ext_resource type="Texture2D" uid="uid://chnxd4n21c0rl" path="res://sprites/enemy/leap/leap_end/left_rev/122.png" id="93_omin7"]
 [ext_resource type="Texture2D" uid="uid://bryjpg4aiag7j" path="res://sprites/enemy/leap/leap_start/left/123.png" id="94_a50h6"]
+[ext_resource type="Texture2D" uid="uid://bfspr85do7mbm" path="res://sprites/enemy/leap/leap_end/left_rev/123.png" id="94_kmk2m"]
+[ext_resource type="Texture2D" uid="uid://yd6pdfvfyc1n" path="res://sprites/enemy/leap/leap_end/left_rev/124.png" id="95_7muqb"]
 [ext_resource type="Texture2D" uid="uid://daxjag7w47rsm" path="res://sprites/enemy/leap/leap_start/left/124.png" id="95_id8ww"]
+[ext_resource type="Texture2D" uid="uid://hs53fkm4k8qs" path="res://sprites/enemy/leap/leap_end/left_rev/125.png" id="96_6eurq"]
 [ext_resource type="Texture2D" uid="uid://cign6t3nffxl0" path="res://sprites/enemy/leap/leap_start/left/125.png" id="96_247e6"]
+[ext_resource type="Texture2D" uid="uid://bfpfmd5he2gdp" path="res://sprites/enemy/leap/leap_end/left_rev/126.png" id="97_5c5tq"]
 [ext_resource type="Texture2D" uid="uid://b6dyjai3jvue0" path="res://sprites/enemy/leap/leap_start/left/126.png" id="97_06ocf"]
+[ext_resource type="Texture2D" uid="uid://bcnxjq44j3vt7" path="res://sprites/enemy/leap/leap_end/left_rev/127.png" id="98_dekfc"]
 [ext_resource type="Texture2D" uid="uid://c3idih8gt2onk" path="res://sprites/enemy/leap/leap_start/left/127.png" id="98_mua1a"]
+[ext_resource type="Texture2D" uid="uid://bm3lgqgjkcjol" path="res://sprites/enemy/leap/leap_end/left_rev/128.png" id="99_ahaod"]
 [ext_resource type="Texture2D" uid="uid://el4wgbubsdff" path="res://sprites/enemy/leap/leap_start/left/128.png" id="99_s410h"]
 [ext_resource type="Texture2D" uid="uid://65hvh6a4nh0w" path="res://sprites/enemy/leap/leap_start/right/132.png" id="100_6h3wm"]
+[ext_resource type="Texture2D" uid="uid://mjimij2pigd" path="res://sprites/enemy/leap/leap_end/right_rev/132.png" id="100_wo2or"]
 [ext_resource type="Texture2D" uid="uid://hlxbcutdlhna" path="res://sprites/enemy/leap/leap_start/right/133.png" id="101_1q843"]
+[ext_resource type="Texture2D" uid="uid://b0fbu5mmei5i4" path="res://sprites/enemy/leap/leap_end/right_rev/133.png" id="101_m3cj5"]
+[ext_resource type="Texture2D" uid="uid://b03kn1lpi7pq0" path="res://sprites/enemy/leap/leap_end/right_rev/134.png" id="102_cfwnp"]
 [ext_resource type="Texture2D" uid="uid://dnxeweoax4teg" path="res://sprites/enemy/leap/leap_start/right/134.png" id="102_ehsmc"]
+[ext_resource type="Texture2D" uid="uid://duxwrtlktfn0u" path="res://sprites/enemy/leap/leap_end/right_rev/135.png" id="103_eabth"]
 [ext_resource type="Texture2D" uid="uid://yj670wkot7u5" path="res://sprites/enemy/leap/leap_start/right/135.png" id="103_te8li"]
 [ext_resource type="Texture2D" uid="uid://bqv14e0qj1mtp" path="res://sprites/enemy/leap/leap_start/right/136.png" id="104_a1av8"]
+[ext_resource type="Texture2D" uid="uid://be70upc5ddbwx" path="res://sprites/enemy/leap/leap_end/right_rev/136.png" id="104_sofay"]
+[ext_resource type="Texture2D" uid="uid://b4rk1c8hjw0py" path="res://sprites/enemy/leap/leap_end/right_rev/137.png" id="105_1pfn0"]
 [ext_resource type="Texture2D" uid="uid://cyas6vi3vcc8u" path="res://sprites/enemy/leap/leap_start/right/137.png" id="105_vu4tp"]
 [ext_resource type="Texture2D" uid="uid://ydh2umuu8nqj" path="res://sprites/enemy/leap/leap_start/right/138.png" id="106_ow2va"]
+[ext_resource type="Texture2D" uid="uid://cahmdufpp0g11" path="res://sprites/enemy/leap/leap_end/right_rev/138.png" id="106_wqg5c"]
 [ext_resource type="Texture2D" uid="uid://0t5ab4iehcpk" path="res://sprites/enemy/leap/leap_start/right/139.png" id="107_pu0lk"]
+[ext_resource type="Texture2D" uid="uid://ievfac0qhhlt" path="res://sprites/enemy/leap/leap_end/right_rev/139.png" id="107_wd0cl"]
 [ext_resource type="Texture2D" uid="uid://bevumungwrrcb" path="res://sprites/enemy/leap/leap_start/up/141.png" id="108_f4cpk"]
+[ext_resource type="Texture2D" uid="uid://05xs4d66gdaq" path="res://sprites/enemy/leap/leap_end/up_rev/141.png" id="108_yrhna"]
 [ext_resource type="Texture2D" uid="uid://bqhhtum6o33r3" path="res://sprites/enemy/leap/leap_start/up/142.png" id="109_2gv5d"]
+[ext_resource type="Texture2D" uid="uid://bihcca7knc7el" path="res://sprites/enemy/leap/leap_end/up_rev/142.png" id="109_3tgg5"]
 [ext_resource type="Texture2D" uid="uid://by44ix805mkyr" path="res://sprites/enemy/leap/leap_start/up/143.png" id="110_113h1"]
+[ext_resource type="Texture2D" uid="uid://mqyvwql07xb5" path="res://sprites/enemy/leap/leap_end/up_rev/143.png" id="110_pssnl"]
 [ext_resource type="Texture2D" uid="uid://despn83bapwch" path="res://sprites/enemy/leap/leap_start/up/144.png" id="111_p5s3v"]
+[ext_resource type="Texture2D" uid="uid://c7aetei8nb0xo" path="res://sprites/enemy/leap/leap_end/up_rev/144.png" id="111_q8u61"]
 [ext_resource type="Texture2D" uid="uid://d2mm41laatlpb" path="res://sprites/enemy/leap/leap_start/up/145.png" id="112_2qy3m"]
+[ext_resource type="Texture2D" uid="uid://c5nq2u1daeenr" path="res://sprites/enemy/leap/leap_end/up_rev/145.png" id="112_lsvr1"]
 [ext_resource type="Texture2D" uid="uid://cjjd2ha6oljqg" path="res://sprites/enemy/leap/leap_start/up/146.png" id="113_b4sf0"]
+[ext_resource type="Texture2D" uid="uid://odgpcle463ha" path="res://sprites/enemy/leap/leap_end/up_rev/146.png" id="113_j1l2k"]
+[ext_resource type="Texture2D" uid="uid://0py8doeb2s8o" path="res://sprites/enemy/leap/leap_end/up_rev/147.png" id="114_226uk"]
 [ext_resource type="Texture2D" uid="uid://c3nwcvtxtg8qr" path="res://sprites/enemy/leap/leap_start/up/147.png" id="114_u7wfm"]
+[ext_resource type="Texture2D" uid="uid://b6xatuq5yfrvu" path="res://sprites/enemy/leap/leap_end/up_rev/148.png" id="115_8vcqc"]
 [ext_resource type="Texture2D" uid="uid://sexdoinkc6f3" path="res://sprites/enemy/leap/leap_start/up/148.png" id="115_jjv71"]
 [ext_resource type="Texture2D" uid="uid://br6o5iw7oacbb" path="res://sprites/enemy/leap/leaping/up/149.png" id="116_oq3pc"]
 [ext_resource type="Texture2D" uid="uid://dlsx6kqrcwbpd" path="res://sprites/enemy/leap/leaping/up/150.png" id="117_eshou"]
@@ -485,6 +517,122 @@ animations = [{
 }],
 "loop": true,
 "name": &"leap_down",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("84_pyjms")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_672hi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_yw8g8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_cykb0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_ldrvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_7ctok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_u1ans")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_rqv6l")
+}],
+"loop": false,
+"name": &"leap_end_down",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("92_0ghxv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_omin7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_kmk2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_7muqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_6eurq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_5c5tq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_dekfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_ahaod")
+}],
+"loop": false,
+"name": &"leap_end_left",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("100_wo2or")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_m3cj5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_cfwnp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_eabth")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_sofay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_1pfn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_wqg5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_wd0cl")
+}],
+"loop": false,
+"name": &"leap_end_right",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("108_yrhna")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_3tgg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_pssnl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_q8u61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_lsvr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_j1l2k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_226uk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_8vcqc")
+}],
+"loop": false,
+"name": &"leap_end_up",
 "speed": 30.0
 }, {
 "frames": [{
@@ -958,5 +1106,5 @@ script = ExtResource("1_2u77a")
 
 [node name="LeapingEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2dbdg")
-animation = &"walk_up"
+animation = &"leap_end_up"
 centered = false
