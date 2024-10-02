@@ -27,7 +27,10 @@ func _process(_delta: float) -> void:
 func create_select_buttons():
     var button_id_list = [
         [GlobalVars.ID_PLAYER],
+
         [GlobalVars.ID_DUMB_ENEMY, GlobalVars.ID_HELMET_ENEMY],
+        [GlobalVars.ID_CHARGING_ENEMY],
+
         [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK],
         [GlobalVars.ID_DEFAULT_FOOD_BLOCK, GlobalVars.ID_WOOD_BLOCK],
         [GlobalVars.ID_METAL_BLOCK, GlobalVars.ID_RUBBER_BLOCK],

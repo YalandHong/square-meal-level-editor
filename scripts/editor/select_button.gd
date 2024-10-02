@@ -7,6 +7,7 @@ const BUTTON_TYPE_ID_TO_SPRITE_FILE_MAP: Dictionary = {
 
     GlobalVars.ID_DUMB_ENEMY: "dumb.png",
     GlobalVars.ID_HELMET_ENEMY: "helmet.png",
+    GlobalVars.ID_CHARGING_ENEMY: "charge.png",
 
     GlobalVars.ID_WALL_BLOCK: "wall.png",
     GlobalVars.ID_METAL_BLOCK: "metal.png",
