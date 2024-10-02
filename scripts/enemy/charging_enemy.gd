@@ -7,6 +7,7 @@ const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(
 )
 
 const ANIMATION_FPS_SCALE_WALK: float = 0.5
+const ANIMATION_FPS_SCALE_CHARGE: float = 0.8
 const ANIMATION_FPS_SCALE_HIT: float = 0.8
 
 # 冲刺相关
@@ -164,4 +165,5 @@ func play_stunned_animation() -> void:
 
 func play_charge_animation():
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_CHARGE
     anim_sprite.play("charge_" + dir)

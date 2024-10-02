@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=3 uid="uid://b4hb844eowywp"]
+[gd_scene load_steps=212 format=3 uid="uid://b4hb844eowywp"]
 
 [ext_resource type="Script" path="res://scripts/enemy/charging_enemy.gd" id="1_bi046"]
 [ext_resource type="Texture2D" uid="uid://boja040qjnswn" path="res://sprites/enemy/charge/charge/down/151.png" id="2_wahsh"]
@@ -168,12 +168,18 @@
 [ext_resource type="Texture2D" uid="uid://ci7grafxjvqhu" path="res://sprites/enemy/charge/walk/down/38.png" id="166_vyxjx"]
 [ext_resource type="Texture2D" uid="uid://d1b13fu583ksg" path="res://sprites/enemy/charge/walk/down/39.png" id="167_8jkre"]
 [ext_resource type="Texture2D" uid="uid://chioqqd52oegh" path="res://sprites/enemy/charge/walk/down/40.png" id="168_ilo7k"]
+[ext_resource type="Texture2D" uid="uid://nk147gt4ydc4" path="res://sprites/enemy/charge/walk/down_flop/33.png" id="169_jyvtt"]
 [ext_resource type="Texture2D" uid="uid://5ceh384d3ibp" path="res://sprites/enemy/charge/walk/left/1.png" id="169_xxoj6"]
+[ext_resource type="Texture2D" uid="uid://d2rtav70aiqis" path="res://sprites/enemy/charge/walk/down_flop/34.png" id="170_2r687"]
 [ext_resource type="Texture2D" uid="uid://dyeaspagpsoog" path="res://sprites/enemy/charge/walk/left/2.png" id="170_sh0t7"]
 [ext_resource type="Texture2D" uid="uid://gcn32swvnvqt" path="res://sprites/enemy/charge/walk/left/3.png" id="171_6n5yh"]
+[ext_resource type="Texture2D" uid="uid://h1posho5hpcf" path="res://sprites/enemy/charge/walk/down_flop/35.png" id="171_m1l7o"]
 [ext_resource type="Texture2D" uid="uid://rcgektd7a8bb" path="res://sprites/enemy/charge/walk/left/4.png" id="172_l2ago"]
+[ext_resource type="Texture2D" uid="uid://cpq3i0c6yf561" path="res://sprites/enemy/charge/walk/down_flop/36.png" id="172_pghdg"]
 [ext_resource type="Texture2D" uid="uid://dsntk335lqqnk" path="res://sprites/enemy/charge/walk/left/5.png" id="173_ajfkg"]
+[ext_resource type="Texture2D" uid="uid://ct6s8ros05pm" path="res://sprites/enemy/charge/walk/down_flop/37.png" id="173_yffua"]
 [ext_resource type="Texture2D" uid="uid://jiki668j3666" path="res://sprites/enemy/charge/walk/left/6.png" id="174_55i31"]
+[ext_resource type="Texture2D" uid="uid://dxcnp1o1llk8g" path="res://sprites/enemy/charge/walk/down_flop/38.png" id="174_2135k"]
 [ext_resource type="Texture2D" uid="uid://cq2wfvynbvetl" path="res://sprites/enemy/charge/walk/left/7.png" id="175_onxbs"]
 [ext_resource type="Texture2D" uid="uid://c6tppemgw2kic" path="res://sprites/enemy/charge/walk/left/8.png" id="176_p6t7o"]
 [ext_resource type="Texture2D" uid="uid://7m0tugmxuuql" path="res://sprites/enemy/charge/walk/left/9.png" id="177_428ol"]
@@ -198,6 +204,12 @@
 [ext_resource type="Texture2D" uid="uid://k67n6hpsu361" path="res://sprites/enemy/charge/walk/up/28.png" id="196_yyy20"]
 [ext_resource type="Texture2D" uid="uid://d3gymb1dimhfy" path="res://sprites/enemy/charge/walk/up/29.png" id="197_1ov2g"]
 [ext_resource type="Texture2D" uid="uid://dfe2q8hp1505m" path="res://sprites/enemy/charge/walk/up/30.png" id="198_3arif"]
+[ext_resource type="Texture2D" uid="uid://cq38v5klkcnif" path="res://sprites/enemy/charge/walk/up_flop/23.png" id="205_wfl05"]
+[ext_resource type="Texture2D" uid="uid://cgir20388i76m" path="res://sprites/enemy/charge/walk/up_flop/24.png" id="206_b4vrt"]
+[ext_resource type="Texture2D" uid="uid://c06jcibcvxv40" path="res://sprites/enemy/charge/walk/up_flop/25.png" id="207_jcc4y"]
+[ext_resource type="Texture2D" uid="uid://ck20ih005myfw" path="res://sprites/enemy/charge/walk/up_flop/26.png" id="208_m7uje"]
+[ext_resource type="Texture2D" uid="uid://c64226rmc7e15" path="res://sprites/enemy/charge/walk/up_flop/27.png" id="209_pekhi"]
+[ext_resource type="Texture2D" uid="uid://bcigskc2yn76y" path="res://sprites/enemy/charge/walk/up_flop/28.png" id="210_fywfj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yvvh8"]
 animations = [{
@@ -762,6 +774,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("168_ilo7k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_jyvtt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_2r687")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_m1l7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_pghdg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_yffua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("174_2135k")
 }],
 "loop": true,
 "name": &"walk_down",
@@ -867,6 +897,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("198_3arif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("205_wfl05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("206_b4vrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("207_jcc4y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("208_m7uje")
+}, {
+"duration": 1.0,
+"texture": ExtResource("209_pekhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("210_fywfj")
 }],
 "loop": true,
 "name": &"walk_up",
@@ -878,5 +926,7 @@ script = ExtResource("1_bi046")
 
 [node name="ChargingEnemySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_yvvh8")
-animation = &"hit_left"
+animation = &"walk_up"
+frame = 15
+frame_progress = 0.390174
 centered = false
