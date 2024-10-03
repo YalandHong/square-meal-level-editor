@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cp0qrprdquouk"]
+
+[ext_resource type="Script" path="res://scripts/menu/choose_level_menu.gd" id="1_24ybe"]
+[ext_resource type="Texture2D" uid="uid://c6kiskinmv7hs" path="res://sprites/bg_menu.png" id="2_4vrxv"]
+[ext_resource type="Texture2D" uid="uid://bwid51mb8abs8" path="res://sprites/menu/1212.png" id="3_tmfph"]
+[ext_resource type="Texture2D" uid="uid://cp5nngn6140c8" path="res://sprites/menu/1500.png" id="4_4346o"]
+[ext_resource type="Texture2D" uid="uid://b7fylyg7ofcis" path="res://sprites/menu/nitrome_active.png" id="5_pdd5i"]
+
+[node name="ChooseLevelMenu" type="Node2D"]
+script = ExtResource("1_24ybe")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("2_4vrxv")
+centered = false
+
+[node name="MenuBackground" type="Sprite2D" parent="."]
+position = Vector2(275, 200)
+texture = ExtResource("3_tmfph")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ChooseALevel" type="Sprite2D" parent="."]
+position = Vector2(275, 40)
+texture = ExtResource("4_4346o")
+
+[node name="NitromeLogo" type="Sprite2D" parent="."]
+position = Vector2(275, 95)
+texture = ExtResource("5_pdd5i")

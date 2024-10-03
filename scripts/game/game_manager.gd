@@ -69,8 +69,8 @@ func _ready() -> void:
     add_child(camera)
     camera.enabled = true
     camera.zoom = Vector2(
-        825.0 / GlobalVars.VIEW_WIDTH,
-        600.0 / GlobalVars.VIEW_HEIGHT
+        float(GlobalVars.WINDOW_WIDTH) / GlobalVars.VIEW_WIDTH,
+        float(GlobalVars.WINDOW_HEIGHT) / GlobalVars.VIEW_HEIGHT
     )
     scroll_game()
 

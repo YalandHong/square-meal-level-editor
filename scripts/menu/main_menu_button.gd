@@ -26,5 +26,6 @@ func _on_mouse_exited():
     text_label.active = false
 
 func _on_mouse_clicked():
+    print("change to level str = ", level_str)
     GlobalVarsSingleton.current_level_file = level_str
     get_tree().change_scene_to_packed(scene_to_load)

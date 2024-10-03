@@ -7,6 +7,6 @@ func _on_mouse_clicked():
         var float_notification = FloatingNotification.new("no player")
         level_editor.camera.add_child(float_notification)
         return
-    level_editor.save_level_map()
+    level_editor.save_level_map("user://edit_level.tsv")
     level_str = "user://edit_level.tsv"
     super._on_mouse_clicked()

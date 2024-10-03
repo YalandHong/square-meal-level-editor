@@ -7,8 +7,6 @@ const MENU_WIDTH: int = GlobalVars.WINDOW_WIDTH - GlobalVars.VIEW_WIDTH
 const MENU_HEIGHT: int = GlobalVars.WINDOW_HEIGHT
 
 @onready var level_editor: LevelEditor = get_parent()
-@onready var run_button: TextureButton = $RunButton
-@onready var save_button: TextureButton = $SaveButton
 
 func _init() -> void:
     create_select_buttons()
@@ -16,10 +14,11 @@ func _init() -> void:
 func _ready():
     size = Vector2(MENU_WIDTH, MENU_HEIGHT)
     color = Color.IVORY
-    run_button.position.x = MENU_WIDTH / 2 - run_button.texture_normal.get_size().x / 2
-    run_button.position.y = MENU_HEIGHT - 44
-    save_button.position.x = MENU_WIDTH / 2 - save_button.texture_normal.get_size().x / 2
-    save_button.position.y = run_button.position.y - 44
+    var i = 0
+    for button in [$ExportButton, $ImportButton, $RunButton, $SaveButton]:
+        button.position.x = MENU_WIDTH / 2 - button.texture_normal.get_size().x / 2
+        button.position.y = MENU_HEIGHT - 44 * (i+1)
+        i += 1
 
 func _process(_delta: float) -> void:
     update_select_menu_position()

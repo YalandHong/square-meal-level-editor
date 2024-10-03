@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://c6kiskinmv7hs" path="res://sprites/bg_menu.png" id="1_y6n2y"]
 [ext_resource type="Texture2D" uid="uid://chwy5nm6lvf2r" path="res://sprites/menu/main_menu_button.png" id="3_oeqpk"]
 [ext_resource type="Script" path="res://scripts/menu/main_menu_button.gd" id="3_op2vl"]
-[ext_resource type="PackedScene" uid="uid://bf5f0nj851ygd" path="res://scenes/main_game.tscn" id="4_48fcq"]
 [ext_resource type="PackedScene" uid="uid://po6qul23l7q2" path="res://scenes/level_editor.tscn" id="5_7oihi"]
+[ext_resource type="PackedScene" uid="uid://cp0qrprdquouk" path="res://scenes/choose_level_menu.tscn" id="5_jp13e"]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -25,8 +25,7 @@ offset_bottom = 339.0
 texture_normal = ExtResource("3_oeqpk")
 script = ExtResource("3_op2vl")
 displayed_text = "play"
-scene_to_load = ExtResource("4_48fcq")
-level_str = "res://levels/test_level.txt"
+scene_to_load = ExtResource("5_jp13e")
 
 [node name="GotoLevelEditor" type="TextureButton" parent="."]
 offset_left = 349.0
