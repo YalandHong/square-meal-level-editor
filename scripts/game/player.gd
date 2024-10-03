@@ -207,6 +207,7 @@ func start_spit_block():
 
     # 切换到吐方块的动画
     play_spit_animation()
+    sfx_player.play_sfx("spit")
     state = PlayerState.SPITTING
 
     # TODO 暂无UI

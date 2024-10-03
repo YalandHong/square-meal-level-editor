@@ -78,7 +78,12 @@ func _process(_delta: float) -> void:
     process_winning()
 
 func get_loaded_level_map(file_path: String) -> Array:
-    var array_2d = LocalFileHelper.read_level_map_tsv_file(file_path)
+    var array_2d
+    if file_path.ends_with(".xml"):
+        array_2d = LocalFileHelper.load_official_level_from_xml(file_path)
+    else:
+        array_2d = LocalFileHelper.read_level_map_tsv_file(file_path)
+    assert(array_2d != null)
     return array_2d
 
 static func calculate_depth(pos: Vector2) -> int:
@@ -120,19 +125,19 @@ func init_level_maps(level_map: Array):
             # 初始化所有默认值为 null
             var mover = null
             var player = null
-            var tile = null
-            var floor = null
+            var block = null
+            var floor_tile = null
 
             if BlockFactory.is_valid_block_type(tile_type):
-                tile = BlockFactory.create_block(row, col, tile_type)
-                add_child(tile)
+                block = BlockFactory.create_block(row, col, tile_type)
+                add_child(block)
             elif EnemyFactory.is_valid_enemy_type(tile_type):
                 mover = EnemyFactory.create_enemy(row, col, tile_type)
                 add_child(mover)
                 enemy_count += 1
             elif FloorFactory.is_valid_floor_type(tile_type):
-                floor = FloorFactory.create_floor(row, col, tile_type)
-                add_child(floor)
+                floor_tile = FloorFactory.create_floor(row, col, tile_type)
+                add_child(floor_tile)
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_and_add_player(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
@@ -141,11 +146,11 @@ func init_level_maps(level_map: Array):
             # 将结果填充到对应的列表中
             level_map_movers[row].append(mover)
             level_map_players[row].append(player)
-            level_map_blocks[row].append(tile)
-            level_map_floors[row].append(floor)
+            level_map_blocks[row].append(block)
+            level_map_floors[row].append(floor_tile)
 
 func create_and_add_player(row: int, col: int) -> Player:
-    var player_scene: PackedScene = load("res://scenes/player.tscn")
+    var player_scene: PackedScene = preload("res://scenes/player.tscn")
     var player: Player = player_scene.instantiate()
     player.set_init_pos(row, col)
 

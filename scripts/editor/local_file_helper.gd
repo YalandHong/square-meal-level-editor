@@ -52,17 +52,21 @@ static func save_level_map_to_tsv_file(level_map: Array, file_path: String) -> b
 
 static func load_official_level_from_xml(xml_path: String) -> Array:
     # read xml
+    # 参考教程：【Godot】实现XML的完整解析(简介含源码) - YouTube
+    # https://www.youtube.com/watch?v=QQf7oVvJB1g
     var xml = XMLParser.new()
     xml.open(xml_path)
     var result = []
     while xml.read() != ERR_FILE_EOF:
         var current_row = []
-        if xml.get_node_type()  == XMLParser.NODE_ELEMENT and xml.get_node_name() == "row":
-            for type in xml.get_node_data().split(","):
+        if xml.get_node_type() == XMLParser.NODE_ELEMENT and xml.get_node_name() == "row":
+            xml.read()
+            assert(xml.get_node_type() == XMLParser.NODE_TEXT)
+            var raw_data_row = xml.get_node_data()
+            for type in raw_data_row.split(",", false):
                 current_row.append(int(type))
             print(current_row)
             result.append(current_row)
-    xml.close()
     assert(is_valid_2d_array(result))
 
     # filter out unsupported values

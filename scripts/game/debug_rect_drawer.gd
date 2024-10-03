@@ -25,12 +25,12 @@ func draw_enemy_rect(level_map_movers: Array):
                 Color.RED
             )
 
-func draw_sliding_block_rect(level_map_tiles: Array):
-    var map_width: int = level_map_tiles[0].size()
-    var map_height: int = level_map_tiles.size()
+func draw_sliding_block_rect(level_map_blocks: Array):
+    var map_width: int = level_map_blocks[0].size()
+    var map_height: int = level_map_blocks.size()
     for row in range(map_height):
         for col in range(map_width):
-            var block: Block = level_map_tiles[row][col]
+            var block: Block = level_map_blocks[row][col]
             if block == null or not block.sliding:
                 continue
             draw_single_rect(
@@ -57,7 +57,7 @@ func draw_player_rect(player):
 # 重写 _draw()，调用封装好的绘制函数
 func _draw():
     draw_enemy_rect(game_manager.level_map_movers)
-    draw_sliding_block_rect(game_manager.level_map_tiles)
+    draw_sliding_block_rect(game_manager.level_map_blocks)
     draw_player_rect(game_manager.get_node("Player"))
 
 # 在需要时更新绘制

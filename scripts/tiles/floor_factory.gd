@@ -13,10 +13,10 @@ static func is_valid_floor_type(type: int) -> bool:
 
 static func create_floor(row: int, col: int, type: int) -> FloorTile:
     var floor_tile_resource = load(TYPE_TO_FLOOR_TILE_MAP[type])
-    var floor: FloorTile
+    var floor_obj: FloorTile
     if floor_tile_resource is PackedScene:
-        floor = floor_tile_resource.instantiate()
+        floor_obj = floor_tile_resource.instantiate()
     else:
-        floor = floor_tile_resource.new()
-    floor.set_init_pos(row, col)
-    return floor
+        floor_obj = floor_tile_resource.new()
+    floor_obj.set_init_pos(row, col)
+    return floor_obj
