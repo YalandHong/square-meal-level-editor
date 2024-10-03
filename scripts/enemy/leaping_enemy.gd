@@ -20,6 +20,13 @@ func _ready() -> void:
     super._ready()
     anim_sprite.animation_finished.connect(_on_animation_finished)
 
+func _process(delta: float) -> void:
+    super._process(delta)
+    if leaping:
+        z_index = GameManager.calculate_depth(
+            Vector2(position.x, position.y + GridHelper.TILE_HEIGHT)
+        )
+
 func handle_movement_or_jump():
     if leap_ending:
         return
