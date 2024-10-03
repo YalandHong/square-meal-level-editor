@@ -15,3 +15,4 @@ func _ready() -> void:
     var game_manager: GameManager = $GameManager
     $GridDrawer.map_width = game_manager.map_width
     $GridDrawer.map_height = game_manager.map_height
+    BgmPlayerSingleton.play_game_song()

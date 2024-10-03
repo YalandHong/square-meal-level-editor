@@ -39,6 +39,7 @@ func _ready():
     $GridDrawer.map_height = map_height
     $ImportFileDialog.file_selected.connect(_on_import_file_dialog_confirmed)
     $ExportFileDialog.file_selected.connect(_on_export_file_dialog_confirmed)
+    BgmPlayerSingleton.play_menu_song()
 
 func try_load_existing_level_file(tsv_file_path: String) -> bool:
     var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(tsv_file_path)

@@ -8,3 +8,4 @@ func _ready() -> void:
         float(GlobalVars.WINDOW_WIDTH) / GlobalVars.VIEW_WIDTH,
         float(GlobalVars.WINDOW_HEIGHT) / GlobalVars.VIEW_HEIGHT
     )
+    BgmPlayerSingleton.play_menu_song()

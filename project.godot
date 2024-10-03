@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 PixelFont="*res://scripts/menu/pixel_font.gd"
 GlobalVarsSingleton="*res://scripts/global_vars.gd"
+BgmPlayerSingleton="*res://scripts/bgm_player.gd"
 
 [debug]
 
