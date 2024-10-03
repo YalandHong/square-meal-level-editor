@@ -28,7 +28,11 @@ const ID_WOOD_BLOCK: int = 3
 const ID_RUBBER_BLOCK: int = 22
 const ID_DEFAULT_FOOD_BLOCK: int = 26
 const ID_FOOD_BLOCK: Array[int] = [26,27,28, 48,49,50,51,52,53]
-# Flash原版里30~36都是wall block，这里我偷懒暂时先不处理
+# Flash原版里wall block有很多id，更精确地控制sprite
+# 4~18是普通的wall block
+# 30~36是带锁链的wall block
+# 37~43是带火把的wall block
+# 这里我偷懒暂时先不处理
 const ID_WALL_BLOCK: int = 30
 
 # 目前未用到

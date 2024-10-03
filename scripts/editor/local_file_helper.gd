@@ -51,6 +51,7 @@ static func save_level_map_to_tsv_file(level_map: Array, file_path: String) -> b
     return true
 
 static func load_official_level_from_xml(xml_path: String) -> Array:
+    # read xml
     var xml = XMLParser.new()
     xml.open(xml_path)
     var result = []
@@ -62,14 +63,26 @@ static func load_official_level_from_xml(xml_path: String) -> Array:
             print(current_row)
             result.append(current_row)
     xml.close()
+    assert(is_valid_2d_array(result))
+
+    # filter out unsupported values
+    var map_width = result[0].size()
+    var map_height = result.size()
+    for row in range(map_height):
+        for col in range(map_width):
+            if result[row][col] >= 4 and result[row][col] <= 18:
+                result[row][col] = GlobalVars.ID_WALL_BLOCK
+            if result[row][col] > 30 and result[row][col] <= 43:
+                result[row][col] = GlobalVars.ID_WALL_BLOCK
     return result
 
 static func is_valid_2d_array(arr: Array) -> bool:
-    # 检查行数是否大于0
-    if arr.size() == 0:
+    if arr.size() < 3:
         return false
     # 获取第一行的列数
     var column_count = arr[0].size()
+    if column_count < 3:
+        return false
     # 检查每一行的列数
     for row in arr:
         if row.size() != column_count:
