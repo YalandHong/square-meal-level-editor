@@ -17,9 +17,8 @@ var map_height: int
 #var level_map: Array
 var level_map_movers: Array
 var level_map_players: Array
-var level_map_floor: Array
-var level_map_tiles: Array # TODO 这个或许应该叫level_map_blocks
-var level_map_floor_tiles: Array
+var level_map_floors: Array
+var level_map_blocks: Array
 
 # 滚动边界
 var scroll_x_min: int
@@ -44,7 +43,7 @@ func init_scroll_bounds() -> void:
 
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
-    return (level_map_tiles[row][col] == null
+    return (level_map_blocks[row][col] == null
         and level_map_players[row][col] == null
         and level_map_movers[row][col] == null)
     # if level_map_movers[row][col] != "":
@@ -92,10 +91,10 @@ func update_players(player: Player, old_row: int, old_col: int, new_row: int, ne
     level_map_players[new_row][new_col] = player
 
 func update_blocks(block: Block, old_row: int, old_col: int, new_row: int, new_col: int):
-    assert(is_same(level_map_tiles[old_row][old_col], block))
-    level_map_tiles[old_row][old_col] = null
-    assert(level_map_tiles[new_row][new_col] == null)
-    level_map_tiles[new_row][new_col] = block
+    assert(is_same(level_map_blocks[old_row][old_col], block))
+    level_map_blocks[old_row][old_col] = null
+    assert(level_map_blocks[new_row][new_col] == null)
+    level_map_blocks[new_row][new_col] = block
 
 # TODO 某些敌人可能会叠在一起，比如leaping enemy
 # 这时候mover map里的内容可能会相互覆盖，导致block/player等碰撞检测不准确
@@ -107,14 +106,14 @@ func update_movers(enemy: Enemy, old_row: int, old_col: int, new_row: int, new_c
 func init_level_maps(level_map: Array):
     level_map_movers = []
     level_map_players = []
-    level_map_tiles = []
-    level_map_floor_tiles = []
+    level_map_blocks = []
+    level_map_floors = []
     enemy_count = 0
     for row in range(map_height):
         level_map_movers.append([])
         level_map_players.append([])
-        level_map_tiles.append([])
-        level_map_floor_tiles.append([])
+        level_map_blocks.append([])
+        level_map_floors.append([])
         for col in range(map_width):
             var tile_type: int = level_map[row][col]
 
@@ -142,8 +141,8 @@ func init_level_maps(level_map: Array):
             # 将结果填充到对应的列表中
             level_map_movers[row].append(mover)
             level_map_players[row].append(player)
-            level_map_tiles[row].append(tile)
-            level_map_floor_tiles[row].append(floor)
+            level_map_blocks[row].append(tile)
+            level_map_floors[row].append(floor)
 
 func create_and_add_player(row: int, col: int) -> Player:
     var player_scene: PackedScene = load("res://scenes/player.tscn")
@@ -154,7 +153,7 @@ func create_and_add_player(row: int, col: int) -> Player:
     return player
 
 func is_eatable_tile(row: int, col: int) -> bool:
-    var block: Block = level_map_tiles[row][col]
+    var block: Block = level_map_blocks[row][col]
     if block == null:
         return false
     return block.is_eatable() and not block.is_being_eaten()
@@ -166,7 +165,7 @@ func is_eatable_enemy(row: int, col: int) -> bool:
     return enemy.stunned and not enemy.being_eaten
 
 func get_tile_instance(row: int, col: int) -> Block:
-    return level_map_tiles[row][col]
+    return level_map_blocks[row][col]
 
 func get_player_instance(row: int, col: int) -> Player:
     return level_map_players[row][col]
@@ -183,7 +182,7 @@ func remove_grid_element(map: Array, row: int, col: int) -> void:
 
 func remove_block(row: int, col: int) -> void:
     assert(get_tile_instance(row, col) is Block)
-    remove_grid_element(level_map_tiles, row, col)
+    remove_grid_element(level_map_blocks, row, col)
 
 func remove_player(row: int, col: int) -> void:
     assert(get_player_instance(row, col) is Player)
@@ -199,7 +198,7 @@ func place_and_slide_new_block(block_type: int, row: int, col: int, start_dir: S
     var new_block: Block = BlockFactory.create_block(row, col, block_type)
     add_child(new_block)
     #level_map[row][col] = block_type
-    level_map_tiles[row][col] = new_block
+    level_map_blocks[row][col] = new_block
 
     # 根据滑动方向初始化 Block 的位置
     # TODO 之后再细调，我还不知道这里差了1个2个是什么作用
