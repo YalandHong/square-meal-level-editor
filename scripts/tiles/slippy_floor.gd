@@ -7,9 +7,11 @@ const SPRITE_PATH: String = "res://sprites/floor_tiles/slippy/"
 
 func _ready() -> void:
     super._ready()
-    set_random_sprite()
+    floor_sprite = Sprite2D.new()
     floor_sprite.centered = false
     floor_sprite.offset = FLOOR_TILE_SPRITE_OFFSET
+    add_child(floor_sprite)
+    set_random_sprite()
 
 func _process(_delta: float) -> void:
     check_hit_player()

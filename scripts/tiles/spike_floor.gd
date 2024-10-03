@@ -10,6 +10,7 @@ func _ready() -> void:
     floor_sprite.centered = false
     floor_sprite.texture = loaded_texture
     floor_sprite.offset = FLOOR_TILE_SPRITE_OFFSET
+    add_child(floor_sprite)
 
 func _process(_delta: float) -> void:
     check_hit_player()
