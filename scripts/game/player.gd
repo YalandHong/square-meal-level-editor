@@ -75,7 +75,8 @@ func _process(_delta):
 func process_moving_or_slipping():
     do_move()
 
-    # 如果玩家到达目标位置，停止移动
+    # 如果玩家到达目标格子，停止移动
+    # 切回idle状态，因为其它block有可能根据这个状态做出某些判定
     if reached_target():
         position.x = moving_target_x
         position.y = moving_target_y
@@ -95,12 +96,10 @@ func process_moving_or_slipping():
         return
 
     # 检查按键转向
+    # 在移动的时候按下相反的方向键，则可以直接转向，而不需要等走到目标格子后再操作
     var new_direction = get_direction_pressed()
     if new_direction == NONE or new_direction == dir:
         return
-
-    # 如果按键方向相反且目标可以移动
-    # TODO 这个分支可以触发吗？
     if (GridHelper.is_opposite_direction(dir, new_direction)
             and try_step_forward_moving_target(new_direction)):
         # moving = true
@@ -127,7 +126,6 @@ func process_idle():
     if direction_pressed != dir:
         dir = direction_pressed
         play_stop_animation()
-        # turning = true
         state = PlayerState.TURNING
         turn_count = 0
         return
@@ -135,7 +133,6 @@ func process_idle():
     # 执行移动动画和移动逻辑
     play_walk_animation()
     if try_step_forward_moving_target(direction_pressed):
-        # moving = true
         state = PlayerState.MOVING
         do_move()
 
@@ -194,7 +191,6 @@ func can_spit(target_row: int, target_col: int) -> bool:
     # 检查目标格子是否为空
     var target_block = game_manager.get_tile_instance(target_row, target_col)
     if target_block != null:
-        # TODO 严格来说这样的逻辑不对，如果next step是敌人，其实应该是可以吐石头的
         return false
     return true
 
@@ -385,3 +381,13 @@ func play_dead_animation():
 func play_win_animation():
     anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WINNING
     anim_sprite.play("cheer")
+
+# 原版双人模式下，这个函数还会判断player 2的位置
+# 目前只支持单人模式，所以不考虑
+func start_slipping():
+    if state != PlayerState.IDLE:
+        return
+    if not try_step_forward_moving_target(dir):
+        return
+    state = PlayerState.SLIPPING
+    play_stop_animation()

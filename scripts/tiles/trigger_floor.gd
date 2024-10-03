@@ -26,3 +26,6 @@ func start_withdraw():
 
 func finish_withdraw():
     state = SpikeState.WITHDRAWN
+
+func get_floor_type() -> int:
+    return GlobalVars.ID_TRIGGER_FLOOR

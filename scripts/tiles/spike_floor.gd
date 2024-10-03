@@ -17,3 +17,6 @@ func check_hit_player():
     var player: Player = game_manager.get_player_instance(current_row, current_col)
     if player != null:
         player.die()
+
+func get_floor_type() -> int:
+    return GlobalVars.ID_SPIKE_FLOOR

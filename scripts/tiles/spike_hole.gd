@@ -55,3 +55,6 @@ func start_withdraw():
 func finish_withdraw():
     state = SpikeState.WITHDRAWN
     spike_timer = START_SPIKE_TIMER
+
+func get_floor_type() -> int:
+    return GlobalVars.ID_SPIKE_HOLE_FLOOR
