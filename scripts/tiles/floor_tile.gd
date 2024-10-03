@@ -10,9 +10,6 @@ var sfx_player: SfxPlayer
 
 const FLOOR_TILE_SPRITE_OFFSET_Y: int = -20
 
-func is_dangerous() -> bool:
-    return false
-
 func is_slippy() -> bool:
     return false
 

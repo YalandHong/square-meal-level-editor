@@ -3,9 +3,6 @@ class_name SpikeFloor
 
 var floor_sprite: Sprite2D
 
-func is_dangerous() -> bool:
-    return true
-
 func _ready() -> void:
     super._ready()
     floor_sprite = Sprite2D.new()
@@ -16,5 +13,6 @@ func _process(_delta: float) -> void:
     check_hit_player()
 
 func check_hit_player():
-    # TODO
-    pass
+    var player: Player = game_manager.get_player_instance(current_row, current_col)
+    if player != null:
+        player.die()
