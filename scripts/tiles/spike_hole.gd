@@ -3,7 +3,6 @@ class_name SpikeHole
 
 # 周期性伸出和收回的spike
 
-
 @onready var floor_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 enum SpikeState { STABBING, STABBED, WITHDRAWING, WITHDRAWN }
@@ -16,6 +15,7 @@ func _ready() -> void:
     floor_sprite.centered = false
     floor_sprite.animation_finished.connect(_on_animated_finished)
     floor_sprite.speed_scale = 0.8
+    floor_sprite.offset = FLOOR_TILE_SPRITE_OFFSET
 
 func _process(_delta: float) -> void:
     check_hit_player()

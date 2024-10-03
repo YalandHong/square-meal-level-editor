@@ -9,6 +9,7 @@ func _ready() -> void:
     var loaded_texture = preload("res://sprites/floor_tiles/spike.png")
     floor_sprite.centered = false
     floor_sprite.texture = loaded_texture
+    floor_sprite.offset = FLOOR_TILE_SPRITE_OFFSET
 
 func _process(_delta: float) -> void:
     check_hit_player()

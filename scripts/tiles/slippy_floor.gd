@@ -9,6 +9,7 @@ func _ready() -> void:
     super._ready()
     set_random_sprite()
     floor_sprite.centered = false
+    floor_sprite.offset = FLOOR_TILE_SPRITE_OFFSET
 
 func _process(_delta: float) -> void:
     check_hit_player()
