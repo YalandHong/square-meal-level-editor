@@ -6,7 +6,7 @@ const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(
     -GameManager.TILE_HEIGHT / 2 - 78
 )
 
-const ANIMATION_FPS_SCALE_WALK: float = 0.5
+const ANIMATION_FPS_SCALE_WALK: float = 0.7
 const ANIMATION_FPS_SCALE_CHARGE: float = 0.8
 const ANIMATION_FPS_SCALE_HIT: float = 0.8
 
