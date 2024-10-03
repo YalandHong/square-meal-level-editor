@@ -1,0 +1,101 @@
+[gd_scene load_steps=22 format=3 uid="uid://b0y21eyafo4du"]
+
+[ext_resource type="Script" path="res://scripts/tiles/spike_hole.gd" id="1_t7rhq"]
+[ext_resource type="Texture2D" uid="uid://dhpt8qetlu514" path="res://sprites/floor_tiles/spike_hole/stab/60.png" id="2_ijuey"]
+[ext_resource type="Texture2D" uid="uid://dmrq742c2baqd" path="res://sprites/floor_tiles/spike_hole/stab/61.png" id="3_h77ns"]
+[ext_resource type="Texture2D" uid="uid://diuyc2t8twag7" path="res://sprites/floor_tiles/spike_hole/stab/62.png" id="4_exwe7"]
+[ext_resource type="Texture2D" uid="uid://c85kjlwen12wl" path="res://sprites/floor_tiles/spike_hole/stab/63.png" id="5_7tc8m"]
+[ext_resource type="Texture2D" uid="uid://ca2ehs78ie047" path="res://sprites/floor_tiles/spike_hole/stab/64.png" id="6_f2st8"]
+[ext_resource type="Texture2D" uid="uid://da0yxr3dnnngf" path="res://sprites/floor_tiles/spike_hole/stab/65.png" id="7_s1ts6"]
+[ext_resource type="Texture2D" uid="uid://dtoebdsq3ai6m" path="res://sprites/floor_tiles/spike_hole/stab/66.png" id="8_ul2cx"]
+[ext_resource type="Texture2D" uid="uid://djb1ow3gjebs8" path="res://sprites/floor_tiles/spike_hole/stab/67.png" id="9_lhfo8"]
+[ext_resource type="Texture2D" uid="uid://b8rs8q46togot" path="res://sprites/floor_tiles/spike_hole/stab/68.png" id="10_dj75g"]
+[ext_resource type="Texture2D" uid="uid://oi867l8ukav4" path="res://sprites/floor_tiles/spike_hole/stab/69.png" id="11_f085y"]
+[ext_resource type="Texture2D" uid="uid://dwrxcbj4xx7r7" path="res://sprites/floor_tiles/spike_hole/stab/70.png" id="12_8wbaf"]
+[ext_resource type="Texture2D" uid="uid://5gdk0onbj4tx" path="res://sprites/floor_tiles/spike_hole/stab/71.png" id="13_3jwbr"]
+[ext_resource type="Texture2D" uid="uid://d4fx2rige4oam" path="res://sprites/floor_tiles/spike_hole/stab/72.png" id="14_nc0ad"]
+[ext_resource type="Texture2D" uid="uid://cgjmbuvfo8lfv" path="res://sprites/floor_tiles/spike_hole/stab/73.png" id="15_t18jw"]
+[ext_resource type="Texture2D" uid="uid://8jas35jmnfyl" path="res://sprites/floor_tiles/spike_hole/stab/78.png" id="16_xi7tv"]
+[ext_resource type="Texture2D" uid="uid://47iai8nte20k" path="res://sprites/floor_tiles/spike_hole/stab/80.png" id="17_h3emh"]
+[ext_resource type="Texture2D" uid="uid://kqa74dbr1o02" path="res://sprites/floor_tiles/spike_hole/withdraw/29.png" id="18_ea1ps"]
+[ext_resource type="Texture2D" uid="uid://cjoewi64fkt10" path="res://sprites/floor_tiles/spike_hole/withdraw/30.png" id="19_pccqp"]
+[ext_resource type="Texture2D" uid="uid://bg7gixsi5nkgw" path="res://sprites/floor_tiles/spike_hole/withdraw/31.png" id="20_svau0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hfpnf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ijuey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h77ns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_exwe7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7tc8m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_f2st8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_s1ts6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ul2cx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lhfo8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_dj75g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_f085y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_8wbaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_3jwbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nc0ad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_t18jw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_xi7tv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_h3emh")
+}],
+"loop": false,
+"name": &"stab",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_ea1ps")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_pccqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_svau0")
+}],
+"loop": false,
+"name": &"withdraw",
+"speed": 30.0
+}]
+
+[node name="SpikeHole" type="Node2D"]
+script = ExtResource("1_t7rhq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hfpnf")
+animation = &"withdraw"
+frame = 2
+frame_progress = 1.0

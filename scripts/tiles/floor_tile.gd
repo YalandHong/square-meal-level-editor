@@ -8,7 +8,7 @@ class_name FloorTile
 var game_manager: GameManager
 var sfx_player: SfxPlayer
 
-const FLOOR_TILE_SPRITE_OFFSET_Y: int = -20
+#const FLOOR_TILE_SPRITE_OFFSET: Vector2 = Vector2(-20)
 
 func is_slippy() -> bool:
     return false
