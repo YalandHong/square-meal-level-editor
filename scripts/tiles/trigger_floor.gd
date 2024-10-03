@@ -3,6 +3,9 @@ class_name TriggerFloor
 
 # 机关刺，玩家踩上去后才会触发
 
+func _init() -> void:
+    spike_timer = 0
+
 func _process(_delta: float) -> void:
     check_hit_player()
     if spike_timer > 0:
@@ -22,6 +25,7 @@ func check_hit_player():
 
 func start_withdraw():
     state = SpikeState.WITHDRAWING
+    floor_sprite.speed_scale = 1.2
     floor_sprite.play_backwards("stab")
 
 func finish_withdraw():

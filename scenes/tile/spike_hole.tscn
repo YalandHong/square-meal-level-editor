@@ -74,7 +74,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"stab",
-"speed": 20.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,

@@ -7,8 +7,11 @@ class_name SpikeHole
 
 enum SpikeState { STABBING, STABBED, WITHDRAWING, WITHDRAWN }
 var state: SpikeState = SpikeState.WITHDRAWN
-var spike_timer: int = START_SPIKE_TIMER
+var spike_timer: int
 const START_SPIKE_TIMER: int = 60
+
+func _init() -> void:
+    spike_timer = START_SPIKE_TIMER
 
 func _ready() -> void:
     super._ready()
@@ -42,6 +45,7 @@ func _on_animated_finished():
 
 func start_stab():
     state = SpikeState.STABBING
+    floor_sprite.speed_scale = 0.8
     floor_sprite.play("stab")
 
 func finish_stab():
@@ -50,6 +54,7 @@ func finish_stab():
 
 func start_withdraw():
     state = SpikeState.WITHDRAWING
+    floor_sprite.speed_scale = 0.8
     floor_sprite.play("withdraw")
 
 func finish_withdraw():
