@@ -7,7 +7,7 @@ class_name SpikeHole
 
 enum SpikeState { STABBING, STABBED, WITHDRAWING, WITHDRAWN }
 var state: SpikeState = SpikeState.WITHDRAWN
-var spike_timer: int = 0
+var spike_timer: int = START_SPIKE_TIMER
 const START_SPIKE_TIMER: int = 60
 
 func _ready() -> void:

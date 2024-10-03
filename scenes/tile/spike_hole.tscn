@@ -74,7 +74,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"stab",
-"speed": 30.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -96,6 +96,4 @@ script = ExtResource("1_t7rhq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hfpnf")
-animation = &"withdraw"
-frame = 2
-frame_progress = 1.0
+animation = &"stab"
