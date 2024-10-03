@@ -9,7 +9,6 @@ static func read_level_map_tsv_file(file_path: String):
         return null
 
     var result_array: Array = []
-
     while not file.eof_reached():
         var line = file.get_line().strip_edges()  # 读取一行并移除首尾空格
         if line == "":
@@ -23,8 +22,11 @@ static func read_level_map_tsv_file(file_path: String):
             numeric_values.append(value.to_float())
 
         result_array.append(numeric_values)  # 将每行的数字数组添加到二维数组中
-
     file.close()
+
+    if is_valid_2d_array(result_array):
+        printerr("invalid 2d array")
+        return null
     print("Finished reading from: ", file_path)
     return result_array
 
@@ -61,3 +63,15 @@ static func load_official_level_from_xml(xml_path: String) -> Array:
             result.append(current_row)
     xml.close()
     return result
+
+static func is_valid_2d_array(arr: Array) -> bool:
+    # 检查行数是否大于0
+    if arr.size() == 0:
+        return false
+    # 获取第一行的列数
+    var column_count = arr[0].size()
+    # 检查每一行的列数
+    for row in arr:
+        if row.size() != column_count:
+            return false
+    return true

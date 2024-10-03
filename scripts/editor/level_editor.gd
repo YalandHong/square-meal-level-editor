@@ -29,27 +29,27 @@ func init_scroll_bounds() -> void:
 
 func _ready():
     #request_map_size()  # 请求地图大小
-    if not try_load_existing_level_file():
+    if not try_load_existing_level_file("user://edit_level.tsv"):
         map_height = 20
         map_width = 30
-        create_default_level_map()
+        create_default_empty_level_map()
     init_scroll_bounds()
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     $GridDrawer.map_width = map_width
     $GridDrawer.map_height = map_height
 
-func try_load_existing_level_file() -> bool:
-    var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(
-        "user://edit_level.tsv"
-    )
+func try_load_existing_level_file(tsv_file_path: String) -> bool:
+    var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(tsv_file_path)
     if loaded_level_map == null:
         return false
+    # TODO 在此之前要先检查player合法性，是否有多个player
     level_map = loaded_level_map
+    try_find_player_grid_pos()
     map_height = level_map.size()
     map_width = level_map[0].size()
     return true
 
-func create_default_level_map():
+func create_default_empty_level_map():
     level_map = []
     level_map.resize(map_height)
     for i in range(map_height):
@@ -124,7 +124,28 @@ func delete_grid_element(row: int, col: int):
 func save_level_map():
     var ok = LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
     if not ok:
-        print("save failed")
+        printerr("save failed")
         return
     var float_notification = FloatingNotification.new("level saved")
     camera.add_child(float_notification)
+
+func popup_floating_notification(text: String) -> void:
+    var float_notification = FloatingNotification.new(text)
+    camera.add_child(float_notification)
+
+func popup_file_dialog():
+    var popup_dialog = $FileDialog
+    popup_dialog.popup()
+
+func _on_file_dialog_confirmed(file_path: String):
+    if not try_load_existing_level_file(file_path):
+        popup_floating_notification("load failed")
+
+func try_find_player_grid_pos() -> bool:
+    for row in range(map_height):
+        for col in range(map_width):
+            if level_map[row][col] == GlobalVars.ID_PLAYER:
+                player_row = row
+                player_col = col
+                return true
+    return false
