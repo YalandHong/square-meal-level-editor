@@ -18,6 +18,7 @@ position = Vector2(275, 200)
 texture = ExtResource("3_tmfph")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
 
 [node name="ChooseALevel" type="Sprite2D" parent="."]
 position = Vector2(275, 40)
