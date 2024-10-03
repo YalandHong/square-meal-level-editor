@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gcn32swvnvqt"
-path="res://.godot/imported/3.png-718ed6ad4135d9cb6b94ed3a53a7cc72.ctex"
+uid="uid://do0gunlnlr4j6"
+path="res://.godot/imported/18.png-de352a82fb1b92f2c417311da8f6e74b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/enemy/charge/walk/left/3.png"
-dest_files=["res://.godot/imported/3.png-718ed6ad4135d9cb6b94ed3a53a7cc72.ctex"]
+source_file="res://sprites/enemy/charge/walk/right_flop/18.png"
+dest_files=["res://.godot/imported/18.png-de352a82fb1b92f2c417311da8f6e74b.ctex"]
 
 [params]
 

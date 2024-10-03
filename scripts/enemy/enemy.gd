@@ -30,8 +30,10 @@ func _ready():
     set_enemy_sprite()
     anim_sprite.centered = false
 
-    # 设置初始方向
-    dir = DOWN
+    # 随机选择一个初始方向，默认是向下
+    dir = NONE
+    if not try_change_direction():
+        dir = DOWN
     play_walk_animation()
     assert(check_aligned_with_moving_target())
 
