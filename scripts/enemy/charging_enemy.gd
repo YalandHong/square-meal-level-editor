@@ -141,9 +141,9 @@ func try_change_back_to_expected_dir() -> bool:
     return ok
 
 # 被方块击晕时会打断冲刺状态
-func do_hit_by_block(block: Block) -> void:
+func do_hit_by_block(block: Block) -> bool:
     charging = false
-    super.do_hit_by_block(block)
+    return super.do_hit_by_block(block)
 
 func set_enemy_sprite() -> void:
     anim_sprite = $ChargingEnemySprite

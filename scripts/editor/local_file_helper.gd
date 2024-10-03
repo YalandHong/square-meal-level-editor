@@ -47,3 +47,17 @@ static func save_level_map_to_tsv_file(level_map: Array, file_path: String) -> b
     file.close()
     print("Level map saved to: ", file_path)
     return true
+
+static func load_official_level_from_xml(xml_path: String) -> Array:
+    var xml = XMLParser.new()
+    xml.open(xml_path)
+    var result = []
+    while xml.read() != ERR_FILE_EOF:
+        var current_row = []
+        if xml.get_node_type()  == XMLParser.NODE_ELEMENT and xml.get_node_name() == "row":
+            for type in xml.get_node_data().split(","):
+                current_row.append(int(type))
+            print(current_row)
+            result.append(current_row)
+    xml.close()
+    return result

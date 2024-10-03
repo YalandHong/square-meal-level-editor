@@ -1,6 +1,9 @@
 extends Node
 class_name GlobalVars
 
+const WINDOW_WIDTH: int = 825
+const WINDOW_HEIGHT: int = 600
+
 const VIEW_WIDTH: int = 550
 const VIEW_HEIGHT: int = 400
 

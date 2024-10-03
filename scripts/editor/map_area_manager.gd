@@ -40,9 +40,9 @@ func track_mouse():
 func get_map_edit_area_rect() -> Rect2:
     var camera = level_editor.camera
     return Rect2(
-        camera.position.x - GlobalVars.VIEW_WIDTH / 2,
-        camera.position.y - GlobalVars.VIEW_HEIGHT / 2,
-        GlobalVars.VIEW_WIDTH - SelectMenuManager.MENU_WIDTH,
+        camera.position.x - GlobalVars.WINDOW_WIDTH / 2,
+        camera.position.y - GlobalVars.WINDOW_HEIGHT / 2,
+        GlobalVars.VIEW_WIDTH,
         GlobalVars.VIEW_HEIGHT
     )
 

@@ -20,12 +20,12 @@ var player_col
 
 # 计算滚动边界
 func init_scroll_bounds() -> void:
-    scroll_x_min = GlobalVars.VIEW_WIDTH / 2
+    scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
     scroll_x_max = max(scroll_x_min,
-        map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2 + SelectMenuManager.MENU_WIDTH)
-    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
+        map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
+    scroll_y_min = GlobalVars.WINDOW_WIDTH / 2
     scroll_y_max = max(scroll_y_min,
-        map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
+        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2)
 
 func _ready():
     #request_map_size()  # 请求地图大小

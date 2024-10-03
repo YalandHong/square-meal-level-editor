@@ -3,8 +3,8 @@ class_name SelectMenuManager
 
 var active_button: SelectButton
 
-const MENU_WIDTH: int = 120
-const MENU_HEIGHT: int = GlobalVars.VIEW_HEIGHT
+const MENU_WIDTH: int = GlobalVars.WINDOW_WIDTH - GlobalVars.VIEW_WIDTH
+const MENU_HEIGHT: int = GlobalVars.WINDOW_HEIGHT
 
 @onready var level_editor: LevelEditor = get_parent()
 @onready var run_button: TextureButton = $RunButton
@@ -28,12 +28,13 @@ func create_select_buttons():
     var button_id_list = [
         [GlobalVars.ID_PLAYER],
 
-        [GlobalVars.ID_DUMB_ENEMY, GlobalVars.ID_HELMET_ENEMY],
-        [GlobalVars.ID_CHARGING_ENEMY, GlobalVars.ID_LEAPING_ENEMY],
+        [GlobalVars.ID_DUMB_ENEMY, GlobalVars.ID_HELMET_ENEMY,
+        GlobalVars.ID_CHARGING_ENEMY, GlobalVars.ID_LEAPING_ENEMY],
 
-        [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK],
-        [GlobalVars.ID_DEFAULT_FOOD_BLOCK, GlobalVars.ID_WOOD_BLOCK],
-        [GlobalVars.ID_METAL_BLOCK, GlobalVars.ID_RUBBER_BLOCK],
+        [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK,
+        GlobalVars.ID_WOOD_BLOCK, GlobalVars.ID_METAL_BLOCK],
+
+        [GlobalVars.ID_RUBBER_BLOCK, GlobalVars.ID_DEFAULT_FOOD_BLOCK],
     ]
     for i in range(len(button_id_list)):
         var button_row = button_id_list[i]
@@ -55,8 +56,8 @@ func _on_button_pressed(button: SelectButton):
     button.set_activation_state(true)  # 激活当前按钮
     active_button = button  # 更新当前激活按钮的引用
 
-# 更新SelectMenuManager的位置和大小
+# 更新SelectMenuManager的位置
 func update_select_menu_position():
     var camera = level_editor.camera
-    position.x = camera.position.x + GlobalVars.VIEW_WIDTH / 2 - MENU_WIDTH
-    position.y = camera.position.y - GlobalVars.VIEW_HEIGHT / 2
+    position.x = camera.position.x - GlobalVars.WINDOW_WIDTH / 2 + GlobalVars.VIEW_WIDTH
+    position.y = camera.position.y - GlobalVars.WINDOW_HEIGHT / 2
