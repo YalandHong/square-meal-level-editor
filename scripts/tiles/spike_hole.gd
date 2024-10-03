@@ -3,10 +3,11 @@ class_name SpikeHole
 
 # 周期性伸出和收回的spike
 
+
 @onready var floor_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-var stabbing: bool = false
-var dangerous: bool = false
+enum SpikeState { STABBING, STABBED, WITHDRAWING, WITHDRAWN }
+var state: SpikeState = SpikeState.WITHDRAWN
 var spike_timer: int = 0
 const START_SPIKE_TIMER: int = 60
 
@@ -17,39 +18,40 @@ func _ready() -> void:
     floor_sprite.speed_scale = 0.8
 
 func _process(_delta: float) -> void:
-    if dangerous:
-        check_hit_player()
+    check_hit_player()
     if spike_timer > 0:
         spike_timer -= 1
         if spike_timer == 0:
-            if not stabbing:
+            if state == SpikeState.WITHDRAWN:
                 start_stab()
-            else:
+            else: # stabbed
                 start_withdraw()
 
 func check_hit_player():
+    if state != SpikeState.STABBED:
+        return
     var player: Player = game_manager.get_player_instance(current_row, current_col)
     if player != null:
         player.die()
 
 func _on_animated_finished():
-    if stabbing:
+    if state == SpikeState.STABBING:
         finish_stab()
-    else:
+    else: # withdrawing
         finish_withdraw()
 
 func start_stab():
-    stabbing = true
+    state = SpikeState.STABBING
     floor_sprite.play("stab")
 
 func finish_stab():
+    state = SpikeState.STABBED
     spike_timer = START_SPIKE_TIMER
-    dangerous = true
 
 func start_withdraw():
-    dangerous = false
-    stabbing = false
+    state = SpikeState.WITHDRAWING
     floor_sprite.play("withdraw")
 
 func finish_withdraw():
+    state = SpikeState.WITHDRAWN
     spike_timer = START_SPIKE_TIMER

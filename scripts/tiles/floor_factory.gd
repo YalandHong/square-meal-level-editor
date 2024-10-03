@@ -3,6 +3,8 @@ class_name FloorFactory
 
 const TYPE_TO_FLOOR_TILE_MAP = {
     GlobalVars.ID_SPIKE_FLOOR: "res://scripts/tiles/spike_floor.gd",
+    GlobalVars.ID_SPIKE_HOLE_FLOOR: "res://scenes/tile/spike_hole.tscn",
+    GlobalVars.ID_TRIGGER_FLOOR: "res://scenes/tile/trigger_floor.tscn",
 }
 
 static func is_valid_floor_type(type: int) -> bool:
