@@ -37,6 +37,8 @@ func _ready():
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     $GridDrawer.map_width = map_width
     $GridDrawer.map_height = map_height
+    $ImportFileDialog.file_selected.connect(_on_import_file_dialog_confirmed)
+    $ExportFileDialog.file_selected.connect(_on_export_file_dialog_confirmed)
 
 func try_load_existing_level_file(tsv_file_path: String) -> bool:
     var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(tsv_file_path)
@@ -121,25 +123,29 @@ func delete_grid_element(row: int, col: int):
         player_col = null
     level_map[row][col] = GlobalVars.ID_EMPTY_TILE
 
-func save_level_map():
-    var ok = LocalFileHelper.save_level_map_to_tsv_file(level_map, "user://edit_level.tsv")
+func save_level_map(tsv_file_path: String):
+    var ok = LocalFileHelper.save_level_map_to_tsv_file(level_map, tsv_file_path)
     if not ok:
         printerr("save failed")
         return
-    var float_notification = FloatingNotification.new("level saved")
-    camera.add_child(float_notification)
+    popup_floating_notification("level saved")
 
 func popup_floating_notification(text: String) -> void:
     var float_notification = FloatingNotification.new(text)
     camera.add_child(float_notification)
 
-func popup_file_dialog():
-    var popup_dialog = $FileDialog
-    popup_dialog.popup()
+func popup_import_file_dialog():
+    $ImportFileDialog.popup()
 
-func _on_file_dialog_confirmed(file_path: String):
+func _on_import_file_dialog_confirmed(file_path: String):
     if not try_load_existing_level_file(file_path):
         popup_floating_notification("load failed")
+
+func popup_export_file_dialog():
+    $ExportFileDialog.popup()
+
+func _on_export_file_dialog_confirmed(file_path: String):
+    save_level_map(file_path)
 
 func try_find_player_grid_pos() -> bool:
     for row in range(map_height):
