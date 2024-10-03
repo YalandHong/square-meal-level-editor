@@ -16,12 +16,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     check_hit_player()
 
-# Player在reach target后有1帧进入idle状态
-# 这保证了check hit player可以成功触发player的slipping
 func check_hit_player():
     var player: Player = game_manager.get_player_instance(current_row, current_col)
     if player != null:
-        player.start_slipping()
+        player.try_start_slipping()
 
 func get_floor_type() -> int:
     return GlobalVars.ID_SLIPPY_FLOOR

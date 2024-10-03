@@ -17,7 +17,7 @@ var shadow_holder: ShadowManager
 var sfx_player: SfxPlayer
 
 enum PlayerState {
-    MOVING, TURNING, IDLE, SLIPPING,
+    MOVING, TURNING, IDLE, SLIPPING, STOPPING,
     EATING, SPITTING, DEAD, WINNING
 }
 var state: PlayerState
@@ -63,33 +63,28 @@ func _ready():
 func _process(_delta):
     match state:
         PlayerState.IDLE:
-            process_idle()
+            handle_idle()
         PlayerState.MOVING, PlayerState.SLIPPING:
-            process_moving_or_slipping()
+            handle_moving_or_slipping()
         PlayerState.TURNING:
-            process_turning()
+            handle_turning()
         PlayerState.EATING:
-            process_eating()
+            handle_eating()
+        PlayerState.STOPPING:
+            handle_stopping()
     z_index = GameManager.calculate_depth(position)
 
-func process_moving_or_slipping():
+func handle_moving_or_slipping():
     do_move()
 
     # 如果玩家到达目标格子，停止移动
-    # 切回idle状态，因为其它block有可能根据这个状态做出某些判定
     if reached_target():
         position.x = moving_target_x
         position.y = moving_target_y
         # TODO shadow
         # shadow_manager.update_shadow_position(player_id, position.x, position.y + 5)
-
         update_player_grid_pos()
-
-        # slipping = false
-        # moving = false
-        # TODO trigger当前row/col的地砖，暂时不知道有什么用
-        #game_manager.check_floor_tiles(current_row, current_col, name)
-        state = PlayerState.IDLE
+        state = PlayerState.STOPPING
         return
 
     if state == PlayerState.SLIPPING:
@@ -106,7 +101,7 @@ func process_moving_or_slipping():
         do_move()
         play_walk_animation()
 
-func process_idle():
+func handle_idle():
     if game_manager.level_cleared:
         state = PlayerState.WINNING
         sfx_player.play_sfx("win")
@@ -135,6 +130,11 @@ func process_idle():
     if try_step_forward_moving_target(direction_pressed):
         state = PlayerState.MOVING
         do_move()
+
+# player在结束moving或者slipping时给出这样1帧的时间，什么都不做
+# 以便某些block进行判定
+func handle_stopping():
+    state = PlayerState.IDLE
 
 # 处理吃东西或吐方块的逻辑
 func start_eat_or_spit():
@@ -274,7 +274,7 @@ func update_player_grid_pos() -> void:
     current_row = new_row
     current_col = new_col
 
-func process_turning() -> void:
+func handle_turning() -> void:
     turn_count += 1
     if turn_count >= MAX_TURN_COUNT:
         state = PlayerState.IDLE
@@ -314,7 +314,7 @@ func on_animation_finished():
 
 # Flash源码里叫shift block
 # 播放block吞入嘴里的动画
-func process_eating():
+func handle_eating():
     if eating_block == null:
         return
     if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
@@ -385,10 +385,11 @@ func play_win_animation():
 
 # 原版双人模式下，这个函数还会判断player 2的位置
 # 目前只支持单人模式，所以不考虑
-func start_slipping():
-    if state != PlayerState.IDLE:
-        return
+func try_start_slipping() -> bool:
+    if state != PlayerState.MOVING and state != PlayerState.STOPPING:
+        return false
     if not try_step_forward_moving_target(dir):
-        return
+        return false
     state = PlayerState.SLIPPING
     play_stop_animation()
+    return true
