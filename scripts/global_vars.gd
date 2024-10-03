@@ -44,6 +44,14 @@ const ID_CHARGING_ENEMY: int = 24
 const ID_HELMET_ENEMY: int = 25
 const ID_LEAPING_ENEMY: int = 44
 
+# floor tile id
+const ID_SPIKE_FLOOR: int = 29
+const ID_SPIKE_HOLE_FLOOR: int = 45
+const ID_TRIGGER_FLOOR: int = 46
+# Flash原版47、54、55、56都是slippy block，不同sprite而已
+# 这里我偷懒暂时先不处理
+const ID_SLIPPY_FLOOR: int = 47
+
 # directions
 const UP = "up"
 const DOWN = "down"

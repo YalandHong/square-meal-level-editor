@@ -19,7 +19,7 @@ var level_map_movers: Array
 var level_map_players: Array
 var level_map_floor: Array
 var level_map_tiles: Array # TODO 这个或许应该叫level_map_blocks
-#var players_map: Dictionary
+var level_map_floor_tiles: Array
 
 # 滚动边界
 var scroll_x_min: int
@@ -108,11 +108,13 @@ func init_level_maps(level_map: Array):
     level_map_movers = []
     level_map_players = []
     level_map_tiles = []
+    level_map_floor_tiles = []
     enemy_count = 0
     for row in range(map_height):
         level_map_movers.append([])
         level_map_players.append([])
         level_map_tiles.append([])
+        level_map_floor_tiles.append([])
         for col in range(map_width):
             var tile_type: int = level_map[row][col]
 
@@ -120,6 +122,7 @@ func init_level_maps(level_map: Array):
             var mover = null
             var player = null
             var tile = null
+            var floor = null
 
             if BlockFactory.is_valid_block_type(tile_type):
                 tile = BlockFactory.create_block(row, col, tile_type)
@@ -128,6 +131,9 @@ func init_level_maps(level_map: Array):
                 mover = EnemyFactory.create_enemy(row, col, tile_type)
                 add_child(mover)
                 enemy_count += 1
+            elif FloorFactory.is_valid_floor_type(tile_type):
+                floor = FloorFactory.create_floor(row, col, tile_type)
+                add_child(floor)
             elif tile_type == GlobalVars.ID_PLAYER:
                 player = create_and_add_player(row, col)
             elif tile_type != GlobalVars.ID_EMPTY_TILE:
@@ -137,6 +143,7 @@ func init_level_maps(level_map: Array):
             level_map_movers[row].append(mover)
             level_map_players[row].append(player)
             level_map_tiles[row].append(tile)
+            level_map_floor_tiles[row].append(floor)
 
 func create_and_add_player(row: int, col: int) -> Player:
     var player_scene: PackedScene = load("res://scenes/player.tscn")

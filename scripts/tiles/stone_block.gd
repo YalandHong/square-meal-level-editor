@@ -6,7 +6,7 @@ func is_eatable():
 
 func _ready() -> void:
     super._ready()
-    var loaded_texture = load("res://sprites/block/stone.png")
+    var loaded_texture = preload("res://sprites/block/stone.png")
     block_sprite.texture = loaded_texture
 
 func get_block_type() -> int:

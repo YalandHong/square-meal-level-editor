@@ -369,7 +369,9 @@ func do_hit_by_block():
     die()
 
 func die():
-    if state != PlayerState.IDLE:
+    if state == PlayerState.DEAD:
+        return
+    if state == PlayerState.SPITTING or state == PlayerState.EATING:
         return
     sfx_player.play_sfx("die")
     state = PlayerState.DEAD

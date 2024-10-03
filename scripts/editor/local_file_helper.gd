@@ -74,6 +74,8 @@ static func load_official_level_from_xml(xml_path: String) -> Array:
                 result[row][col] = GlobalVars.ID_WALL_BLOCK
             if result[row][col] > 30 and result[row][col] <= 43:
                 result[row][col] = GlobalVars.ID_WALL_BLOCK
+            if result[row][col] >= 54 and result[row][col] <= 56:
+                result[row][col] = GlobalVars.ID_SLIPPY_FLOOR
     return result
 
 static func is_valid_2d_array(arr: Array) -> bool:
