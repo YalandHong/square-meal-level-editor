@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://po6qul23l7q2"]
+[gd_scene load_steps=13 format=3 uid="uid://po6qul23l7q2"]
 
 [ext_resource type="Script" path="res://scripts/editor/select_menu_manager.gd" id="1_kst68"]
 [ext_resource type="Script" path="res://scripts/editor/level_editor.gd" id="1_nbeij"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://bk15at62gqy3p" path="res://sounds/music/menu_music.wav" id="6_oqoey"]
 [ext_resource type="Script" path="res://scripts/editor/editor_save_button.gd" id="7_en4am"]
 [ext_resource type="Script" path="res://scripts/editor/editor_import_button.gd" id="9_jxfyw"]
+[ext_resource type="Script" path="res://scripts/editor/editor_export_button.gd" id="10_c65qg"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_nbeij")
@@ -42,7 +43,6 @@ offset_bottom = 40.0
 texture_normal = ExtResource("4_sscbb")
 script = ExtResource("7_en4am")
 displayed_text = "save"
-level_str = null
 
 [node name="ImportButton" type="TextureButton" parent="SelectMenuManager"]
 offset_right = 40.0
@@ -50,6 +50,13 @@ offset_bottom = 40.0
 texture_normal = ExtResource("4_sscbb")
 script = ExtResource("9_jxfyw")
 displayed_text = "import"
+
+[node name="ExportButton" type="TextureButton" parent="SelectMenuManager"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("10_c65qg")
+displayed_text = "export"
 
 [node name="MouseTracker" parent="." instance=ExtResource("4_osxih")]
 
