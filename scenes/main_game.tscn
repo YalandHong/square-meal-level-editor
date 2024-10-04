@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=12 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://scripts/menu/score_display.gd" id="12_djwgf"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
-[ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_k6vyx")
@@ -27,9 +26,6 @@ script = ExtResource("1_to2mj")
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("25_h0p2b")
-
-[node name="ShadowManager" type="Node2D" parent="."]
-script = ExtResource("27_fconu")
 
 [node name="GridDrawer" type="Node2D" parent="."]
 visible = false

@@ -13,7 +13,6 @@ const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x + 15, SP
 const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(-99 - 15 + 75 + SPRITE_OFFSET_NORMAL.x, SPRITE_OFFSET_NORMAL.y)
 
 var game_manager: GameManager
-var shadow_holder: ShadowManager
 
 enum PlayerState {
     MOVING, TURNING, IDLE, SLIPPING, STOPPING,
