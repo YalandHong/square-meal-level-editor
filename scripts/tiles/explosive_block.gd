@@ -1,8 +1,12 @@
 extends Block
 class_name ExplosiveBlock
 
+# 开始倒计时
 var triggered: bool = false
+# 倒计时结束，进入爆炸状态
 var exploding: bool = false
+
+var explosion: Explosion
 
 func is_eatable():
     return not sliding and not exploding
@@ -24,19 +28,25 @@ func finish_slide():
 func try_trigger_countdown() -> bool:
     if triggered:
         return false
-    var explosion = Explosion.new()
+    explosion = Explosion.new()
+    add_child(explosion)
     triggered = true
     return true
-
-# 被别的东西炸了，立刻触发自己爆炸
-func be_exploded():
-    if exploding:
-        return
-    # TODO 连环爆炸
-    pass
 
 # 爆炸的一瞬间，方块被移除
 # 这里和原版Flash有区别，原版是在爆炸结束时移除的
 func do_explode():
     exploding = true
     queue_free()
+
+# 被别的东西炸了，立刻触发自己爆炸
+func be_exploded():
+    if exploding:
+        return
+    if triggered:
+        explosion.start_exploding()
+        return
+    triggered = true
+    explosion = Explosion.new()
+    explosion.explode_timer = 0
+    add_child(explosion)
