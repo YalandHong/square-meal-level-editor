@@ -8,11 +8,11 @@ var game_song_player: AudioStreamPlayer
 
 func _init() -> void:
     menu_song_player = AudioStreamPlayer.new()
-    menu_song_player.stream = preload("res://sounds/music/menu_music.wav")
+    menu_song_player.stream = preload("res://sounds/music/menu_music.mp3")
     add_child(menu_song_player)
 
     game_song_player = AudioStreamPlayer.new()
-    game_song_player.stream = preload("res://sounds/music/game_music.wav")
+    game_song_player.stream = preload("res://sounds/music/game_music.mp3")
     add_child(game_song_player)
 
 func play_game_song():
