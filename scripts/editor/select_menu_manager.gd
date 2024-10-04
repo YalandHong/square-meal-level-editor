@@ -33,7 +33,11 @@ func create_select_buttons():
         [GlobalVars.ID_WALL_BLOCK, GlobalVars.ID_STONE_BLOCK,
         GlobalVars.ID_WOOD_BLOCK, GlobalVars.ID_METAL_BLOCK],
 
-        [GlobalVars.ID_RUBBER_BLOCK, GlobalVars.ID_DEFAULT_FOOD_BLOCK],
+        [GlobalVars.ID_RUBBER_BLOCK, GlobalVars.ID_EXPLOSIVE_BLOCK,
+        GlobalVars.ID_DEFAULT_FOOD_BLOCK],
+
+        [GlobalVars.ID_SPIKE_FLOOR, GlobalVars.ID_SPIKE_HOLE_FLOOR,
+        GlobalVars.ID_SLIPPY_FLOOR],
     ]
     for i in range(len(button_id_list)):
         var button_row = button_id_list[i]
