@@ -50,6 +50,6 @@ func be_exploded():
         return
     triggered = true
     explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
-    explosion.explode_timer = 0
     explosion.explosive_source = self
     add_child(explosion)
+    explosion.start_exploding()
