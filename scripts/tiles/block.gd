@@ -172,9 +172,12 @@ func check_hit_rubber_block() -> bool:
     block.do_wobble()
     return true
 
-# TODO 未实现
 func check_hit_explosive_block():
-    assert(false)
+    var row = GridHelper.get_next_row_in_direction(current_row, dir)
+    var col = GridHelper.get_next_col_in_direction(current_col, dir)
+    var block = game_manager.get_block_instance(row, col)
+    if block != null and block is ExplosiveBlock:
+        block.try_trigger_countdown()
 
 func start_bounce(bounce_dir: String):
     slide_speed -= 2

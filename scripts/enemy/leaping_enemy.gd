@@ -37,6 +37,7 @@ func handle_movement_or_jump():
         return
     handle_reached_moving_target()
 
+# 准确来说应该叫撞到障碍物、不能再继续往dir方向前进了，而不能叫到达moving target
 func handle_reached_moving_target():
     position = Vector2(moving_target_x, moving_target_y)
     update_mover_grid_pos()

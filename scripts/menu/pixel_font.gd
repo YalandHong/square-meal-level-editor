@@ -18,5 +18,5 @@ func load_fonts():
         font_map_inactive[ch] = load(texture_path)
 
     for ch in "0123456789":
-        var texture_path = "res://sprites/font/score_font/" + ch + ".png"
+        var texture_path = "res://sprites/font/counting/" + ch + ".png"
         font_map_counting[ch] = load(texture_path)

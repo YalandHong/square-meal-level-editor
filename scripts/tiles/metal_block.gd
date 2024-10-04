@@ -37,7 +37,10 @@ func slide() -> void:
     if try_step_forward_moving_target(dir):
         return
     if slide_speed > 1:  # Flash原版里没有这部分，是我自己随性加的
+        if check_hit_rubber_block():
+            return
         check_hit_wooden_block()
+        check_hit_explosive_block()
     finish_slide()
 
 func adjust_slide_speed():
