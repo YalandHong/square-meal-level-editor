@@ -97,7 +97,7 @@ func try_change_direction() -> bool:
     return false
 
 func get_closest_player_grid_pos() -> Vector2i:
-    var player: Player = game_manager.get_node("Player")
+    var player: Player = game_manager.get_first_player()
     return Vector2i(player.current_row, player.current_col)
 
 # 检测是否能看到玩家

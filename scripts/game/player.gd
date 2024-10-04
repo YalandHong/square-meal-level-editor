@@ -34,8 +34,7 @@ const ANIMATION_FPS_SCALE_WALK: float = 0.3
 
 # 吃方块相关
 var swallowed_block_type: int = GlobalVars.ID_EMPTY_TILE
-# TODO eating block有可能是enemy，不一定是block，应该改为grid element
-var eating_block: Node2D
+var eating_block: GridElement
 var eating_block_row: int = -1
 var eating_block_col: int = -1
 const EATING_BLOCK_SHIFT_SPEED: float = 8
@@ -330,15 +329,8 @@ func do_swallow_block():
         return
     do_eat_block()
 
-# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
 func do_eat_enemy():
-    # TODO 增加分数
-    # TODO magic number
-    #GameManager.increment_score(100)
-    #display_points(100)
-
-    game_manager.remove_enemy(eating_block_row, eating_block_col)
-    eating_block.queue_free()
+    eating_block.be_eaten_by_player(self)
     eating_block = null
 
 func do_eat_block():

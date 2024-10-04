@@ -6,7 +6,7 @@ var float_timer: int
 func _init(text: String) -> void:
     super(text)
     float_timer = 0
-    z_index = 1000
+    z_index = GlobalVars.DEPTH_UI_ELEMENTS
 
 func _process(_delta: float) -> void:
     queue_redraw()

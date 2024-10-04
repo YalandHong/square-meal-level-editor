@@ -5,8 +5,8 @@ extends Node
 所有grid element的父节点，管理grid element所在的2D网格
 '''
 
-const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
-const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
+const TILE_WIDTH: int = GridHelper.TILE_WIDTH
+const TILE_HEIGHT: int = GridHelper.TILE_HEIGHT
 
 # direction常量
 const UP = GlobalVars.UP
@@ -24,13 +24,6 @@ var level_map_players: Array
 var level_map_floors: Array
 var level_map_blocks: Array
 
-# 滚动边界
-var scroll_x_min: int
-var scroll_x_max: int
-var scroll_y_min: int
-var scroll_y_max: int
-var camera: Camera2D
-
 # 通关相关
 var enemy_count: int
 var winner_timer: int
@@ -38,12 +31,6 @@ const MAX_WINNER_TIMER_BEFORE_CHEERING: int = 30
 const MAX_WINNER_TIMER_BEFORE_WINNING: int = 90
 var level_cleared: bool
 
-# 计算滚动边界
-func init_scroll_bounds() -> void:
-    scroll_x_min = GlobalVars.VIEW_WIDTH / 2
-    scroll_x_max = max(scroll_x_min, map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
-    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
-    scroll_y_max = max(scroll_y_min, map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
@@ -62,23 +49,10 @@ func _init():
     map_height = level_map.size()
 
     init_level_maps(level_map)
-    init_scroll_bounds()
     level_cleared = false
     winner_timer = 0
 
-func _ready() -> void:
-    # 创建并设置 Camera2D
-    camera = Camera2D.new()
-    add_child(camera)
-    camera.enabled = true
-    camera.zoom = Vector2(
-        float(GlobalVars.WINDOW_WIDTH) / GlobalVars.VIEW_WIDTH,
-        float(GlobalVars.WINDOW_HEIGHT) / GlobalVars.VIEW_HEIGHT
-    )
-    scroll_game()
-
 func _process(_delta: float) -> void:
-    scroll_game()
     process_winning()
 
 func get_loaded_level_map(file_path: String) -> Array:
@@ -182,6 +156,9 @@ func get_player_instance(row: int, col: int) -> Player:
 func get_enemy_instance(row: int, col: int) -> Enemy:
     return level_map_movers[row][col]
 
+func get_first_player() -> Player:
+    return get_node("Player")
+
 # 从网格中移除块，但不会free
 func remove_grid_element(map: Array, row: int, col: int) -> void:
     assert(map[row][col] != null)
@@ -245,22 +222,6 @@ func place_and_slide_new_explosive_block(row: int, col: int, start_dir: String,
     add_child(new_block)
     level_map_blocks[row][col] = new_block
     new_block.start_slide(start_dir)
-
-func scroll_game() -> void:
-    # 目前只支持1个Player
-    var player1: Player = get_node("Player")
-    var scroll_center = player1.position
-
-    #if player2 != null:
-        ## 处理双玩家
-        #var mid_x = (player1.position.x + player2.position.x) / 2
-        #var mid_y = (player1.position.y + player2.position.y) / 2
-        #scroll_x = -mid_x + viewport.size.x / 2
-        #scroll_y = -mid_y + viewport.size.y / 2
-
-    scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
-    scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
-    camera.position = scroll_center
 
 func process_winning():
     if enemy_count == 0 and winner_timer < MAX_WINNER_TIMER_BEFORE_WINNING:

@@ -58,7 +58,7 @@ func draw_player_rect(player):
 func _draw():
     draw_enemy_rect(game_manager.level_map_movers)
     draw_sliding_block_rect(game_manager.level_map_blocks)
-    draw_player_rect(game_manager.get_node("Player"))
+    draw_player_rect(game_manager.get_first_player())
 
 # 在需要时更新绘制
 func _process(_delta):

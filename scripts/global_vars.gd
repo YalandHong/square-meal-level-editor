@@ -66,3 +66,6 @@ const RIGHT = "right"
 const NONE = ""
 
 const FRAME_RATE = 30
+
+const DEPTH_UI_ELEMENTS = 3000
+const DEPTH_EPLOSION = 1000

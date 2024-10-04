@@ -1,16 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=12 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
+[ext_resource type="Texture2D" uid="uid://c6kiskinmv7hs" path="res://sprites/bg_menu.png" id="2_tmgmi"]
 [ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/game/debug_rect_drawer.gd" id="9_yqqm4"]
+[ext_resource type="Texture2D" uid="uid://ctecgavc7nc06" path="res://sprites/menu/block_display/player.png" id="10_3p8cx"]
 [ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="10_f4e46"]
+[ext_resource type="Script" path="res://scripts/menu/block_display.gd" id="11_3eba8"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_k6vyx")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("2_tmgmi")
+centered = false
 
 [node name="BgDrawer" type="Node2D" parent="."]
 script = ExtResource("1_to2mj")
@@ -31,3 +38,11 @@ script = ExtResource("7_2pbga")
 script = ExtResource("9_yqqm4")
 
 [node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BlockDisplay" type="Sprite2D" parent="."]
+position = Vector2(7, 339)
+texture = ExtResource("10_3p8cx")
+centered = false
+script = ExtResource("11_3eba8")
