@@ -30,11 +30,11 @@ func track_mouse():
     var mouse_row = editor_mouse_y_to_row(mouse_pos.y)
     var mouse_col = editor_mouse_x_to_col(mouse_pos.x)
 
-    if Input.is_action_just_pressed("mouse_left"):
+    if Input.is_action_pressed("mouse_left"):
         var button = level_editor.get_node("SelectMenuManager").active_button
         if button != null:
             level_editor.put_grid_element(mouse_row, mouse_col, button.type)
-    elif Input.is_action_just_pressed("mouse_right"):
+    elif Input.is_action_pressed("mouse_right"):
         level_editor.delete_grid_element(mouse_row, mouse_col)
 
 func get_map_edit_area_rect() -> Rect2:
@@ -83,8 +83,10 @@ func draw_full_map_area():
             )
             if type == GlobalVars.ID_PLAYER:
                 pos += Player.SPRITE_OFFSET_NORMAL
+            elif EnemyFactory.is_valid_enemy_type(type):
+                pos += Vector2(-3, Block.BLOCK_SPRITE_OFFSET_Y - 6)
             else:
-                pos += Vector2(0, Block.BLOCK_SPRITE_OFFSET_Y)
+                pos += Vector2(-1, Block.BLOCK_SPRITE_OFFSET_Y)
             draw_texture(loaded_texture, pos)
 
 func get_or_create_texture(type: int) -> Texture2D:

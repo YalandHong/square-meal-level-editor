@@ -1,7 +1,7 @@
 extends TextureButton
 class_name SelectButton
 
-const BUTTON_SPRITE_FILE_FOLDER: String = "res://sprites/editor/button/"
+const BUTTON_SPRITE_FILE_FOLDER: String = "res://sprites/editor/button_unified/"
 const BUTTON_TYPE_ID_TO_SPRITE_FILE_MAP: Dictionary = {
     GlobalVars.ID_PLAYER: "player.png",
 
