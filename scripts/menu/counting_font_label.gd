@@ -1,11 +1,10 @@
 extends Node2D
-
 class_name CountingFontLabel
 
 var displayed_text: String
 
-func _init(text: String) -> void:
-    displayed_text = text
+func _init() -> void:
+    displayed_text = ""
 
 func _draw() -> void:
     draw_pixel_text_centered(displayed_text)

@@ -14,7 +14,6 @@ const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(-99 - 15 + 75 + SPRITE_OFFSET_NO
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
-var sfx_player: SfxPlayer
 
 enum PlayerState {
     MOVING, TURNING, IDLE, SLIPPING, STOPPING,
@@ -49,7 +48,6 @@ const ANIMATION_FPS_SCALE_WINNING: float = 0.8
 
 func _ready():
     game_manager = get_parent()
-    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
     # TODO 暂不支持
     #shadow_holder = get_parent()
 
@@ -104,7 +102,7 @@ func handle_moving_or_slipping():
 func handle_idle():
     if game_manager.level_cleared:
         state = PlayerState.WINNING
-        sfx_player.play_sfx("win")
+        SfxPlayerSingleton.play_sfx("win")
         play_win_animation()
         return
 
@@ -189,7 +187,7 @@ func get_direction_pressed() -> String:
 
 func can_spit(target_row: int, target_col: int) -> bool:
     # 检查目标格子是否为空
-    var target_block = game_manager.get_tile_instance(target_row, target_col)
+    var target_block = game_manager.get_block_instance(target_row, target_col)
     if target_block != null:
         return false
     return true
@@ -207,7 +205,7 @@ func start_spit_block():
 
     # 切换到吐方块的动画
     play_spit_animation()
-    sfx_player.play_sfx("spit")
+    SfxPlayerSingleton.play_sfx("spit")
     state = PlayerState.SPITTING
 
     # TODO 暂无UI
@@ -233,7 +231,7 @@ func finish_spit_block():
     state = PlayerState.IDLE
 
 func check_target_movable(target_row: int, target_col: int) -> bool:
-    var block: Block = game_manager.get_tile_instance(target_row, target_col)
+    var block: Block = game_manager.get_block_instance(target_row, target_col)
     if block != null and not block.is_walkable():
         return false
     var enemy: Enemy = game_manager.get_enemy_instance(target_row, target_col)
@@ -285,14 +283,14 @@ func start_eat_block() -> void:
 
     # 吃方块
     if game_manager.is_eatable_tile(eating_block_row, eating_block_col):
-        eating_block = game_manager.get_tile_instance(eating_block_row, eating_block_col)
+        eating_block = game_manager.get_block_instance(eating_block_row, eating_block_col)
         eating_block.being_eaten = true
-        sfx_player.play_sfx("eat")
+        SfxPlayerSingleton.play_sfx("eat")
     # 吃敌人
     elif game_manager.is_eatable_enemy(eating_block_row, eating_block_col):
         eating_block = game_manager.get_enemy_instance(eating_block_row, eating_block_col)
         eating_block.being_eaten = true
-        sfx_player.play_sfx("eat")
+        SfxPlayerSingleton.play_sfx("eat")
     # 没吃到任何东西
     else:
         eating_block = null
@@ -315,7 +313,7 @@ func on_animation_finished():
 # Flash源码里叫shift block
 # 播放block吞入嘴里的动画
 func handle_eating():
-    if eating_block == null:
+    if eating_block == null or not is_instance_valid(eating_block):
         return
     if anim_sprite.get_frame() < EATING_BLOCK_START_SHIFTING_FRAME:
         return
@@ -326,7 +324,7 @@ func finish_eat_block():
     play_stop_animation()
 
 func do_swallow_block():
-    if eating_block == null:
+    if eating_block == null or not is_instance_valid(eating_block):
         return
     if eating_block is FoodBlock:
         eat_food()
@@ -336,6 +334,7 @@ func do_swallow_block():
         return
     eat_non_food_block()
 
+# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
 func eat_food():
     # TODO 增加分数
     # TODO magic number
@@ -346,6 +345,7 @@ func eat_food():
     eating_block.queue_free()
     eating_block = null
 
+# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
 func eat_enemy():
     # TODO 增加分数
     # TODO magic number
@@ -356,6 +356,7 @@ func eat_enemy():
     eating_block.queue_free()
     eating_block = null
 
+# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
 func eat_non_food_block():
     game_manager.remove_block(eating_block_row, eating_block_col)
     swallowed_block_type = eating_block.get_block_type()
@@ -370,7 +371,7 @@ func die():
         return
     if state == PlayerState.SPITTING or state == PlayerState.EATING:
         return
-    sfx_player.play_sfx("die")
+    SfxPlayerSingleton.play_sfx("die")
     state = PlayerState.DEAD
     play_dead_animation()
 
@@ -393,3 +394,7 @@ func try_start_slipping() -> bool:
     state = PlayerState.SLIPPING
     play_stop_animation()
     return true
+
+# 原游戏里玩家被炸是隐形，我这选择直接die了
+func be_exploded():
+    die()

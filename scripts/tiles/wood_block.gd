@@ -28,7 +28,7 @@ func do_hit_object():
 func do_break():
     dir = NONE
     sliding = false
-    sfx_player.play_sfx("wood_break")
+    SfxPlayerSingleton.play_sfx("wood_break")
     wood_block_sprite.offset.y = BLOCK_SPRITE_OFFSET_Y - 11
     wood_block_sprite.offset.x = -17
     wood_block_sprite.play("break")

@@ -1,6 +1,10 @@
 class_name GameManager
 extends Node
 
+'''
+所有grid element的父节点，管理grid element所在的2D网格
+'''
+
 const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
 const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
@@ -53,7 +57,7 @@ func _init():
     # debug
     seed(0)
 
-    var level_map = get_loaded_level_map(GlobalVarsSingleton.current_level_file)
+    var level_map = get_loaded_level_map(CurrentLevelIndicatorSingleton.current_level_file)
     map_width = level_map[0].size()
     map_height = level_map.size()
 
@@ -169,7 +173,7 @@ func is_eatable_enemy(row: int, col: int) -> bool:
         return false
     return enemy.stunned and not enemy.being_eaten
 
-func get_tile_instance(row: int, col: int) -> Block:
+func get_block_instance(row: int, col: int) -> Block:
     return level_map_blocks[row][col]
 
 func get_player_instance(row: int, col: int) -> Player:
@@ -186,7 +190,7 @@ func remove_grid_element(map: Array, row: int, col: int) -> void:
     #elem.queue_free()
 
 func remove_block(row: int, col: int) -> void:
-    assert(get_tile_instance(row, col) is Block)
+    assert(get_block_instance(row, col) is Block)
     remove_grid_element(level_map_blocks, row, col)
 
 func remove_player(row: int, col: int) -> void:

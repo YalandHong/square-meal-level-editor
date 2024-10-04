@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://xees8h8u7d0y"]
+[gd_scene load_steps=24 format=3 uid="uid://xees8h8u7d0y"]
 
-[ext_resource type="Texture2D" uid="uid://dmh2ysc0v3f84" path="res://sprites/block/explosion/1.png" id="1_5fsv0"]
+[ext_resource type="Script" path="res://scenes/tile/explosion.gd" id="1_arxmo"]
 [ext_resource type="Texture2D" uid="uid://c6ehhqbwok54l" path="res://sprites/block/explosion/2.png" id="2_5jy48"]
 [ext_resource type="Texture2D" uid="uid://cy1u7pfuq4mx7" path="res://sprites/block/explosion/3.png" id="3_3yp5b"]
 [ext_resource type="Texture2D" uid="uid://ccav0spi5m8j5" path="res://sprites/block/explosion/4.png" id="4_1ij70"]
@@ -21,13 +21,11 @@
 [ext_resource type="Texture2D" uid="uid://goto2mt7j28g" path="res://sprites/block/explosion/19.png" id="19_3dekg"]
 [ext_resource type="Texture2D" uid="uid://m2o2ndr0yc7b" path="res://sprites/block/explosion/20.png" id="20_pc58d"]
 [ext_resource type="Texture2D" uid="uid://darmknglb5pcq" path="res://sprites/block/explosion/21.png" id="21_wh3mf"]
+[ext_resource type="Script" path="res://scripts/menu/counting_font_label.gd" id="23_kibju"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_j6hkv"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_5fsv0")
-}, {
 "duration": 1.0,
 "texture": ExtResource("2_5jy48")
 }, {
@@ -94,7 +92,13 @@ animations = [{
 }]
 
 [node name="Explosion" type="Node2D"]
+script = ExtResource("1_arxmo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_j6hkv")
 animation = &"explode"
+frame = 19
+frame_progress = 1.0
+
+[node name="CountingFontLabel" type="Node2D" parent="."]
+script = ExtResource("23_kibju")

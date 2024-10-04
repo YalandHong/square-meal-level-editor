@@ -6,7 +6,6 @@ class_name FloorTile
 # FloorTile不会移动，所以dir、moving target之类的属性不会用到
 
 var game_manager: GameManager
-var sfx_player: SfxPlayer
 
 const FLOOR_TILE_SPRITE_OFFSET: Vector2 = Vector2(-1, -3)
 
@@ -15,7 +14,6 @@ func is_slippy() -> bool:
 
 func _ready() -> void:
     game_manager = get_parent()
-    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
 func get_floor_type() -> int:
     return GlobalVars.ID_INVALID

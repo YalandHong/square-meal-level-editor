@@ -3,15 +3,9 @@ class_name Block
 
 # GameManager 负责游戏全局的逻辑
 var game_manager: GameManager
-var sfx_player: SfxPlayer
 
 const BLOCK_SPRITE_OFFSET_Y: int = -20
 
-# 定义 Block 基类的通用属性和方法
-#var walkable: bool = false
-#var eatable: bool = false
-#var dangerous: bool = false
-#var slippy: bool = false
 var being_eaten: bool = false
 
 # 滑行相关
@@ -30,12 +24,6 @@ func is_walkable() -> bool:
 func is_eatable() -> bool:
     return false
 
-func is_dangerous() -> bool:
-    return false
-
-func is_slippy() -> bool:
-    return false
-
 func is_being_eaten() -> bool:
     return being_eaten
 
@@ -48,7 +36,6 @@ func _init() -> void:
 
 func _ready() -> void:
     game_manager = get_parent()
-    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
 # Flash原版是写在GameManager的moveBlocks了
 # 也就是由game manager每帧统一对所有的block进行slide滑动
@@ -74,7 +61,7 @@ func start_slide(start_dir: String) -> void:
 
 func finish_slide():
     sliding = false
-    sfx_player.play_sfx("block_stops")
+    SfxPlayerSingleton.play_sfx("block_stops")
     dir = NONE
 
 func do_move() -> void:
@@ -109,9 +96,9 @@ func slide() -> void:
     update_block_grid_pos()
     if try_step_forward_moving_target(dir):
         return
-    if check_hit_rubber_block(): # 预留的接口
+    if check_hit_rubber_block():
         return
-    #check_explosive_block()  # 预留的接口
+    check_hit_explosive_block()
     check_hit_wooden_block()
     finish_slide() # 完成滑动
 
@@ -120,7 +107,7 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
     var enemy = game_manager.get_enemy_instance(target_row, target_col)
     if enemy != null and enemy is HelmetEnemy and enemy.ducking:
         return false
-    return game_manager.get_tile_instance(target_row, target_col) == null
+    return game_manager.get_block_instance(target_row, target_col) == null
 
 # 方块滑动时的碰撞检测
 # TODO 这个函数写得比较矬，因为是直接chatgpt生成的
@@ -168,7 +155,7 @@ func do_hit_object():
 func check_hit_wooden_block():
     var row = GridHelper.get_next_row_in_direction(current_row, dir)
     var col = GridHelper.get_next_col_in_direction(current_col, dir)
-    var block = game_manager.get_tile_instance(row, col)
+    var block = game_manager.get_block_instance(row, col)
     if block != null and block is WoodBlock:
         block.do_break()
 
@@ -176,7 +163,7 @@ func check_hit_wooden_block():
 func check_hit_rubber_block() -> bool:
     var row = GridHelper.get_next_row_in_direction(current_row, dir)
     var col = GridHelper.get_next_col_in_direction(current_col, dir)
-    var block = game_manager.get_tile_instance(row, col)
+    var block = game_manager.get_block_instance(row, col)
     if block == null or block is not RubberBlock:
         return false
     if slide_speed <= 2:
@@ -185,7 +172,15 @@ func check_hit_rubber_block() -> bool:
     block.do_wobble()
     return true
 
+# TODO 未实现
+func check_hit_explosive_block():
+    assert(false)
+
 func start_bounce(bounce_dir: String):
     slide_speed -= 2
     dir = bounce_dir
     try_step_forward_moving_target(dir)
+
+func be_exploded():
+    game_manager.remove_block(current_row, current_col)
+    queue_free()

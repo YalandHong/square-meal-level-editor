@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 PixelFont="*res://scripts/menu/pixel_font.gd"
 BgmPlayerSingleton="*res://scripts/bgm_player.gd"
 CurrentLevelIndicatorSingleton="*res://scripts/current_level_indicator.gd"
+SfxPlayerSingleton="*res://scripts/sfx_player.gd"
 
 [debug]
 

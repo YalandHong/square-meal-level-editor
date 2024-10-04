@@ -1,5 +1,9 @@
 extends Node
-class_name SfxPlayer
+#class_name SfxPlayer
+
+'''
+全局sfx音效播放器
+'''
 
 # 存储音效文件路径的字典
 var sfx_files: Dictionary = {

@@ -27,5 +27,5 @@ func get_block_type() -> int:
     return GlobalVars.ID_RUBBER_BLOCK
 
 func do_wobble():
-    sfx_player.play_sfx("rubble_bounce")
+    SfxPlayerSingleton.play_sfx("rubble_bounce")
     rubber_block_sprite.play("wobble")

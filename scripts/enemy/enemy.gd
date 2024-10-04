@@ -3,7 +3,6 @@ class_name Enemy
 
 var game_manager: GameManager
 var shadow_holder: ShadowManager
-var sfx_player: SfxPlayer
 
 var anim_sprite: AnimatedSprite2D
 
@@ -25,7 +24,6 @@ func _init() -> void:
 
 func _ready():
     game_manager = get_parent()
-    sfx_player = game_manager.get_parent().get_node("SfxPlayer")
 
     set_enemy_sprite()
     anim_sprite.centered = false
@@ -264,7 +262,7 @@ func fallback_movement(block: Block) -> void:
 func perform_jump() -> void:
     stunned = false
     jumping = true
-    sfx_player.play_sfx("stun")
+    SfxPlayerSingleton.play_sfx("stun")
     play_jump_animation()
     # TODO shadow暂不支持
     # get_node("/root/GameManager/shadow_holder/enemy_shadow_%s" % str(enemy_id)).goto_and_play("jump")
@@ -272,7 +270,7 @@ func perform_jump() -> void:
 # 有东西挡住了的，不能作为目标移动位置
 # 目标位置已经是其它敌人的移动目标了，也不行
 func check_target_movable(target_row: int, target_col: int) -> bool:
-    if (game_manager.get_tile_instance(target_row, target_col) != null):
+    if (game_manager.get_block_instance(target_row, target_col) != null):
         return false
     if (game_manager.get_enemy_instance(target_row, target_col) != null):
         return false
@@ -302,7 +300,11 @@ func check_landable(row: int, col: int, hit_block: Block) -> bool:
 
     # [row][col] is not empty
     assert(hit_block != null)
-    if game_manager.get_tile_instance(row, col) == hit_block:
+    if game_manager.get_block_instance(row, col) == hit_block:
         return true
 
     return false
+
+func be_exploded():
+    game_manager.remove_enemy(current_row, current_col)
+    queue_free()
