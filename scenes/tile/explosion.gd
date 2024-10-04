@@ -6,7 +6,7 @@ var explosive_source: GridElement
 
 func _init() -> void:
     explode_timer = 120
-    position = Vector2(GridHelper.TILE_WIDTH / 2, GridHelper.TILE_HEIGHT / 2)
+    position = Vector2(GridHelper.TILE_WIDTH / 2, -GridHelper.TILE_HEIGHT / 2)
 
 func _ready() -> void:
     $AnimatedSprite2D.visible = false

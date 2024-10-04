@@ -29,6 +29,7 @@ func try_trigger_countdown() -> bool:
     if triggered:
         return false
     explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
+    explosion.explosive_source = self
     add_child(explosion)
     triggered = true
     return true
@@ -49,4 +50,5 @@ func be_exploded():
     triggered = true
     explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
     explosion.explode_timer = 0
+    explosion.explosive_source = self
     add_child(explosion)

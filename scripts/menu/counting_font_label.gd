@@ -5,6 +5,7 @@ var displayed_text: String
 
 func _init() -> void:
     displayed_text = ""
+    z_index = 1000
 
 func _draw() -> void:
     draw_pixel_text_centered(displayed_text)
