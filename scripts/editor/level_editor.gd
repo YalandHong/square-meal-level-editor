@@ -5,8 +5,8 @@ const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
 const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
 var level_map: Array
-var map_height: int
 var map_width: int
+var map_height: int
 
 # 滚动边界
 var scroll_x_min: int
@@ -45,12 +45,30 @@ func try_load_existing_level_file(tsv_file_path: String) -> bool:
     var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(tsv_file_path)
     if loaded_level_map == null:
         return false
-    # TODO 在此之前要先检查player合法性，是否有多个player
     level_map = loaded_level_map
-    try_find_player_grid_pos()
-    map_height = level_map.size()
     map_width = level_map[0].size()
+    map_height = level_map.size()
+    filter_out_invalid_values()
+    try_find_player_grid_pos()
     return true
+
+func filter_out_invalid_values():
+    var has_player: bool = false
+    var valid_values = SelectButton.BUTTON_TYPE_ID_TO_SPRITE_FILE_MAP.keys()
+    for row in range(map_height):
+        for col in range(map_width):
+            if level_map[row][col] == GlobalVars.ID_EMPTY_TILE:
+                continue
+            if level_map[row][col] == GlobalVars.ID_PLAYER:
+                if has_player:
+                    level_map[row][col] = GlobalVars.ID_EMPTY_TILE
+                else:
+                    has_player = true
+            # TODO 这段代码不知道为什么有bug，if语句总是成立，所以暂且先不管
+            #if level_map[row][col] not in valid_values:
+                #print(level_map[row][col])
+                #print(valid_values)
+                #level_map[row][col] = GlobalVars.ID_EMPTY_TILE
 
 func create_default_empty_level_map():
     level_map = []
