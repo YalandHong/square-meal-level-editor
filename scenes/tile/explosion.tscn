@@ -1,0 +1,100 @@
+[gd_scene load_steps=23 format=3 uid="uid://xees8h8u7d0y"]
+
+[ext_resource type="Texture2D" uid="uid://dmh2ysc0v3f84" path="res://sprites/block/explosion/1.png" id="1_5fsv0"]
+[ext_resource type="Texture2D" uid="uid://c6ehhqbwok54l" path="res://sprites/block/explosion/2.png" id="2_5jy48"]
+[ext_resource type="Texture2D" uid="uid://cy1u7pfuq4mx7" path="res://sprites/block/explosion/3.png" id="3_3yp5b"]
+[ext_resource type="Texture2D" uid="uid://ccav0spi5m8j5" path="res://sprites/block/explosion/4.png" id="4_1ij70"]
+[ext_resource type="Texture2D" uid="uid://d18ctdmv56gyl" path="res://sprites/block/explosion/5.png" id="5_2grw4"]
+[ext_resource type="Texture2D" uid="uid://b5005ubtkgnb2" path="res://sprites/block/explosion/6.png" id="6_0ii6p"]
+[ext_resource type="Texture2D" uid="uid://d2fdwskm2ydqy" path="res://sprites/block/explosion/7.png" id="7_sim6d"]
+[ext_resource type="Texture2D" uid="uid://yjbkbu0x671f" path="res://sprites/block/explosion/8.png" id="8_kb7je"]
+[ext_resource type="Texture2D" uid="uid://cwtqamp0fyv21" path="res://sprites/block/explosion/9.png" id="9_rmwh8"]
+[ext_resource type="Texture2D" uid="uid://wedyf0iqi8xw" path="res://sprites/block/explosion/10.png" id="10_omcwg"]
+[ext_resource type="Texture2D" uid="uid://b1eayu3a3673b" path="res://sprites/block/explosion/11.png" id="11_5bs7k"]
+[ext_resource type="Texture2D" uid="uid://dsi37atm26ojl" path="res://sprites/block/explosion/12.png" id="12_h0bg6"]
+[ext_resource type="Texture2D" uid="uid://kq41dxrrymht" path="res://sprites/block/explosion/13.png" id="13_yuqqi"]
+[ext_resource type="Texture2D" uid="uid://ceetbxvws2jkf" path="res://sprites/block/explosion/14.png" id="14_vqtkh"]
+[ext_resource type="Texture2D" uid="uid://cv8iwv7ft3kk7" path="res://sprites/block/explosion/15.png" id="15_0duup"]
+[ext_resource type="Texture2D" uid="uid://c3uyaynl2vhd0" path="res://sprites/block/explosion/16.png" id="16_ylj2v"]
+[ext_resource type="Texture2D" uid="uid://csj8xmwggxbfe" path="res://sprites/block/explosion/17.png" id="17_k534i"]
+[ext_resource type="Texture2D" uid="uid://dxhrbieomyga3" path="res://sprites/block/explosion/18.png" id="18_abxnm"]
+[ext_resource type="Texture2D" uid="uid://goto2mt7j28g" path="res://sprites/block/explosion/19.png" id="19_3dekg"]
+[ext_resource type="Texture2D" uid="uid://m2o2ndr0yc7b" path="res://sprites/block/explosion/20.png" id="20_pc58d"]
+[ext_resource type="Texture2D" uid="uid://darmknglb5pcq" path="res://sprites/block/explosion/21.png" id="21_wh3mf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j6hkv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5fsv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5jy48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3yp5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1ij70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2grw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0ii6p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_sim6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kb7je")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_rmwh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_omcwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_5bs7k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_h0bg6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_yuqqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_vqtkh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_0duup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ylj2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_k534i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_abxnm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_3dekg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_pc58d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_wh3mf")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 30.0
+}]
+
+[node name="Explosion" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_j6hkv")
+animation = &"explode"
