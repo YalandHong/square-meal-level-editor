@@ -23,6 +23,8 @@ centered = false
 [node name="BgDrawer" type="Node2D" parent="."]
 script = ExtResource("1_to2mj")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("25_h0p2b")
 
@@ -30,15 +32,15 @@ script = ExtResource("25_h0p2b")
 script = ExtResource("27_fconu")
 
 [node name="GridDrawer" type="Node2D" parent="."]
+visible = false
 script = ExtResource("26_pxk8i")
 
 [node name="SfxPlayer" type="Node" parent="."]
 script = ExtResource("7_2pbga")
 
 [node name="DebugRectDrawer" type="Node2D" parent="."]
+visible = false
 script = ExtResource("9_yqqm4")
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BlockDisplay" type="Sprite2D" parent="."]
 position = Vector2(7, 339)
@@ -47,6 +49,7 @@ centered = false
 script = ExtResource("11_3eba8")
 
 [node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]
+visible = false
 
 [node name="ScoreDisplay" type="Node2D" parent="."]
 script = ExtResource("12_djwgf")
