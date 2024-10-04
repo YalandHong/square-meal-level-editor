@@ -38,6 +38,7 @@ func try_trigger_countdown() -> bool:
 # 这里和原版Flash有区别，原版是在爆炸结束时移除的
 func do_explode():
     exploding = true
+    game_manager.remove_block(current_row, current_col)
     queue_free()
 
 # 被别的东西炸了，立刻触发自己爆炸

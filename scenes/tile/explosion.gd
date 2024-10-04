@@ -3,10 +3,14 @@ class_name Explosion
 
 var explode_timer: int
 var explosive_source: GridElement
+var current_row: int
+var current_col: int
+var game_manager: GameManager
 
 func _init() -> void:
-    explode_timer = 120
+    explode_timer = 150
     position = Vector2(GridHelper.TILE_WIDTH / 2, -GridHelper.TILE_HEIGHT / 2)
+    z_index = 1000
 
 func _ready() -> void:
     $AnimatedSprite2D.visible = false
@@ -14,13 +18,14 @@ func _ready() -> void:
     $AnimatedSprite2D.animation_finished.connect(_on_animated_finished)
 
 func _process(_delta: float) -> void:
-    if explode_timer > 0:
+    if explode_timer > 1:
         explode_timer -= 1
-        var seconds = (explode_timer + 30) / 30
-        $CountingFontLabel.displayed_text = str(seconds)
+        var countdown = (explode_timer + 15) / 15
+        $CountingFontLabel.displayed_text = str(countdown)
         return
 
-    if explode_timer == 0:
+    if explode_timer == 1:
+        explode_timer -= 1
         start_exploding()
         return
 
@@ -30,20 +35,25 @@ func _process(_delta: float) -> void:
 # 计时结束，播放爆炸动画和音效
 # 同时，将自己挂到game manager底下，因为自己的父节点会被炸掉
 func start_exploding():
+    current_row = explosive_source.current_row
+    current_col = explosive_source.current_col
+    game_manager = explosive_source.game_manager
+    assert(is_same(get_parent(), explosive_source))
+    explosive_source.remove_child(self)
+    game_manager.add_child(self)
+    position = Vector2(
+        GridHelper.get_tile_center_x(current_col),
+        GridHelper.get_tile_center_y(current_row)
+    )
+
     $AnimatedSprite2D.visible = true
     $AnimatedSprite2D.play("explode")
     SfxPlayerSingleton.play_sfx("explode")
-    assert(is_same(get_parent(), explosive_source))
-    explosive_source.remove_child(self)
-    var game_manager: GameManager = explosive_source.game_manager
-    game_manager.add_child(self)
+
     if explosive_source is ExplosiveBlock:
         explosive_source.do_explode()
 
 func check_area():
-    var current_row = explosive_source.current_row
-    var current_col = explosive_source.current_col
-    var game_manager: GameManager = explosive_source.game_manager
     for row in range(current_row - 1, current_row + 2):
         for col in range(current_col - 1, current_col + 2):
             var elem = game_manager.get_enemy_instance(row, col)
