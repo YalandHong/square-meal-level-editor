@@ -53,13 +53,18 @@ func _process(_delta: float) -> void:
 #     finish_jump()
 
 func handle_stunned() -> void:
+    # 这里update mover原因是，如果有多个敌人叠在一起
+    # 可能会导致短时间内game manager一个格子上的敌人相互覆盖
+    # 但是等敌人散开以后，处于击晕状态要及时更新game manager中自己的位置
+    # 不然player无法与这个敌人交互
+    update_mover_grid_pos()
     stunned_count += 1
     if stunned_count < MAX_STUNNED_COUNT:
         return
     wake_up()
 
 func wake_up():
-    update_mover_grid_pos()
+    #update_mover_grid_pos()
     if not try_step_forward_moving_target(dir):
         try_change_direction()
         #tiles_moved = 0
@@ -178,11 +183,11 @@ func do_hit_by_block(block: Block) -> bool:
             hit_successful = handle_hit_up(block)
         DOWN:
             hit_successful = handle_hit_down(block)
-    # TODO 这么做并不是一种正确的做法
-    # 敌人很密集的时候，有可能会找不到落地的地方，那就只能原地蹦然后原地落地
+    # 敌人很密集的时候，有可能会找不到落地的地方
+    # 那就只能击飞到moving target所在的格子，不管那个格子是否空闲
     assert(hit_successful)
-    #if not hit_successful:
-        #fallback_movement(block)
+    if not hit_successful:
+        print("not landable, just jump")
     perform_jump()
     return true
 
@@ -245,18 +250,6 @@ func try_jump_to(new_dir: String, row_offset: int, col_offset: int, block: Block
         return true
 
     return false
-
-# 移动失败时的回退逻辑
-func fallback_movement(block: Block) -> void:
-    if try_jump_to(LEFT, 0, -1, block):
-        return
-    elif try_jump_to(RIGHT, 0, 1, block):
-        return
-    elif try_jump_to(UP, -1, 0, block):
-        return
-    elif try_jump_to(DOWN, 1, 0, block):
-        return
-    assert(false, "no place for fallback")
 
 # 执行跳跃动作
 func perform_jump() -> void:
