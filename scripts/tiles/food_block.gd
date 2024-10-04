@@ -51,3 +51,8 @@ func set_random_sprite():
         block_sprite.texture = loaded_texture  # 给当前节点的 texture 属性赋值
     else:
         push_error("Failed to load texture: " + random_image)
+
+func be_eaten_by_player(player: Player):
+    # TODO 得分
+    game_manager.remove_block(current_row, current_col)
+    queue_free()

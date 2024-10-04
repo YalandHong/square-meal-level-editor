@@ -187,3 +187,8 @@ func start_bounce(bounce_dir: String):
 func be_exploded():
     game_manager.remove_block(current_row, current_col)
     queue_free()
+
+func be_eaten_by_player(player: Player):
+    player.swallowed_block_type = get_block_type()
+    game_manager.remove_block(current_row, current_col)
+    queue_free()

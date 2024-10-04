@@ -29,7 +29,6 @@ func try_trigger_countdown() -> bool:
     if triggered:
         return false
     explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
-    explosion.explosive_source = self
     add_child(explosion)
     triggered = true
     return true
@@ -50,6 +49,12 @@ func be_exploded():
         return
     triggered = true
     explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
-    explosion.explosive_source = self
     add_child(explosion)
     explosion.start_exploding()
+
+func be_eaten_by_player(player: Player):
+    try_trigger_countdown()
+    remove_child(explosion)
+    player.add_child(explosion)
+    game_manager.remove_block(current_row, current_col)
+    queue_free()

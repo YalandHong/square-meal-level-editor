@@ -212,18 +212,15 @@ func start_spit_block():
     # 更新显示玩家当前持有的方块状态 (这里假设有个 BlockDisplay 类来显示持有的方块)
     #BlockDisplay.update_display(0)
 
-    # 如果当前方块是炸弹类型 (block ID 23)，进行相应的倒计时和状态重置
-    # TODO 不支持炸弹方块
-    #if current_block == 23:
-        #explosion_countdown = timer.get_countdown()
-        #timer.reset()
-        #ticking = false
-    #else:
-        #explosion_countdown = 100
-        #ticking = false
-
     # 将玩家持有的方块放入目标格子，并清空玩家当前的持有方块
-    game_manager.place_and_slide_new_block(swallowed_block_type, target_row, target_col, dir)
+    if swallowed_block_type == GlobalVars.ID_EXPLOSIVE_BLOCK:
+        game_manager.place_and_slide_new_explosive_block(
+            target_row, target_col, dir, get_node("Explosion")
+        )
+    else:
+        game_manager.place_and_slide_new_block(
+            swallowed_block_type, target_row, target_col, dir
+        )
     swallowed_block_type = GlobalVars.ID_EMPTY_TILE
 
 func finish_spit_block():
@@ -326,27 +323,13 @@ func finish_eat_block():
 func do_swallow_block():
     if eating_block == null or not is_instance_valid(eating_block):
         return
-    if eating_block is FoodBlock:
-        eat_food()
-        return
     if eating_block is Enemy:
-        eat_enemy()
+        do_eat_enemy()
         return
-    eat_non_food_block()
+    do_eat_block()
 
 # TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
-func eat_food():
-    # TODO 增加分数
-    # TODO magic number
-    #GameManager.increment_score(50)
-    #display_points(50)
-
-    game_manager.remove_block(eating_block_row, eating_block_col)
-    eating_block.queue_free()
-    eating_block = null
-
-# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
-func eat_enemy():
+func do_eat_enemy():
     # TODO 增加分数
     # TODO magic number
     #GameManager.increment_score(100)
@@ -356,11 +339,8 @@ func eat_enemy():
     eating_block.queue_free()
     eating_block = null
 
-# TODO 这样写不好，约定的规矩是，每个grid element自己释放自己
-func eat_non_food_block():
-    game_manager.remove_block(eating_block_row, eating_block_col)
-    swallowed_block_type = eating_block.get_block_type()
-    eating_block.queue_free()
+func do_eat_block():
+    eating_block.be_eaten_by_player(self)
     eating_block = null
 
 func do_hit_by_block():

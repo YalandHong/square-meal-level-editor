@@ -39,3 +39,10 @@ static func allocate_non_food_block(type: int) -> Block:
         GlobalVars.ID_EXPLOSIVE_BLOCK:
             block_obj = ExplosiveBlock.new()
     return block_obj
+
+static func create_triggered_explosive_block(row: int, col: int,
+                                            explosion: Explosion) -> ExplosiveBlock:
+    var block_obj = ExplosiveBlock.new()
+    block_obj.triggered = true
+    block_obj.explosion = explosion
+    return block_obj

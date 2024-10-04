@@ -237,6 +237,15 @@ func place_and_slide_new_block(block_type: int, row: int, col: int, start_dir: S
     # 启动 Block 的滑动逻辑
     new_block.start_slide(start_dir)
 
+func place_and_slide_new_explosive_block(row: int, col: int, start_dir: String,
+                                        explosion: Explosion) -> void:
+    var new_block: Block = BlockFactory.create_triggered_explosive_block(
+        row, col, explosion
+    )
+    add_child(new_block)
+    level_map_blocks[row][col] = new_block
+    new_block.start_slide(start_dir)
+
 func scroll_game() -> void:
     # 目前只支持1个Player
     var player1: Player = get_node("Player")

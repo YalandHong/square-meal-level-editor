@@ -2,7 +2,7 @@ extends Node2D
 class_name Explosion
 
 var explode_timer: int
-var explosive_source: GridElement
+#var explosive_source: GridElement
 var current_row: int
 var current_col: int
 var game_manager: GameManager
@@ -35,10 +35,10 @@ func _process(_delta: float) -> void:
 # 同时，将自己挂到game manager底下，因为自己的父节点会被炸掉
 func start_exploding():
     explode_timer = -1
+    var explosive_source: GridElement = get_parent()
     current_row = explosive_source.current_row
     current_col = explosive_source.current_col
     game_manager = explosive_source.game_manager
-    assert(is_same(get_parent(), explosive_source))
     explosive_source.remove_child(self)
     game_manager.add_child(self)
     position = Vector2(
@@ -65,7 +65,6 @@ func check_area():
                 elem.be_exploded()
             elem = game_manager.get_block_instance(row, col)
             if elem != null:
-                assert(not is_same(elem, explosive_source))
                 elem.be_exploded()
 
 func _on_animated_finished():
