@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 PixelFont="*res://scripts/menu/pixel_font.gd"
-GlobalVarsSingleton="*res://scripts/global_vars.gd"
 BgmPlayerSingleton="*res://scripts/bgm_player.gd"
+CurrentLevelIndicatorSingleton="*res://scripts/current_level_indicator.gd"
 
 [debug]
 

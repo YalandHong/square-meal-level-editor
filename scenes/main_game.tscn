@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=9 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -8,13 +8,9 @@
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
-[ext_resource type="Script" path="res://scripts/fps_manager.gd" id="41_22c60"]
 
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_k6vyx")
-
-[node name="FpsManager" type="Node" parent="."]
-script = ExtResource("41_22c60")
 
 [node name="BgDrawer" type="Node2D" parent="."]
 script = ExtResource("1_to2mj")

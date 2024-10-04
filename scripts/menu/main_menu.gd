@@ -2,6 +2,10 @@ extends Node2D
 
 @onready var camera: Camera2D = $Camera2D
 
+func _init() -> void:
+    Engine.max_fps = GlobalVars.FRAME_RATE
+
+
 func _ready() -> void:
     camera.enabled = true
     camera.zoom = Vector2(

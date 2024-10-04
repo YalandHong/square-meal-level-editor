@@ -1,6 +1,8 @@
 extends Node
 class_name GlobalVars
 
+# 全局常量
+
 const WINDOW_WIDTH: int = 825
 const WINDOW_HEIGHT: int = 600
 
@@ -63,4 +65,4 @@ const LEFT = "left"
 const RIGHT = "right"
 const NONE = ""
 
-var current_level_file: String = ""
+const FRAME_RATE = 30
