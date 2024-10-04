@@ -62,7 +62,7 @@ func _ready():
 func _process(_delta):
     match state:
         PlayerState.IDLE, PlayerState.STOPPING:
-            handle_idle()
+            handle_idle_or_stopping()
         PlayerState.MOVING, PlayerState.SLIPPING:
             handle_moving_or_slipping()
         PlayerState.TURNING:
@@ -101,7 +101,7 @@ func handle_moving_or_slipping():
         do_move()
         play_walk_animation()
 
-func handle_idle():
+func handle_idle_or_stopping():
     if game_manager.level_cleared:
         state = PlayerState.WINNING
         SfxPlayerSingleton.play_sfx("win")
@@ -131,9 +131,6 @@ func handle_idle():
     if try_step_forward_moving_target(direction_pressed):
         state = PlayerState.MOVING
         do_move()
-
-func handle_stopping():
-    state = PlayerState.IDLE
 
 # 处理吃东西或吐方块的逻辑
 func start_eat_or_spit():
