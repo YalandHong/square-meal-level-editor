@@ -45,6 +45,7 @@ const SPITTING_BLOCK_DO_SPIT_FRAME: int = 2
 # 分数和通关相关
 var score: int = 0
 const ANIMATION_FPS_SCALE_WINNING: float = 0.8
+const ANIMATION_FPS_SCALE_DEAD: float = 0.6
 
 func _ready():
     game_manager = get_parent()
@@ -60,7 +61,7 @@ func _ready():
 
 func _process(_delta):
     match state:
-        PlayerState.IDLE:
+        PlayerState.IDLE, PlayerState.STOPPING:
             handle_idle()
         PlayerState.MOVING, PlayerState.SLIPPING:
             handle_moving_or_slipping()
@@ -68,8 +69,6 @@ func _process(_delta):
             handle_turning()
         PlayerState.EATING:
             handle_eating()
-        PlayerState.STOPPING:
-            handle_stopping()
     z_index = GameManager.calculate_depth(position)
 
 func handle_moving_or_slipping():
@@ -82,7 +81,10 @@ func handle_moving_or_slipping():
         # TODO shadow
         # shadow_manager.update_shadow_position(player_id, position.x, position.y + 5)
         update_player_grid_pos()
+        # player在结束moving或者slipping时给出这样1帧的stopping状态
+        # 以便某些block进行判定
         state = PlayerState.STOPPING
+        #state = PlayerState.IDLE
         return
 
     if state == PlayerState.SLIPPING:
@@ -112,6 +114,7 @@ func handle_idle():
 
     var direction_pressed = get_direction_pressed()
     if direction_pressed == NONE:
+        state = PlayerState.IDLE
         play_stop_animation()
         return
 
@@ -129,8 +132,6 @@ func handle_idle():
         state = PlayerState.MOVING
         do_move()
 
-# player在结束moving或者slipping时给出这样1帧的时间，什么都不做
-# 以便某些block进行判定
 func handle_stopping():
     state = PlayerState.IDLE
 
@@ -351,7 +352,7 @@ func die():
     play_dead_animation()
 
 func play_dead_animation():
-    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_WALK
+    anim_sprite.speed_scale = ANIMATION_FPS_SCALE_DEAD
     anim_sprite.offset = SPRITE_OFFSET_NORMAL
     anim_sprite.play("die")
 
