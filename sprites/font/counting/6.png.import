@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://w6b73r5qwhcq"
-path="res://.godot/imported/6.png-5a871f2c3885bab7763328eea27b8f4c.ctex"
+path="res://.godot/imported/6.png-56b1008c143de0b7288616f1a3fae9c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/font/score_font/6.png"
-dest_files=["res://.godot/imported/6.png-5a871f2c3885bab7763328eea27b8f4c.ctex"]
+source_file="res://sprites/font/counting/6.png"
+dest_files=["res://.godot/imported/6.png-56b1008c143de0b7288616f1a3fae9c3.ctex"]
 
 [params]
 

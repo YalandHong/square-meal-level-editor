@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djhmb7mqsebne"
-path="res://.godot/imported/2.png-f6013515215ebf17140ad1d11f35cad5.ctex"
+uid="uid://ck2qwtpdtbkka"
+path="res://.godot/imported/9.png-8bd91a7f4ff1821b417bb9eabce349ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/font/score_font/2.png"
-dest_files=["res://.godot/imported/2.png-f6013515215ebf17140ad1d11f35cad5.ctex"]
+source_file="res://sprites/font/counting/9.png"
+dest_files=["res://.godot/imported/9.png-8bd91a7f4ff1821b417bb9eabce349ea.ctex"]
 
 [params]
 
