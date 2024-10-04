@@ -45,4 +45,6 @@ static func create_triggered_explosive_block(row: int, col: int,
     var block_obj = ExplosiveBlock.new()
     block_obj.triggered = true
     block_obj.explosion = explosion
+    block_obj.add_child(explosion)
+    block_obj.set_init_pos(row, col)
     return block_obj

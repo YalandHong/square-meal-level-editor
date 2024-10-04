@@ -18,6 +18,8 @@ func _ready() -> void:
     $AnimatedSprite2D.animation_finished.connect(_on_animated_finished)
 
 func _process(_delta: float) -> void:
+    assert(get_parent() != null)
+
     if explode_timer > 0:
         explode_timer -= 1
         var countdown = (explode_timer + 15) / 15
@@ -28,7 +30,7 @@ func _process(_delta: float) -> void:
         start_exploding()
         return
 
-    if $AnimatedSprite2D.frame == 12:
+    if $AnimatedSprite2D.frame == 10:
         check_area()
 
 # 计时结束，播放爆炸动画和音效

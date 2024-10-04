@@ -214,8 +214,10 @@ func start_spit_block():
 
     # 将玩家持有的方块放入目标格子，并清空玩家当前的持有方块
     if swallowed_block_type == GlobalVars.ID_EXPLOSIVE_BLOCK:
+        var explosion = get_node("Explosion")
+        remove_child(explosion)
         game_manager.place_and_slide_new_explosive_block(
-            target_row, target_col, dir, get_node("Explosion")
+            target_row, target_col, dir, explosion
         )
     else:
         game_manager.place_and_slide_new_block(

@@ -56,5 +56,6 @@ func be_eaten_by_player(player: Player):
     try_trigger_countdown()
     remove_child(explosion)
     player.add_child(explosion)
+    player.swallowed_block_type = get_block_type()
     game_manager.remove_block(current_row, current_col)
     queue_free()
