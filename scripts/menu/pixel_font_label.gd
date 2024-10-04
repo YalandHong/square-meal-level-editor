@@ -41,7 +41,11 @@ func draw_special_text_centered(text: String, font_map: Dictionary):
     display_special_text(start_x, start_y, text, font_map)
 
 func draw_active_pixel_text_centered(text: String):
+    if text == "":
+        return
     draw_special_text_centered(text, PixelFont.font_map_active)
 
 func draw_inactive_pixel_text_centered(text: String):
+    if text == "":
+        return
     draw_special_text_centered(text, PixelFont.font_map_inactive)

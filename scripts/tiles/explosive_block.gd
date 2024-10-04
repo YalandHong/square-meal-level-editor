@@ -28,7 +28,7 @@ func finish_slide():
 func try_trigger_countdown() -> bool:
     if triggered:
         return false
-    explosion = Explosion.new()
+    explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
     add_child(explosion)
     triggered = true
     return true
@@ -47,6 +47,6 @@ func be_exploded():
         explosion.start_exploding()
         return
     triggered = true
-    explosion = Explosion.new()
+    explosion = preload("res://scenes/tile/explosion.tscn").instantiate()
     explosion.explode_timer = 0
     add_child(explosion)
