@@ -24,7 +24,7 @@ static func read_level_map_tsv_file(file_path: String):
         result_array.append(numeric_values)  # 将每行的数字数组添加到二维数组中
     file.close()
 
-    if is_valid_2d_array(result_array):
+    if not is_valid_loaded_level_map(result_array):
         printerr("invalid 2d array")
         return null
     print("Finished reading from: ", file_path)
@@ -67,7 +67,7 @@ static func load_official_level_from_xml(xml_path: String) -> Array:
                 current_row.append(int(type))
             print(current_row)
             result.append(current_row)
-    assert(is_valid_2d_array(result))
+    assert(is_valid_loaded_level_map(result))
 
     # filter out unsupported values
     var map_width = result[0].size()
@@ -82,7 +82,7 @@ static func load_official_level_from_xml(xml_path: String) -> Array:
                 result[row][col] = GlobalVars.ID_SLIPPY_FLOOR
     return result
 
-static func is_valid_2d_array(arr: Array) -> bool:
+static func is_valid_loaded_level_map(arr: Array) -> bool:
     if arr.size() < 3:
         return false
     # 获取第一行的列数

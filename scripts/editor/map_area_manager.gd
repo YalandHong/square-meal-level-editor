@@ -43,7 +43,7 @@ func get_map_edit_area_rect() -> Rect2:
         camera.position.x - GlobalVars.WINDOW_WIDTH / 2,
         camera.position.y - GlobalVars.WINDOW_HEIGHT / 2,
         GlobalVars.VIEW_WIDTH,
-        GlobalVars.VIEW_HEIGHT
+        GlobalVars.WINDOW_HEIGHT
     )
 
 # 检查鼠标是否在 Camera2D 区域内

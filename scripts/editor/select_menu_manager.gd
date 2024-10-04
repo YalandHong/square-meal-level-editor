@@ -14,11 +14,18 @@ func _init() -> void:
 func _ready():
     size = Vector2(MENU_WIDTH, MENU_HEIGHT)
     color = Color.IVORY
-    var i = 0
-    for button in [$ExportButton, $ImportButton, $RunButton, $SaveButton]:
-        button.position.x = MENU_WIDTH / 2 - button.texture_normal.get_size().x / 2
-        button.position.y = MENU_HEIGHT - 44 * (i+1)
-        i += 1
+    # 从下往上布局按钮
+    var editor_button_list = [
+        [$ExportButton, $ImportButton],
+        [$RunButton, $SaveButton],
+    ]
+    for row in range(editor_button_list.size()):
+        for col in range(editor_button_list[row].size()):
+            var button = editor_button_list[row][col]
+            button.position = Vector2(
+                MENU_WIDTH / 2 + (button.texture_normal.get_size().x + 5) * (col - 1),
+                MENU_HEIGHT - 44 * (row+1)
+            )
 
 func _process(_delta: float) -> void:
     update_select_menu_position()
