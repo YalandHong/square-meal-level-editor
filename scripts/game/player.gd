@@ -373,3 +373,9 @@ func try_start_slipping() -> bool:
 # 原游戏里玩家被炸是隐形，我这选择直接die了
 func be_exploded():
     die()
+
+func add_score(added_score: int):
+    score += added_score
+    var popup = FloatingScoreUp.new(str(added_score))
+    add_child(popup)
+    popup.position = Vector2(GridHelper.TILE_WIDTH / 2, -35)
