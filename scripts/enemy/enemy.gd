@@ -310,6 +310,6 @@ func be_exploded():
     queue_free()
 
 func be_eaten_by_player(player: Player):
-    # TODO 得分100
+    player.score += 100
     game_manager.remove_enemy(current_row, current_col)
     queue_free()

@@ -3,16 +3,25 @@ extends Node2D
 class_name PixelFontLabel
 
 var active: bool = false
+var center: bool = true
 var displayed_text: String
 
 func _init(text: String) -> void:
     displayed_text = text
 
 func _draw() -> void:
+    if displayed_text == "":
+        return
     if active:
-        draw_active_pixel_text_centered(displayed_text)
+        if center:
+            draw_active_pixel_text_centered(displayed_text)
+        else:
+            draw_active_pixel_text_at_origin(displayed_text)
     else:
-        draw_inactive_pixel_text_centered(displayed_text)
+        if center:
+            draw_inactive_pixel_text_centered(displayed_text)
+        else:
+            draw_inactive_pixel_text_at_origin(displayed_text)
 
 func _process(_delta: float) -> void:
     queue_redraw()
@@ -41,11 +50,13 @@ func draw_special_text_centered(text: String, font_map: Dictionary):
     display_special_text(start_x, start_y, text, font_map)
 
 func draw_active_pixel_text_centered(text: String):
-    if text == "":
-        return
     draw_special_text_centered(text, PixelFont.font_map_active)
 
 func draw_inactive_pixel_text_centered(text: String):
-    if text == "":
-        return
     draw_special_text_centered(text, PixelFont.font_map_inactive)
+
+func draw_active_pixel_text_at_origin(text: String):
+    display_special_text(0, 0, text, PixelFont.font_map_active)
+
+func draw_inactive_pixel_text_at_origin(text: String):
+    display_special_text(0, 0, text, PixelFont.font_map_inactive)

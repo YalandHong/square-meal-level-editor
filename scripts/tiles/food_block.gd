@@ -53,6 +53,6 @@ func set_random_sprite():
         push_error("Failed to load texture: " + random_image)
 
 func be_eaten_by_player(player: Player):
-    # TODO 得分
+    player.score += 50
     game_manager.remove_block(current_row, current_col)
     queue_free()

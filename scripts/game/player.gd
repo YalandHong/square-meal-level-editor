@@ -43,6 +43,7 @@ const EATING_BLOCK_START_SHIFTING_FRAME: int = 7
 const SPITTING_BLOCK_DO_SPIT_FRAME: int = 2
 
 # 分数和通关相关
+var score: int = 0
 const ANIMATION_FPS_SCALE_WINNING: float = 0.8
 
 func _ready():

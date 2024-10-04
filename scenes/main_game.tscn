@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=13 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ctecgavc7nc06" path="res://sprites/menu/block_display/player.png" id="10_3p8cx"]
 [ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="10_f4e46"]
 [ext_resource type="Script" path="res://scripts/menu/block_display.gd" id="11_3eba8"]
+[ext_resource type="Script" path="res://scripts/menu/score_display.gd" id="12_djwgf"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 [ext_resource type="Script" path="res://scripts/game/shadow_manager.gd" id="27_fconu"]
@@ -37,8 +38,6 @@ script = ExtResource("7_2pbga")
 [node name="DebugRectDrawer" type="Node2D" parent="."]
 script = ExtResource("9_yqqm4")
 
-[node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BlockDisplay" type="Sprite2D" parent="."]
@@ -46,3 +45,8 @@ position = Vector2(7, 339)
 texture = ExtResource("10_3p8cx")
 centered = false
 script = ExtResource("11_3eba8")
+
+[node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]
+
+[node name="ScoreDisplay" type="Node2D" parent="."]
+script = ExtResource("12_djwgf")
