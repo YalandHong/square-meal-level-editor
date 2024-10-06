@@ -35,7 +35,8 @@ func _ready():
     assert(check_aligned_with_moving_target())
 
 func _process(_delta: float) -> void:
-    z_index = GameManager.calculate_depth(position)
+    # 当enemy和其他block等元素深度相同时，挡在block和player前面
+    z_index = GameManager.calculate_depth(position) + 2
 
     if being_eaten:
         return # 如果已经被吃掉，则不进行任何处理

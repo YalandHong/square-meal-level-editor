@@ -68,7 +68,8 @@ func _process(_delta):
             handle_turning()
         PlayerState.EATING:
             handle_eating()
-    z_index = GameManager.calculate_depth(position)
+    # 当player和其他block等元素深度相同时，挡在block前面
+    z_index = GameManager.calculate_depth(position) + 1
 
 func handle_moving_or_slipping():
     do_move()

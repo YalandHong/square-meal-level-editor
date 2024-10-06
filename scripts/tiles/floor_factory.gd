@@ -5,7 +5,7 @@ const TYPE_TO_FLOOR_TILE_MAP = {
     GlobalVars.ID_SPIKE_FLOOR: preload("res://scripts/tiles/spike_floor.gd"),
     GlobalVars.ID_SPIKE_HOLE_FLOOR: preload("res://scenes/tile/spike_hole.tscn"),
     GlobalVars.ID_TRIGGER_FLOOR: preload("res://scenes/tile/trigger_floor.tscn"),
-    GlobalVars.ID_SLIPPY_FLOOR: preload("res://scripts/tiles/slippy_floor.gd"),
+    GlobalVars.ID_SLIPPY_FLOOR: preload("res://scenes/tile/slippy_floor.tscn"),
 }
 
 static func is_valid_floor_type(type: int) -> bool:
