@@ -15,7 +15,7 @@ static func is_valid_block_type(type: int) -> bool:
 static func create_block(row: int, col: int, type: int) -> Block:
     var block_obj: Block
     if type in GlobalVars.ID_FOOD_BLOCK:
-        block_obj = FoodBlock.new()
+        block_obj = preload("res://scenes/tile/food_block.tscn").instantiate()
     else:
         block_obj = allocate_non_food_block(type)
     block_obj.set_init_pos(row, col)

@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://7ahf2wfpth0i"]
+
+[ext_resource type="Script" path="res://scripts/tiles/food_block.gd" id="1_deycj"]
+[ext_resource type="Texture2D" uid="uid://vg0esax0cy8t" path="res://sprites/block/food_unified/175.png" id="2_3k2tm"]
+[ext_resource type="Texture2D" uid="uid://cjvvbppj7y51j" path="res://sprites/block/food_unified/178.png" id="3_htrwr"]
+[ext_resource type="Texture2D" uid="uid://cnkana0bcj4lo" path="res://sprites/block/food_unified/181.png" id="4_hjtam"]
+[ext_resource type="Texture2D" uid="uid://clbvndo563op5" path="res://sprites/block/food_unified/257.png" id="5_cjwv0"]
+[ext_resource type="Texture2D" uid="uid://bu6v6bom2tpm5" path="res://sprites/block/food_unified/260.png" id="6_tfuup"]
+[ext_resource type="Texture2D" uid="uid://cwlhgj3hr8tig" path="res://sprites/block/food_unified/263.png" id="7_xr583"]
+[ext_resource type="Texture2D" uid="uid://de4ep5gns2wh5" path="res://sprites/block/food_unified/266.png" id="8_vhumb"]
+[ext_resource type="Texture2D" uid="uid://diu04rxal2876" path="res://sprites/block/food_unified/269.png" id="9_gn11t"]
+[ext_resource type="Texture2D" uid="uid://cq53qlkr3vkn3" path="res://sprites/block/food_unified/272.png" id="10_vsrf7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vdhvj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3k2tm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_htrwr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hjtam")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cjwv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_tfuup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xr583")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vhumb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gn11t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vsrf7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="FoodBlock" type="Node2D"]
+script = ExtResource("1_deycj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vdhvj")
