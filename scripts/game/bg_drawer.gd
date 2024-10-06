@@ -24,5 +24,5 @@ func _ready() -> void:
     var game_manager: GameManager = get_node("../GameManager")
     draw_width = game_manager.map_width * GameManager.TILE_WIDTH
     draw_height = game_manager.map_height * GameManager.TILE_HEIGHT
-    background_texture = load("res://sprites/bg_level.png")
+    background_texture = preload("res://sprites/bg_level.png")
     queue_redraw() # 触发一次绘制

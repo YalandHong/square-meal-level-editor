@@ -29,12 +29,12 @@ static func allocate_non_food_block(type: int) -> Block:
         GlobalVars.ID_WALL_BLOCK:
             block_obj = WallBlock.new()
         GlobalVars.ID_WOOD_BLOCK:
-            var block_scene: PackedScene = load("res://scenes/tile/wood_block.tscn")
+            var block_scene: PackedScene = preload("res://scenes/tile/wood_block.tscn")
             block_obj = block_scene.instantiate()
         GlobalVars.ID_METAL_BLOCK:
             block_obj = MetalBlock.new()
         GlobalVars.ID_RUBBER_BLOCK:
-            var block_scene: PackedScene = load("res://scenes/tile/rubber_block.tscn")
+            var block_scene: PackedScene = preload("res://scenes/tile/rubber_block.tscn")
             block_obj = block_scene.instantiate()
         GlobalVars.ID_EXPLOSIVE_BLOCK:
             block_obj = ExplosiveBlock.new()

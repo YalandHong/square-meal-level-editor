@@ -1,7 +1,7 @@
 extends Node
 
 # 全局bgm播放器
-# 使用auto load载入作为全局对象
+# 使用autoload载入作为全局对象
 
 var menu_song_player: AudioStreamPlayer
 var game_song_player: AudioStreamPlayer

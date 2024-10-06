@@ -13,7 +13,7 @@ func _init() -> void:
 
 func _ready() -> void:
     super._ready()
-    var loaded_texture = load("res://sprites/block/metal.png")
+    var loaded_texture = preload("res://sprites/block/metal.png")
     block_sprite.texture = loaded_texture
 
 func get_block_type() -> int:

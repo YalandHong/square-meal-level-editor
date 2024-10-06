@@ -2,7 +2,6 @@ extends GridElement
 class_name Enemy
 
 var game_manager: GameManager
-var shadow_holder: ShadowManager
 
 var anim_sprite: AnimatedSprite2D
 
