@@ -18,3 +18,9 @@ func create_buttons(max_available_level_number: int) -> void:
         var col = i % 10
         button.position = Vector2(75 + col * 40, 135 + row * 40)
         add_child(button)
+
+
+func _on_back_pressed() -> void:
+    CurrentLevelIndicatorSingleton.current_level_num = -1
+    CurrentLevelIndicatorSingleton.current_level_file = ""
+    get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
