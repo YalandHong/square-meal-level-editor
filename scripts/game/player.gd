@@ -52,7 +52,7 @@ func _ready():
     #shadow_holder = get_parent()
 
     anim_sprite.centered = false
-    anim_sprite.animation_finished.connect(on_animation_finished)
+    anim_sprite.animation_finished.connect(_on_animation_finished)
 
     state = PlayerState.IDLE
     dir = DOWN
@@ -299,13 +299,15 @@ func start_eat_block() -> void:
     # 在吃东西动画播放结束时，会callback相应处理函数
     play_eat_animation()
 
-func on_animation_finished():
+func _on_animation_finished():
     #print("animation finished")
     if state == PlayerState.EATING:
         do_swallow_block()
         finish_eat_block()
     elif state == PlayerState.SPITTING:
         finish_spit_block()
+    elif state == PlayerState.DEAD:
+        game_manager._handle_failed()
 
 # Flash源码里叫shift block
 # 播放block吞入嘴里的动画

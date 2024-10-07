@@ -30,7 +30,7 @@ var winner_timer: int
 const MAX_WINNER_TIMER_BEFORE_CHEERING: int = 30
 const MAX_WINNER_TIMER_BEFORE_WINNING: int = 90
 var level_cleared: bool
-
+var level_failed: bool
 
 # 判断某一块是否为空
 func is_empty(row: int, col: int) -> bool:
@@ -51,6 +51,7 @@ func _init():
     init_level_maps(level_map)
     level_cleared = false
     winner_timer = 0
+    level_failed = false
 
 func _process(_delta: float) -> void:
     process_winning()
@@ -224,6 +225,8 @@ func place_and_slide_new_explosive_block(row: int, col: int, start_dir: String,
     new_block.start_slide(start_dir)
 
 func process_winning():
+    if level_failed:
+        return
     if enemy_count == 0 and winner_timer < MAX_WINNER_TIMER_BEFORE_WINNING:
         winner_timer += 1
     if winner_timer >= MAX_WINNER_TIMER_BEFORE_CHEERING:
@@ -231,3 +234,8 @@ func process_winning():
 
 func is_valid_row_col(row: int, col: int) -> bool:
     return row >= 0 and row < map_height and col >= 0 and col < map_width
+
+func _handle_failed():
+    if not level_failed:
+        level_failed = true
+        get_parent().popup_game_over_menu()

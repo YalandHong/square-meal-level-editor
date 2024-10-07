@@ -56,3 +56,9 @@ func scroll_game() -> void:
     scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
     scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
     camera.position = scroll_center
+
+func popup_game_over_menu():
+    var game_over_menu = preload("res://scenes/game_over_menu.tscn").instantiate()
+    #game_over_menu.position = camera.position
+    game_over_menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
+    camera.add_child(game_over_menu)

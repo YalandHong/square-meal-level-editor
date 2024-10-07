@@ -19,5 +19,5 @@ func _process(delta: float) -> void:
 
 func scroll_with_camera():
     var camera: Camera2D = $"../Camera2D"
-    var DISPLAYER_OFFSET = Vector2(10, 10)
+    var DISPLAYER_OFFSET = Vector2(10, 5)
     position = camera.position - Vector2(GlobalVars.VIEW_WIDTH/2, GlobalVars.VIEW_HEIGHT/2) + DISPLAYER_OFFSET
