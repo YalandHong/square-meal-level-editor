@@ -44,7 +44,7 @@ func create_select_buttons():
         GlobalVars.ID_DEFAULT_FOOD_BLOCK],
 
         [GlobalVars.ID_SPIKE_FLOOR, GlobalVars.ID_SPIKE_HOLE_FLOOR,
-        GlobalVars.ID_SLIPPY_FLOOR],
+        GlobalVars.ID_SLIPPY_FLOOR, GlobalVars.ID_TRIGGER_FLOOR],
     ]
     for i in range(len(button_id_list)):
         var button_row = button_id_list[i]

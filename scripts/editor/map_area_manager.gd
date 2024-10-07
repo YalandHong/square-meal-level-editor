@@ -68,7 +68,8 @@ func highlight_mouse_area():
     )
     draw_rect(tile_rect, highlight_color)
 
-# TODO 或许，只需要draw camera里可见的部分即可，提高效率
+# 绘制level map
+# 各个sprites的偏移量看起来不一样，这里加一些offset
 func draw_full_map_area():
     for row in range(level_editor.map_height):
         for col in range(level_editor.map_width):
@@ -85,6 +86,8 @@ func draw_full_map_area():
                 pos += Player.SPRITE_OFFSET_NORMAL
             elif EnemyFactory.is_valid_enemy_type(type):
                 pos += Vector2(-3, Block.BLOCK_SPRITE_OFFSET_Y - 6)
+            elif FloorFactory.is_valid_floor_type(type):
+                pos += Vector2(0, Block.BLOCK_SPRITE_OFFSET_Y - 3)
             else:
                 pos += Vector2(-1, Block.BLOCK_SPRITE_OFFSET_Y)
             draw_texture(loaded_texture, pos)

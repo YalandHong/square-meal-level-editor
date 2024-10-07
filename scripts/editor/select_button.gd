@@ -21,7 +21,7 @@ const BUTTON_TYPE_ID_TO_SPRITE_FILE_MAP: Dictionary = {
     GlobalVars.ID_SPIKE_FLOOR: "spike.png",
     GlobalVars.ID_SPIKE_HOLE_FLOOR: "spike_hole.png",
     GlobalVars.ID_SLIPPY_FLOOR: "slippy.png",
-
+    GlobalVars.ID_TRIGGER_FLOOR: "trigger.png",
 }
 
 var type: int

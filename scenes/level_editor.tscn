@@ -15,6 +15,7 @@
 script = ExtResource("1_nbeij")
 
 [node name="BgDrawer" type="Node2D" parent="."]
+visible = false
 script = ExtResource("2_gqn0u")
 
 [node name="GridDrawer" type="Node2D" parent="."]
