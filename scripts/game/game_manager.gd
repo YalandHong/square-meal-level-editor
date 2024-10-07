@@ -227,10 +227,13 @@ func place_and_slide_new_explosive_block(row: int, col: int, start_dir: String,
 func process_winning():
     if level_failed:
         return
+    if level_cleared:
+        return
     if enemy_count == 0 and winner_timer < MAX_WINNER_TIMER_BEFORE_WINNING:
         winner_timer += 1
     if winner_timer >= MAX_WINNER_TIMER_BEFORE_CHEERING:
         level_cleared = true
+        get_parent().popup_level_complete_menu()
 
 func is_valid_row_col(row: int, col: int) -> bool:
     return row >= 0 and row < map_height and col >= 0 and col < map_width

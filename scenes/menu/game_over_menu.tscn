@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsc5l0fppd1hv"]
+
+[ext_resource type="Texture2D" uid="uid://bwid51mb8abs8" path="res://sprites/menu/1212.png" id="1_85cpd"]
+[ext_resource type="Script" path="res://scripts/menu/game_over_menu.gd" id="2_bc88h"]
+[ext_resource type="Texture2D" uid="uid://ci2s8tom8vsij" path="res://sprites/menu/game_over.png" id="3_xjl7n"]
+[ext_resource type="Texture2D" uid="uid://cob7453q0l5or" path="res://sprites/menu/284.png" id="4_8h2kd"]
+[ext_resource type="Texture2D" uid="uid://cor8t5bobyc2t" path="res://sprites/menu/286.png" id="5_eb5m0"]
+[ext_resource type="Texture2D" uid="uid://vcvuffl2nep8" path="res://sprites/menu/1219.png" id="6_y0fd6"]
+[ext_resource type="Texture2D" uid="uid://wuvwm8rq0ft3" path="res://sprites/menu/1221.png" id="7_t7itk"]
+
+[node name="GameOverMenu" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_85cpd")
+stretch_mode = 5
+script = ExtResource("2_bc88h")
+
+[node name="GameOver" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 7.0
+offset_right = 325.0
+offset_bottom = 25.0
+texture = ExtResource("3_xjl7n")
+stretch_mode = 3
+
+[node name="Back" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 312.0
+offset_right = 110.0
+offset_bottom = 330.0
+texture_normal = ExtResource("4_8h2kd")
+texture_hover = ExtResource("5_eb5m0")
+stretch_mode = 3
+
+[node name="TryAgain" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 281.0
+offset_top = 312.0
+offset_right = 418.0
+offset_bottom = 330.0
+texture_normal = ExtResource("6_y0fd6")
+texture_hover = ExtResource("7_t7itk")
+stretch_mode = 3
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="TryAgain" to="." method="_on_try_again_pressed"]

@@ -8,7 +8,7 @@ func _ready() -> void:
         float(GlobalVars.WINDOW_WIDTH) / GlobalVars.VIEW_WIDTH,
         float(GlobalVars.WINDOW_HEIGHT) / GlobalVars.VIEW_HEIGHT
     )
-    create_buttons(30)
+    create_buttons(CurrentLevelIndicatorSingleton.MAX_LEVELS_AVAILABLE)
     BgmPlayerSingleton.play_menu_song()
 
 func create_buttons(max_available_level_number: int) -> void:

@@ -58,7 +58,11 @@ func scroll_game() -> void:
     camera.position = scroll_center
 
 func popup_game_over_menu():
-    var game_over_menu = preload("res://scenes/game_over_menu.tscn").instantiate()
-    #game_over_menu.position = camera.position
-    game_over_menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
-    camera.add_child(game_over_menu)
+    var menu = preload("res://scenes/menu/game_over_menu.tscn").instantiate()
+    menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
+    camera.add_child(menu)
+
+func popup_level_complete_menu():
+    var menu = preload("res://scenes/menu/level_complete_menu.tscn").instantiate()
+    menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
+    camera.add_child(menu)

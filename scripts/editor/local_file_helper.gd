@@ -94,3 +94,9 @@ static func is_valid_loaded_level_map(arr: Array) -> bool:
         if row.size() != column_count:
             return false
     return true
+
+static func get_official_level_file_xml_path(level_number: int) -> String:
+    var xml_file_name = str(level_number) + ".xml"
+    if (level_number < 10):
+        xml_file_name = "0" + xml_file_name
+    return "res://levels/official/" + xml_file_name
