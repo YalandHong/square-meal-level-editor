@@ -184,10 +184,9 @@ func _on_run_button_pressed() -> void:
         return
     save_level_map("user://edit_level.tsv")
     var level_str = "user://edit_level.tsv"
-    var scene_to_load = preload("res://scenes/main_game.tscn")
     CurrentLevelIndicatorSingleton.current_level_num = CurrentLevelIndicatorSingleton.EDITOR_LEVEL_NUMBER
     CurrentLevelIndicatorSingleton.current_level_file = level_str
-    get_tree().change_scene_to_packed(scene_to_load)
+    get_tree().change_scene_to_file("res://scenes/main_game.tscn")
 
 func _on_save_button_pressed() -> void:
     save_level_map("user://edit_level.tsv")
@@ -197,3 +196,7 @@ func _on_import_button_pressed() -> void:
 
 func _on_export_button_pressed() -> void:
     popup_export_file_dialog()
+
+func _on_quit_button_pressed() -> void:
+    save_level_map("user://edit_level.tsv")
+    get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

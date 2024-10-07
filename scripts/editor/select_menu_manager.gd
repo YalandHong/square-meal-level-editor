@@ -26,6 +26,7 @@ func _ready():
                 MENU_WIDTH / 2 + (button.texture_normal.get_size().x + 5) * (col - 1),
                 MENU_HEIGHT - 44 * (row+1)
             )
+    $QuitButton.position = Vector2(MENU_WIDTH / 2, 5)
 
 func _process(_delta: float) -> void:
     update_select_menu_position()

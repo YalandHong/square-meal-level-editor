@@ -58,6 +58,14 @@ texture_normal = ExtResource("4_sscbb")
 script = ExtResource("6_27ryd")
 displayed_text = "export"
 
+[node name="QuitButton" type="TextureButton" parent="SelectMenuManager"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 42.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "back"
+
 [node name="MouseTracker" parent="." instance=ExtResource("4_osxih")]
 
 [node name="ImportFileDialog" type="FileDialog" parent="."]
@@ -84,3 +92,4 @@ use_native_dialog = true
 [connection signal="pressed" from="SelectMenuManager/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/ExportButton" to="." method="_on_export_button_pressed"]
+[connection signal="pressed" from="SelectMenuManager/QuitButton" to="." method="_on_quit_button_pressed"]
