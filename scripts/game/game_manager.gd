@@ -47,8 +47,9 @@ func _init():
     var level_map = get_loaded_level_map(CurrentLevelIndicatorSingleton.current_level_file)
     map_width = level_map[0].size()
     map_height = level_map.size()
-
     init_level_maps(level_map)
+    $"../BgDrawer".map_width = map_width
+    $"../BgDrawer".map_height = map_height
     level_cleared = false
     winner_timer = 0
     level_failed = false

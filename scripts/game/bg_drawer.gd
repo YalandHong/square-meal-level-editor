@@ -1,14 +1,16 @@
 extends Node2D
 class_name BgDrawer
 
-var draw_width: int
-var draw_height: int
+var map_width: int = 0
+var map_height: int = 0
 
 # 背景纹理
 var background_texture: Texture2D
 
 func _draw() -> void:
     var texture_size: Vector2 = background_texture.get_size()
+    var draw_width = map_width * GridHelper.TILE_WIDTH
+    var draw_height = map_height * GridHelper.TILE_HEIGHT
 
     # 计算需要横向和纵向绘制的次数
     var rows: int = ceil(draw_height / texture_size.y)
@@ -21,8 +23,4 @@ func _draw() -> void:
             draw_texture(background_texture, pos)
 
 func _ready() -> void:
-    var game_manager: GameManager = get_node("../GameManager")
-    draw_width = game_manager.map_width * GameManager.TILE_WIDTH
-    draw_height = game_manager.map_height * GameManager.TILE_HEIGHT
     background_texture = preload("res://sprites/bg_level.png")
-    queue_redraw() # 触发一次绘制

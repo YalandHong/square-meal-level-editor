@@ -3,7 +3,7 @@ class_name LeapingEnemy
 
 const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(
     -58 / 2 + GameManager.TILE_WIDTH / 2,
-    -GameManager.TILE_HEIGHT / 2 - 86
+    -GameManager.TILE_HEIGHT / 2 - 80
 )
 
 const ANIMATION_FPS_SCALE_WALK: float = 0.5

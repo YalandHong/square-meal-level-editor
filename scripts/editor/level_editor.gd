@@ -22,7 +22,7 @@ var player_col
 func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
     scroll_x_max = max(scroll_x_min,
-        map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
+        map_width * TILE_WIDTH)
     scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2
     scroll_y_max = max(scroll_y_min,
         map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2)
@@ -37,6 +37,8 @@ func _ready():
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     $GridDrawer.map_width = map_width
     $GridDrawer.map_height = map_height
+    $BgDrawer.map_width = map_width
+    $BgDrawer.map_height = map_height
     $ImportFileDialog.file_selected.connect(_on_import_file_dialog_confirmed)
     $ExportFileDialog.file_selected.connect(_on_export_file_dialog_confirmed)
     BgmPlayerSingleton.play_menu_song()
@@ -183,7 +185,7 @@ func _on_run_button_pressed() -> void:
     save_level_map("user://edit_level.tsv")
     var level_str = "user://edit_level.tsv"
     var scene_to_load = preload("res://scenes/main_game.tscn")
-    CurrentLevelIndicatorSingleton.current_level_num = -1
+    CurrentLevelIndicatorSingleton.current_level_num = CurrentLevelIndicatorSingleton.EDITOR_LEVEL_NUMBER
     CurrentLevelIndicatorSingleton.current_level_file = level_str
     get_tree().change_scene_to_packed(scene_to_load)
 
