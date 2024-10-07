@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://po6qul23l7q2"]
+[gd_scene load_steps=11 format=3 uid="uid://po6qul23l7q2"]
 
 [ext_resource type="Script" path="res://scripts/editor/select_menu_manager.gd" id="1_kst68"]
 [ext_resource type="Script" path="res://scripts/editor/level_editor.gd" id="1_nbeij"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="4_osxih"]
 [ext_resource type="Texture2D" uid="uid://ssk13on0bvpp" path="res://sprites/editor/editor_menu_button.png" id="4_sscbb"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="5_4t7wh"]
+[ext_resource type="Texture2D" uid="uid://bso6txinagoqo" path="res://sprites/editor/select_menu_bg.png" id="5_gx5as"]
 [ext_resource type="Script" path="res://scripts/editor/editor_menu_button.gd" id="6_27ryd"]
+[ext_resource type="Script" path="res://scripts/editor/text_instructions.gd" id="10_81vdc"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_nbeij")
@@ -23,7 +25,11 @@ script = ExtResource("5_4t7wh")
 [node name="MapAreaManager" type="Node2D" parent="."]
 script = ExtResource("2_r4wt1")
 
-[node name="SelectMenuManager" type="ColorRect" parent="."]
+[node name="SelectMenuManager" type="TextureRect" parent="."]
+offset_right = 275.0
+offset_bottom = 600.0
+texture = ExtResource("5_gx5as")
+stretch_mode = 1
 script = ExtResource("1_kst68")
 
 [node name="RunButton" type="TextureButton" parent="SelectMenuManager"]
@@ -67,6 +73,10 @@ script = ExtResource("6_27ryd")
 displayed_text = "back"
 
 [node name="MouseTracker" parent="." instance=ExtResource("4_osxih")]
+visible = false
+
+[node name="TextInstructions" type="Node2D" parent="."]
+script = ExtResource("10_81vdc")
 
 [node name="ImportFileDialog" type="FileDialog" parent="."]
 title = "Open a File"

@@ -25,7 +25,7 @@ func init_scroll_bounds() -> void:
         map_width * TILE_WIDTH)
     scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2
     scroll_y_max = max(scroll_y_min,
-        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2)
+        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 3*TILE_HEIGHT)
 
 func _ready():
     #request_map_size()  # 请求地图大小

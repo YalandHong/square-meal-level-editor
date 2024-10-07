@@ -1,4 +1,4 @@
-extends ColorRect
+extends TextureRect
 class_name SelectMenuManager
 
 var active_button: SelectButton
@@ -12,8 +12,7 @@ func _init() -> void:
     create_select_buttons()
 
 func _ready():
-    size = Vector2(MENU_WIDTH, MENU_HEIGHT)
-    color = Color.IVORY
+    #size = Vector2(MENU_WIDTH, MENU_HEIGHT)
     # 从下往上布局按钮
     var editor_button_list = [
         [$ExportButton, $ImportButton],
@@ -23,7 +22,7 @@ func _ready():
         for col in range(editor_button_list[row].size()):
             var button = editor_button_list[row][col]
             button.position = Vector2(
-                MENU_WIDTH / 2 + (button.texture_normal.get_size().x + 5) * (col - 1),
+                15 + MENU_WIDTH / 2 + (button.texture_normal.get_size().x + 5) * (col - 1),
                 MENU_HEIGHT - 44 * (row+1)
             )
     $QuitButton.position = Vector2(MENU_WIDTH / 2, 5)
@@ -53,8 +52,8 @@ func create_select_buttons():
             var button_id = button_row[j]
             var button = SelectButton.new(button_id)
             add_child(button)
-            button.position.x = 10 + j * 54
-            button.position.y = 10 + i * 60
+            button.position.x = 40 + j * 54
+            button.position.y = 10 + i * 85
 
 # 当某个按钮被按下时，执行激活逻辑
 func _on_button_pressed(button: SelectButton):
