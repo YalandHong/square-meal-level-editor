@@ -185,7 +185,7 @@ func do_hit_by_block(block: Block) -> bool:
             hit_successful = handle_hit_down(block)
     # 敌人很密集的时候，有可能会找不到落地的地方
     # 那就只能击飞到moving target所在的格子，不管那个格子是否空闲
-    assert(hit_successful)
+    #assert(hit_successful)
     if not hit_successful:
         print("not landable, just jump")
     perform_jump()
