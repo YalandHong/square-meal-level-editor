@@ -6,7 +6,6 @@ var text_label: PixelFontLabel
 # 导出文本变量
 @export var displayed_text: String = "sample"
 @export var scene_to_load: PackedScene
-@export var level_str: String
 
 func _ready():
     mouse_entered.connect(self._on_mouse_entered)
@@ -26,6 +25,4 @@ func _on_mouse_exited():
     text_label.active = false
 
 func _on_mouse_clicked():
-    print("change to level str = ", level_str)
-    CurrentLevelIndicatorSingleton.current_level_file = level_str
     get_tree().change_scene_to_packed(scene_to_load)
