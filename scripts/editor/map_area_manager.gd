@@ -48,7 +48,11 @@ func get_map_edit_area_rect() -> Rect2:
 
 # 检查鼠标是否在 Camera2D 区域内
 func is_mouse_within_bounds(mouse_pos: Vector2) -> bool:
-    return get_map_edit_area_rect().has_point(mouse_pos)
+    if not get_map_edit_area_rect().has_point(mouse_pos):
+        return false
+    var mouse_row = editor_mouse_y_to_row(mouse_pos.y)
+    var mouse_col = editor_mouse_x_to_col(mouse_pos.x)
+    return level_editor.is_valid_row_col(mouse_row, mouse_col)
 
 # use in debug
 func highlight_map_edit_area():

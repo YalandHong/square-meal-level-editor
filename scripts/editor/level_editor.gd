@@ -113,14 +113,15 @@ func _process(_delta):
 
 # 处理相机移动的函数
 func handle_camera_movement():
-    if Input.is_action_just_pressed("ui_up"):
-        camera.position.y -= TILE_HEIGHT
-    elif Input.is_action_just_pressed("ui_down"):
-        camera.position.y += TILE_HEIGHT
-    elif Input.is_action_just_pressed("ui_left"):
-        camera.position.x -= TILE_WIDTH
-    elif Input.is_action_just_pressed("ui_right"):
-        camera.position.x += TILE_WIDTH
+    var CAMERA_MOVE_SPEED = 12
+    if Input.is_action_pressed("ui_up"):
+        camera.position.y -= CAMERA_MOVE_SPEED
+    elif Input.is_action_pressed("ui_down"):
+        camera.position.y += CAMERA_MOVE_SPEED
+    elif Input.is_action_pressed("ui_left"):
+        camera.position.x -= CAMERA_MOVE_SPEED
+    elif Input.is_action_pressed("ui_right"):
+        camera.position.x += CAMERA_MOVE_SPEED
 
     # 确保相机不超出地图边界
     camera.position.x = clamp(camera.position.x, scroll_x_min, scroll_x_max)
@@ -200,3 +201,6 @@ func _on_export_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
     save_level_map("user://edit_level.tsv")
     get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func is_valid_row_col(row: int, col: int) -> bool:
+    return row >= 0 and row < map_height and col >= 0 and col < map_width

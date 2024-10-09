@@ -30,8 +30,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
     # 只在按下的一瞬间触发场景重启
-    if Input.is_action_just_pressed("ui_restart"):
-        restart_scene()
+    #if Input.is_action_just_pressed("ui_restart"):
+        #restart_scene()
     scroll_game()
 
 # 计算滚动边界
