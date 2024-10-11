@@ -43,7 +43,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     if sliding:
         slide()
-        # print("sliding block pos: ", position)
+    elif not being_eaten:
+        # 不滑动时也要更新grid中的位置
+        # 避免有时候几个方块挤到一起时，自己的位置被覆盖
+        update_block_grid_pos()
     z_index = GameManager.calculate_depth(position)
 
 func get_block_type() -> int:
