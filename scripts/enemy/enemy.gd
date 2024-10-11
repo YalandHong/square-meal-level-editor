@@ -261,7 +261,7 @@ func perform_jump() -> void:
     # get_node("/root/GameManager/shadow_holder/enemy_shadow_%s" % str(enemy_id)).goto_and_play("jump")
 
 # 有东西挡住了的，不能作为目标移动位置
-# 目标位置已经是其它敌人的移动目标了，也不行
+# 目标位置已经是其它敌人或者方块的移动目标了，也不行
 func check_target_movable(target_row: int, target_col: int) -> bool:
     if (game_manager.get_block_instance(target_row, target_col) != null):
         return false
@@ -274,6 +274,11 @@ func check_target_movable(target_row: int, target_col: int) -> bool:
         if (adjacent_enemy != null
             and GridHelper.y_to_row(adjacent_enemy.moving_target_y) == target_row
             and GridHelper.x_to_col(adjacent_enemy.moving_target_x) == target_col):
+            return false
+        var adjacent_sliding_block: Block = game_manager.get_block_instance(adj_row, adj_col)
+        if (adjacent_sliding_block != null and adjacent_sliding_block.sliding
+            and GridHelper.y_to_row(adjacent_sliding_block.moving_target_y) == target_row
+            and GridHelper.x_to_col(adjacent_sliding_block.moving_target_x) == target_col):
             return false
     return true
 
