@@ -18,6 +18,7 @@ func restart_scene() -> void:
     scene_tree.reload_current_scene()
 
 func _ready() -> void:
+    $Background.z_index = GlobalVars.DEPTH_BG_SCREEN
     $GridDrawer.map_width = game_manager.map_width
     $GridDrawer.map_height = game_manager.map_height
     BgmPlayerSingleton.play_game_song()

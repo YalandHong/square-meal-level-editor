@@ -24,3 +24,4 @@ func _draw() -> void:
 
 func _ready() -> void:
     background_texture = preload("res://sprites/bg_level.png")
+    z_index = GlobalVars.DEPTH_BG_FLOOR

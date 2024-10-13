@@ -7,7 +7,7 @@ class_name Player
 # 有些我懒得resize了，所以设置不一样的offset
 # 在下面这些公式里，75是stop/walk的精灵宽度，99是eat right/left的精灵宽度
 # 15是为了补齐player在stop和walk sprite的位置差距
-const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-75 / 2 + GameManager.TILE_WIDTH / 2, -GameManager.TILE_HEIGHT / 2 - 35)
+const SPRITE_OFFSET_NORMAL: Vector2 = Vector2(-75 / 2 + GameManager.TILE_WIDTH / 2, -GameManager.TILE_HEIGHT / 2 - 40)
 const SPRITE_OFFSET_EAT: Vector2 = SPRITE_OFFSET_NORMAL
 const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x + 15, SPRITE_OFFSET_NORMAL.y)
 const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(-99 - 15 + 75 + SPRITE_OFFSET_NORMAL.x, SPRITE_OFFSET_NORMAL.y)
@@ -50,7 +50,6 @@ const ANIMATION_FPS_SCALE_DEAD: float = 0.6
 func _ready():
     game_manager = get_parent()
     shadow = preload("res://scenes/game/shadow.tscn").instantiate()
-    update_shadow_position()
     add_child(shadow)
 
     anim_sprite.centered = false
@@ -72,6 +71,7 @@ func _process(_delta):
             handle_eating()
     # 当player和其他block等元素深度相同时，挡在block前面
     z_index = GameManager.calculate_depth(position) + 1
+    update_shadow_position()
 
 func handle_moving_or_slipping():
     do_move()
@@ -80,7 +80,6 @@ func handle_moving_or_slipping():
     if reached_target():
         position.x = moving_target_x
         position.y = moving_target_y
-        update_shadow_position()
         update_player_grid_pos()
         # player在结束moving或者slipping时给出这样1帧的stopping状态
         # 以便某些block进行判定
@@ -249,7 +248,6 @@ func do_move():
     elif dir == DOWN:
         position.y += WALK_SPEED
 
-    update_shadow_position()
     update_player_grid_pos()
 
 func update_player_grid_pos() -> void:
@@ -374,5 +372,6 @@ func add_score(added_score: int):
     add_child(popup)
     popup.position = Vector2(GridHelper.TILE_WIDTH / 2, -35)
 
+# z_index默认是相对深度
 func update_shadow_position():
-    shadow.z_index = GameManager.calculate_depth(position - Vector2(0, 30))
+    shadow.z_index = - 30

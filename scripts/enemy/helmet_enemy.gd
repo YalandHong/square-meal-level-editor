@@ -21,6 +21,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
     z_index = GameManager.calculate_depth(position)
+    update_shadow_position()
     if being_eaten:
         return # 如果已经被吃掉，则不进行任何处理
     if stunned:

@@ -43,7 +43,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     if sliding:
         slide()
-    z_index = GameManager.calculate_depth(position)
+        # block滑动时，挡在player、enemy的前面
+        z_index = GameManager.calculate_depth(position) + 3
+    else:
+        z_index = GameManager.calculate_depth(position - Vector2(0, 20))
 
 func get_block_type() -> int:
     return GlobalVars.ID_INVALID

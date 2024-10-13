@@ -94,6 +94,6 @@ animations = [{
 }]
 
 [node name="Shadow" type="AnimatedSprite2D"]
-modulate = Color(1, 1, 1, 0.470588)
+modulate = Color(1, 1, 1, 0.27451)
 sprite_frames = SubResource("SpriteFrames_wuasx")
 centered = false

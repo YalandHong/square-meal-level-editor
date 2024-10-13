@@ -24,7 +24,6 @@ func _init() -> void:
 func _ready():
     game_manager = get_parent()
     shadow = preload("res://scenes/game/shadow.tscn").instantiate()
-    update_shadow_position()
     add_child(shadow)
 
     set_enemy_sprite()
@@ -40,6 +39,7 @@ func _ready():
 func _process(_delta: float) -> void:
     # 当enemy和其他block等元素深度相同时，挡在block和player前面
     z_index = GameManager.calculate_depth(position) + 2
+    update_shadow_position()
 
     if being_eaten:
         return # 如果已经被吃掉，则不进行任何处理
@@ -82,7 +82,6 @@ func handle_movement_or_jump() -> void:
         return
     position = Vector2(moving_target_x, moving_target_y)
     update_mover_grid_pos()
-    update_shadow_position()
     if jumping:
         finish_jump()
         return
@@ -95,7 +94,6 @@ func do_move() -> void:
         return
     position = GridHelper.step_position_by_speed(position, dir, MOVE_SPEED)
     update_mover_grid_pos()
-    update_shadow_position()
 
 func update_mover_grid_pos():
     var new_row = GridHelper.y_to_row(position.y)
@@ -176,7 +174,6 @@ func do_hit_by_block(block: Block) -> bool:
 
     # enemy被击飞的时候，是从一个对齐网格的位置开始起飞，到另一个对齐网格的位置落地
     force_align_position_to_grid()
-    update_shadow_position()
 
     # 判断方向并尝试移动
     var hit_successful: bool = false
@@ -318,5 +315,6 @@ func be_eaten_by_player(player: Player):
     game_manager.remove_enemy(current_row, current_col)
     queue_free()
 
+# z_index默认是相对深度
 func update_shadow_position():
-    shadow.z_index = GameManager.calculate_depth(position - Vector2(0, 30))
+    shadow.z_index = - 30
