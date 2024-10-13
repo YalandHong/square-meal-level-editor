@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var player: Player = $"../GameManager".get_first_player()
+    var player: Player = $"../../GameManager".get_first_player()
     if player == null:
         return
     var swallowed_block_type = player.swallowed_block_type

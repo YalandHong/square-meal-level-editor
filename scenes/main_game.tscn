@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=15 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/menu/score_display.gd" id="12_djwgf"]
 [ext_resource type="Texture2D" uid="uid://c762h823dqxtl" path="res://sprites/menu/pause_inactive.png" id="12_qikut"]
 [ext_resource type="Texture2D" uid="uid://bwuch17hunumn" path="res://sprites/menu/pause_active.png" id="13_ltogj"]
+[ext_resource type="Script" path="res://scripts/menu/pause_button.gd" id="14_nfnwo"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 
@@ -63,5 +64,6 @@ offset_bottom = 23.0
 texture_normal = ExtResource("12_qikut")
 texture_hover = ExtResource("13_ltogj")
 stretch_mode = 3
+script = ExtResource("14_nfnwo")
 
 [connection signal="pressed" from="UiElementsLayer/PauseButton" to="." method="_on_pause_button_pressed"]

@@ -14,6 +14,7 @@ func _ready() -> void:
 
 
 func _on_back_pressed() -> void:
+    get_tree().paused = false
     if CurrentLevelIndicatorSingleton.current_level_num == CurrentLevelIndicatorSingleton.EDITOR_LEVEL_NUMBER:
         get_tree().change_scene_to_file("res://scenes/level_editor.tscn")
         return
@@ -24,7 +25,7 @@ func _on_back_pressed() -> void:
 
 func _on_continue_game_pressed() -> void:
     var tween: Tween = create_tween()
-    tween.tween_property(self, "scale", Vector2(0.1, 0.1), 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+    tween.tween_property(self, "scale", Vector2(0.1, 0.1), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
     tween.finished.connect(_on_tween_out_finished)
 
 func _on_tween_out_finished() -> void:

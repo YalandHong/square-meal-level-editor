@@ -15,6 +15,9 @@ func _init() -> void:
     game_song_player.stream = preload("res://sounds/music/game_music.mp3")
     add_child(game_song_player)
 
+    # 游戏暂停时也要继续播放BGM
+    process_mode = ProcessMode.PROCESS_MODE_ALWAYS
+
 func play_game_song():
     if menu_song_player.is_playing():
         menu_song_player.stop()

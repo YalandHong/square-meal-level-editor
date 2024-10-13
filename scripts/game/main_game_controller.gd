@@ -59,7 +59,7 @@ func scroll_game() -> void:
     camera.position = scroll_center
     ui_layer.position = scroll_center - Vector2(GlobalVars.VIEW_WIDTH/2, GlobalVars.VIEW_HEIGHT/2)
 
-
+# TODO 这里应该把menu挂在ui layer底下而不是camera下面
 func popup_game_over_menu():
     var menu = preload("res://scenes/menu/game_over_menu.tscn").instantiate()
     menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS

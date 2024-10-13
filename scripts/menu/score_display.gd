@@ -7,7 +7,7 @@ func _init() -> void:
     center = false
 
 func _process(delta: float) -> void:
-    var player: Player = $"../GameManager".get_first_player()
+    var player: Player = $"../../GameManager".get_first_player()
     if player == null:
         return
     displayed_text = "score " + str(player.score)
