@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/editor/level_editor.gd" id="1_nbeij"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="2_gqn0u"]
 [ext_resource type="Script" path="res://scripts/editor/map_area_manager.gd" id="2_r4wt1"]
-[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="4_osxih"]
+[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/game/mouse_tracker.tscn" id="4_osxih"]
 [ext_resource type="Texture2D" uid="uid://ssk13on0bvpp" path="res://sprites/editor/editor_menu_button.png" id="4_sscbb"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="5_4t7wh"]
 [ext_resource type="Texture2D" uid="uid://bso6txinagoqo" path="res://sprites/editor/select_menu_bg.png" id="5_gx5as"]

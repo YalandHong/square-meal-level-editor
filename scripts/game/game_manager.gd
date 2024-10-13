@@ -138,7 +138,7 @@ func init_level_maps(level_map: Array):
             level_map_floors[row].append(floor_tile)
 
 func create_and_add_player(row: int, col: int) -> Player:
-    var player_scene: PackedScene = preload("res://scenes/player.tscn")
+    var player_scene: PackedScene = preload("res://scenes/game/player.tscn")
     var player: Player = player_scene.instantiate()
     player.set_init_pos(row, col)
 

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/sfx_player.gd" id="7_2pbga"]
 [ext_resource type="Script" path="res://scripts/game/debug_rect_drawer.gd" id="9_yqqm4"]
 [ext_resource type="Texture2D" uid="uid://ctecgavc7nc06" path="res://sprites/menu/block_display/player.png" id="10_3p8cx"]
-[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="10_f4e46"]
+[ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/game/mouse_tracker.tscn" id="10_f4e46"]
 [ext_resource type="Script" path="res://scripts/menu/block_display.gd" id="11_3eba8"]
 [ext_resource type="Script" path="res://scripts/menu/score_display.gd" id="12_djwgf"]
 [ext_resource type="Texture2D" uid="uid://c762h823dqxtl" path="res://sprites/menu/pause_inactive.png" id="12_qikut"]
