@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://7ahf2wfpth0i"]
+[gd_scene load_steps=13 format=3 uid="uid://7ahf2wfpth0i"]
 
 [ext_resource type="Script" path="res://scripts/tiles/food_block.gd" id="1_deycj"]
 [ext_resource type="Texture2D" uid="uid://vg0esax0cy8t" path="res://sprites/block/food_unified/175.png" id="2_3k2tm"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://de4ep5gns2wh5" path="res://sprites/block/food_unified/266.png" id="8_vhumb"]
 [ext_resource type="Texture2D" uid="uid://diu04rxal2876" path="res://sprites/block/food_unified/269.png" id="9_gn11t"]
 [ext_resource type="Texture2D" uid="uid://cq53qlkr3vkn3" path="res://sprites/block/food_unified/272.png" id="10_vsrf7"]
+[ext_resource type="PackedScene" uid="uid://bai2vyrjbxwa4" path="res://scenes/game/shadow.tscn" id="11_ckrug"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vdhvj"]
 animations = [{
@@ -51,3 +52,5 @@ script = ExtResource("1_deycj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vdhvj")
+
+[node name="Shadow" parent="." instance=ExtResource("11_ckrug")]

@@ -317,4 +317,4 @@ func be_eaten_by_player(player: Player):
 
 # z_index默认是相对深度
 func update_shadow_position():
-    shadow.z_index = - 30
+    shadow.z_index = -30
