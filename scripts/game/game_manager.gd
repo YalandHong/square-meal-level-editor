@@ -69,7 +69,7 @@ func get_loaded_level_map(file_path: String) -> Array:
     return array_2d
 
 static func calculate_depth(pos: Vector2) -> int:
-    return int(pos.y / 4)
+    return int(pos.y / 2)
 
 func update_players(player: Player, old_row: int, old_col: int, new_row: int, new_col: int):
     assert(is_same(level_map_players[old_row][old_col], player))

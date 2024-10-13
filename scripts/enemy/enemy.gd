@@ -2,7 +2,7 @@ extends GridElement
 class_name Enemy
 
 var game_manager: GameManager
-
+var shadow: AnimatedSprite2D
 var anim_sprite: AnimatedSprite2D
 
 # 定义相关变量
@@ -23,6 +23,9 @@ func _init() -> void:
 
 func _ready():
     game_manager = get_parent()
+    shadow = preload("res://scenes/game/shadow.tscn").instantiate()
+    update_shadow_position()
+    add_child(shadow)
 
     set_enemy_sprite()
     anim_sprite.centered = false
@@ -79,6 +82,7 @@ func handle_movement_or_jump() -> void:
         return
     position = Vector2(moving_target_x, moving_target_y)
     update_mover_grid_pos()
+    update_shadow_position()
     if jumping:
         finish_jump()
         return
@@ -91,6 +95,7 @@ func do_move() -> void:
         return
     position = GridHelper.step_position_by_speed(position, dir, MOVE_SPEED)
     update_mover_grid_pos()
+    update_shadow_position()
 
 func update_mover_grid_pos():
     var new_row = GridHelper.y_to_row(position.y)
@@ -171,6 +176,7 @@ func do_hit_by_block(block: Block) -> bool:
 
     # enemy被击飞的时候，是从一个对齐网格的位置开始起飞，到另一个对齐网格的位置落地
     force_align_position_to_grid()
+    update_shadow_position()
 
     # 判断方向并尝试移动
     var hit_successful: bool = false
@@ -311,3 +317,6 @@ func be_eaten_by_player(player: Player):
     player.add_score(100)
     game_manager.remove_enemy(current_row, current_col)
     queue_free()
+
+func update_shadow_position():
+    shadow.z_index = GameManager.calculate_depth(position - Vector2(0, 30))

@@ -13,6 +13,7 @@ const SPRITE_OFFSET_EAT_RIGHT: Vector2 = Vector2(SPRITE_OFFSET_NORMAL.x + 15, SP
 const SPRITE_OFFSET_EAT_LEFT: Vector2 = Vector2(-99 - 15 + 75 + SPRITE_OFFSET_NORMAL.x, SPRITE_OFFSET_NORMAL.y)
 
 var game_manager: GameManager
+var shadow: AnimatedSprite2D
 
 enum PlayerState {
     MOVING, TURNING, IDLE, SLIPPING, STOPPING,
@@ -48,8 +49,9 @@ const ANIMATION_FPS_SCALE_DEAD: float = 0.6
 
 func _ready():
     game_manager = get_parent()
-    # TODO 暂不支持
-    #shadow_holder = get_parent()
+    shadow = preload("res://scenes/game/shadow.tscn").instantiate()
+    update_shadow_position()
+    add_child(shadow)
 
     anim_sprite.centered = false
     anim_sprite.animation_finished.connect(_on_animation_finished)
@@ -78,13 +80,11 @@ func handle_moving_or_slipping():
     if reached_target():
         position.x = moving_target_x
         position.y = moving_target_y
-        # TODO shadow
-        # shadow_manager.update_shadow_position(player_id, position.x, position.y + 5)
+        update_shadow_position()
         update_player_grid_pos()
         # player在结束moving或者slipping时给出这样1帧的stopping状态
         # 以便某些block进行判定
         state = PlayerState.STOPPING
-        #state = PlayerState.IDLE
         return
 
     if state == PlayerState.SLIPPING:
@@ -249,13 +249,7 @@ func do_move():
     elif dir == DOWN:
         position.y += WALK_SPEED
 
-    # 更新玩家阴影位置
-    # TODO 暂不支持
-    # var shadow = shadow_holder["shadow_" + str(player_id)]
-    # shadow.position.x = position.x
-    # TODO magic number
-    # shadow.position.y = position.y + 5
-
+    update_shadow_position()
     update_player_grid_pos()
 
 func update_player_grid_pos() -> void:
@@ -379,3 +373,6 @@ func add_score(added_score: int):
     var popup = FloatingScoreUp.new(str(added_score))
     add_child(popup)
     popup.position = Vector2(GridHelper.TILE_WIDTH / 2, -35)
+
+func update_shadow_position():
+    shadow.z_index = GameManager.calculate_depth(position - Vector2(0, 30))

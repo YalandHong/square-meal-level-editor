@@ -7,6 +7,15 @@ const LEFT = GlobalVars.LEFT
 const RIGHT = GlobalVars.RIGHT
 const NONE = GlobalVars.NONE
 
+'''
+Flash原版里，单步移动结束后是对齐到tile的center。
+但由于Godot里，场景、control和sprite等很多组件的原点都是左上角。
+所以我为了方便，设置了2套坐标。
+一套是position的xy坐标，方便debug和sprite绘制，grid element单步移动结束时xy对齐到网格左上角。
+另一套是Grid的row/col坐标，用于本游戏2D网格里各种交互和碰撞。
+这些坐标的计算和相互转换，我在GridHelper里定义好了一套工具函数
+'''
+
 var dir: String
 var moving_target_x: float
 var moving_target_y: float
@@ -47,10 +56,6 @@ func check_aligned_with_moving_target() -> bool:
             (dir == RIGHT and position.y == moving_target_y))
 
 # 初始化位置
-# grid element单步移动结束时对齐到网格左上角
-# Flash原版里，单步移动结束后是对齐到tile的center
-# 而我这里之所以是tile的左上角而不是tile center，是为了方便debug和sprite绘制
-# 因为场景、control和sprite等很多组件的原点都是左上角
 func set_init_pos(row: int, col: int) -> void:
     position.x = GridHelper.get_tile_top_left_x(col)
     position.y = GridHelper.get_tile_top_left_y(row)

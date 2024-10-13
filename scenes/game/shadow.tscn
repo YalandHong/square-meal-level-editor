@@ -25,6 +25,14 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_rrvxq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rrvxq")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_ciw2o")
@@ -81,9 +89,11 @@ animations = [{
 "texture": ExtResource("19_f7pfn")
 }],
 "loop": false,
-"name": &"default",
+"name": &"hit",
 "speed": 30.0
 }]
 
 [node name="Shadow" type="AnimatedSprite2D"]
+modulate = Color(1, 1, 1, 0.470588)
 sprite_frames = SubResource("SpriteFrames_wuasx")
+centered = false
