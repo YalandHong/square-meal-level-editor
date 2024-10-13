@@ -10,6 +10,7 @@ var scroll_x_max: int
 var scroll_y_min: int
 var scroll_y_max: int
 @onready var camera: Camera2D = $Camera2D
+@onready var ui_layer: Node2D = $UiElementsLayer
 
 # 重启当前场景
 func restart_scene() -> void:
@@ -56,6 +57,8 @@ func scroll_game() -> void:
     scroll_center.x = clamp(scroll_center.x, scroll_x_min, scroll_x_max)
     scroll_center.y = clamp(scroll_center.y, scroll_y_min, scroll_y_max)
     camera.position = scroll_center
+    ui_layer.position = scroll_center - Vector2(GlobalVars.VIEW_WIDTH/2, GlobalVars.VIEW_HEIGHT/2)
+
 
 func popup_game_over_menu():
     var menu = preload("res://scenes/menu/game_over_menu.tscn").instantiate()
@@ -66,3 +69,12 @@ func popup_level_complete_menu():
     var menu = preload("res://scenes/menu/level_complete_menu.tscn").instantiate()
     menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
     camera.add_child(menu)
+
+func popup_pause_menu():
+    var menu = preload("res://scenes/menu/pause_menu.tscn").instantiate()
+    menu.z_index = GlobalVars.DEPTH_UI_ELEMENTS
+    camera.add_child(menu)
+
+
+func _on_pause_button_pressed() -> void:
+    popup_pause_menu()

@@ -11,17 +11,8 @@ const DISPLAYER_TEXTURE_MAP = {
 func _init() -> void:
     z_index = GlobalVars.DEPTH_UI_ELEMENTS
 
-func _ready() -> void:
-    scroll_with_camera()
-
 func _process(_delta: float) -> void:
-    scroll_with_camera()
     queue_redraw()
-
-func scroll_with_camera():
-    var camera: Camera2D = $"../Camera2D"
-    var DISPLAYER_OFFSET = Vector2(10, 340)
-    position = camera.position - Vector2(GlobalVars.VIEW_WIDTH/2, GlobalVars.VIEW_HEIGHT/2) + DISPLAYER_OFFSET
 
 func _draw() -> void:
     var player: Player = $"../GameManager".get_first_player()

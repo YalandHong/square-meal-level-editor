@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf5f0nj851ygd"]
+[gd_scene load_steps=14 format=3 uid="uid://bf5f0nj851ygd"]
 
 [ext_resource type="Script" path="res://scripts/game/main_game_controller.gd" id="1_k6vyx"]
 [ext_resource type="Script" path="res://scripts/game/bg_drawer.gd" id="1_to2mj"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://b8mdg5yxjsbub" path="res://scenes/mouse_tracker.tscn" id="10_f4e46"]
 [ext_resource type="Script" path="res://scripts/menu/block_display.gd" id="11_3eba8"]
 [ext_resource type="Script" path="res://scripts/menu/score_display.gd" id="12_djwgf"]
+[ext_resource type="Texture2D" uid="uid://c762h823dqxtl" path="res://sprites/menu/pause_inactive.png" id="12_qikut"]
+[ext_resource type="Texture2D" uid="uid://bwuch17hunumn" path="res://sprites/menu/pause_active.png" id="13_ltogj"]
 [ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="25_h0p2b"]
 [ext_resource type="Script" path="res://scripts/grid_drawer.gd" id="26_pxk8i"]
 
@@ -38,14 +40,28 @@ script = ExtResource("7_2pbga")
 visible = false
 script = ExtResource("9_yqqm4")
 
-[node name="BlockDisplay" type="Sprite2D" parent="."]
-position = Vector2(7, 339)
+[node name="UiElementsLayer" type="Node2D" parent="."]
+
+[node name="BlockDisplay" type="Sprite2D" parent="UiElementsLayer"]
+position = Vector2(10, 340)
 texture = ExtResource("10_3p8cx")
 centered = false
 script = ExtResource("11_3eba8")
 
-[node name="MouseTracker" parent="." instance=ExtResource("10_f4e46")]
+[node name="MouseTracker" parent="UiElementsLayer" instance=ExtResource("10_f4e46")]
 visible = false
 
-[node name="ScoreDisplay" type="Node2D" parent="."]
+[node name="ScoreDisplay" type="Node2D" parent="UiElementsLayer"]
+position = Vector2(10, 5)
 script = ExtResource("12_djwgf")
+
+[node name="PauseButton" type="TextureButton" parent="UiElementsLayer"]
+offset_left = 527.0
+offset_top = 5.0
+offset_right = 545.0
+offset_bottom = 23.0
+texture_normal = ExtResource("12_qikut")
+texture_hover = ExtResource("13_ltogj")
+stretch_mode = 3
+
+[connection signal="pressed" from="UiElementsLayer/PauseButton" to="." method="_on_pause_button_pressed"]
