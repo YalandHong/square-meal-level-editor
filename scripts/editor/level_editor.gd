@@ -25,7 +25,7 @@ func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
     scroll_x_max = max(scroll_x_min,
         map_width * TILE_WIDTH)
-    scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2
+    scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2 - 2*TILE_HEIGHT
     scroll_y_max = max(scroll_y_min,
         map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 3*TILE_HEIGHT)
 
@@ -36,6 +36,7 @@ func _ready():
         map_width = 30
         create_default_empty_level_map()
     init_scroll_bounds()
+
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     $GridDrawer.map_width = map_width
     $GridDrawer.map_height = map_height
@@ -44,6 +45,7 @@ func _ready():
     $ImportFileDialog.file_selected.connect(_on_import_file_dialog_confirmed)
     $ExportFileDialog.file_selected.connect(_on_export_file_dialog_confirmed)
     BgmPlayerSingleton.play_menu_song()
+    $AddRowColUiLayer.refresh_add_del_buttons()
 
 func try_load_existing_level_file(tsv_file_path: String) -> bool:
     var loaded_level_map = LocalFileHelper.read_level_map_tsv_file(tsv_file_path)
@@ -115,7 +117,7 @@ func _process(_delta):
 
 # 处理相机移动的函数
 func handle_camera_movement():
-    var CAMERA_MOVE_SPEED = 12
+    var CAMERA_MOVE_SPEED = 15
     if Input.is_action_pressed("ui_up"):
         camera.position.y -= CAMERA_MOVE_SPEED
     elif Input.is_action_pressed("ui_down"):

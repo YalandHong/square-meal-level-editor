@@ -5,19 +5,17 @@ extends Node2D
 const TILE_WIDTH: int = GlobalVars.TILE_WIDTH
 const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
-func _ready() -> void:
-    refresh_add_del_buttons()
-
 func refresh_add_del_buttons():
     var BUTTON_SIZE = $AddRowTop.texture_normal.get_size().x + 5
+    print(BUTTON_SIZE)
     var LEVEL_WIDTH_PX = level_editor.map_width * TILE_WIDTH
     var LEVEL_HEIGHT_PX = level_editor.map_height * TILE_HEIGHT
 
-    $AddRowTop.position = Vector2(LEVEL_WIDTH_PX - BUTTON_SIZE, -50)
-    $DelRowTop.position = Vector2(LEVEL_WIDTH_PX, -50)
+    $AddRowTop.position = Vector2(LEVEL_WIDTH_PX/2 - BUTTON_SIZE, -50)
+    $DelRowTop.position = Vector2(LEVEL_WIDTH_PX/2, -50)
 
-    $AddRowBottom.position = Vector2(LEVEL_WIDTH_PX - BUTTON_SIZE, LEVEL_HEIGHT_PX + 10)
-    $AddRowBottom.position = Vector2(LEVEL_WIDTH_PX, LEVEL_HEIGHT_PX + 10)
+    $AddRowBottom.position = Vector2(LEVEL_WIDTH_PX/2 - BUTTON_SIZE, LEVEL_HEIGHT_PX + 10)
+    $DelRowBottom.position = Vector2(LEVEL_WIDTH_PX/2, LEVEL_HEIGHT_PX + 10)
 
 
 func _on_add_row_top_pressed() -> void:
