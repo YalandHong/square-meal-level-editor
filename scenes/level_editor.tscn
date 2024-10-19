@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://po6qul23l7q2"]
+[gd_scene load_steps=12 format=3 uid="uid://po6qul23l7q2"]
 
 [ext_resource type="Script" path="res://scripts/editor/select_menu_manager.gd" id="1_kst68"]
 [ext_resource type="Script" path="res://scripts/editor/level_editor.gd" id="1_nbeij"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bso6txinagoqo" path="res://sprites/editor/select_menu_bg.png" id="5_gx5as"]
 [ext_resource type="Script" path="res://scripts/editor/editor_menu_button.gd" id="6_27ryd"]
 [ext_resource type="Script" path="res://scripts/editor/text_instructions.gd" id="10_81vdc"]
+[ext_resource type="Script" path="res://scripts/editor/add_row_col_ui_layer.gd" id="10_npfi6"]
 
 [node name="LevelEditor" type="Node2D"]
 script = ExtResource("1_nbeij")
@@ -76,6 +77,37 @@ displayed_text = "back"
 [node name="MouseTracker" parent="." instance=ExtResource("4_osxih")]
 visible = false
 
+[node name="AddRowColUiLayer" type="Node2D" parent="."]
+script = ExtResource("10_npfi6")
+
+[node name="AddRowTop" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "add"
+
+[node name="AddRowBottom" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "add"
+
+[node name="DelRowTop" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "delete"
+
+[node name="DelRowBottom" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "delete"
+
 [node name="TextInstructions" type="Node2D" parent="."]
 script = ExtResource("10_81vdc")
 
@@ -104,3 +136,7 @@ use_native_dialog = true
 [connection signal="pressed" from="SelectMenuManager/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/ExportButton" to="." method="_on_export_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/AddRowTop" to="AddRowColUiLayer" method="_on_add_row_top_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/AddRowBottom" to="AddRowColUiLayer" method="_on_add_row_bottom_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/DelRowTop" to="AddRowColUiLayer" method="_on_del_row_top_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/DelRowBottom" to="AddRowColUiLayer" method="_on_del_row_bottom_pressed"]

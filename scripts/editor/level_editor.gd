@@ -255,12 +255,16 @@ func remove_second_row() -> void:
     if map_height > MAP_MIN_HEIGHT:
         level_map.remove_at(1)
         map_height -= 1
+        try_find_player_grid_pos()
+
 
 # 删除倒数第二行
 func remove_second_last_row() -> void:
     if map_height > MAP_MIN_HEIGHT:
         level_map.remove_at(map_height - 2)
         map_height -= 1
+        try_find_player_grid_pos()
+
 
 # 删除第二列
 func remove_second_column() -> void:
@@ -268,6 +272,7 @@ func remove_second_column() -> void:
         for i in range(map_height):
             level_map[i].remove_at(1)
         map_width -= 1
+        try_find_player_grid_pos()
 
 # 删除倒数第二列
 func remove_second_last_column() -> void:
@@ -275,3 +280,4 @@ func remove_second_last_column() -> void:
         for i in range(map_height):
             level_map[i].remove_at(map_width - 2)
         map_width -= 1
+        try_find_player_grid_pos()
