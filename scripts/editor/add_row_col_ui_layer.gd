@@ -11,8 +11,8 @@ func refresh_add_del_buttons():
     var LEVEL_WIDTH_PX = level_editor.map_width * TILE_WIDTH
     var LEVEL_HEIGHT_PX = level_editor.map_height * TILE_HEIGHT
 
-    $AddRowTop.position = Vector2(LEVEL_WIDTH_PX/2 - BUTTON_SIZE, -50)
-    $DelRowTop.position = Vector2(LEVEL_WIDTH_PX/2, -50)
+    $AddRowTop.position = Vector2(LEVEL_WIDTH_PX/2 - BUTTON_SIZE, -60)
+    $DelRowTop.position = Vector2(LEVEL_WIDTH_PX/2, -60)
 
     $AddRowBottom.position = Vector2(LEVEL_WIDTH_PX/2 - BUTTON_SIZE, LEVEL_HEIGHT_PX + 10)
     $DelRowBottom.position = Vector2(LEVEL_WIDTH_PX/2, LEVEL_HEIGHT_PX + 10)

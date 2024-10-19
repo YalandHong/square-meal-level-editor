@@ -20,14 +20,6 @@ var scroll_y_max: int
 var player_row
 var player_col
 
-# 计算滚动边界
-func init_scroll_bounds() -> void:
-    scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
-    scroll_x_max = max(scroll_x_min,
-        map_width * TILE_WIDTH)
-    scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2 - 2*TILE_HEIGHT
-    scroll_y_max = max(scroll_y_min,
-        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 3*TILE_HEIGHT)
 
 func _ready():
     #request_map_size()  # 请求地图大小
@@ -35,7 +27,7 @@ func _ready():
         map_height = 20
         map_width = 30
         create_default_empty_level_map()
-    init_scroll_bounds()
+    set_scroll_bounds()
 
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
     $GridDrawer.map_width = map_width
@@ -87,33 +79,18 @@ func create_default_empty_level_map():
             else:
                 level_map[i].append(GlobalVars.ID_EMPTY_TILE)
 
-## 请求玩家输入地图大小
-#func request_map_size():
-    ## TODO 暂不支持
-    #_on_input_confirmed()
-#
-## 输入验证函数
-#func is_valid_input(input_text: String) -> bool:
-    #return input_text.is_valid_int()
-#
-## 处理输入确认
-#func _on_input_confirmed(row_input: LineEdit, col_input: LineEdit):
-    #if not is_valid_input(row_input.text) or not is_valid_input(col_input.text):
-        #get_tree().call_group("dialogs", "show_error", "请输入有效的数字！")
-        #return
-#
-    #map_height = int(row_input.text)
-    #map_width = int(col_input.text)
-#
-    #if map_height < 3 or map_width < 3:
-        #get_tree().call_group("dialogs", "show_error", "行数和列数必须至少为3！")
-        #return
-#
-    #initialize_level_map()
-
 # 处理相机移动
 func _process(_delta):
     handle_camera_movement()
+
+# 计算滚动边界
+func set_scroll_bounds() -> void:
+    scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
+    scroll_x_max = max(scroll_x_min,
+        map_width * TILE_WIDTH)
+    scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2 - 3*TILE_HEIGHT
+    scroll_y_max = max(scroll_y_min,
+        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 3*TILE_HEIGHT)
 
 # 处理相机移动的函数
 func handle_camera_movement():
@@ -180,6 +157,8 @@ func try_find_player_grid_pos() -> bool:
                 player_row = row
                 player_col = col
                 return true
+    player_row = null
+    player_col = null
     return false
 
 func _on_run_button_pressed() -> void:
