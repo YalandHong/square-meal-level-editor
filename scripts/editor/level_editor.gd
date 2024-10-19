@@ -7,6 +7,8 @@ const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 var level_map: Array
 var map_width: int
 var map_height: int
+const MAP_MIN_WIDTH: int = 3
+const MAP_MIN_HEIGHT: int = 3
 
 # 滚动边界
 var scroll_x_min: int
@@ -204,3 +206,72 @@ func _on_quit_button_pressed() -> void:
 
 func is_valid_row_col(row: int, col: int) -> bool:
     return row >= 0 and row < map_height and col >= 0 and col < map_width
+
+
+# 在第一行下方增加一行
+func add_row_below_first() -> void:
+    var new_row = []
+    new_row.resize(map_width)
+    new_row.fill(GlobalVars.ID_EMPTY_TILE)
+    new_row[0] = GlobalVars.ID_WALL_BLOCK
+    new_row[map_width - 1] = GlobalVars.ID_WALL_BLOCK
+    level_map.insert(1, new_row)
+    map_height += 1
+
+# 在最后一行上方增加一行
+func add_row_above_last() -> void:
+    var new_row = []
+    new_row.resize(map_width)
+    new_row.fill(GlobalVars.ID_EMPTY_TILE)
+    new_row[0] = GlobalVars.ID_WALL_BLOCK
+    new_row[map_width - 1] = GlobalVars.ID_WALL_BLOCK
+    level_map.insert(map_height - 1, new_row)
+    map_height += 1
+
+# 在第一列右侧增加一列
+func add_column_right_of_first() -> void:
+    for i in range(map_height):
+        if i == 0:
+            level_map[i].insert(1, GlobalVars.ID_WALL_BLOCK)  # 第一行
+        elif i == map_height - 1:
+            level_map[i].insert(1, GlobalVars.ID_WALL_BLOCK)  # 最后一行
+        else:
+            level_map[i].insert(1, GlobalVars.ID_EMPTY_TILE)  # 其他行
+    map_width += 1
+
+# 在最后一列左侧增加一列
+func add_column_left_of_last() -> void:
+    for i in range(map_height):
+        if i == 0:
+            level_map[i].insert(map_width - 1, GlobalVars.ID_WALL_BLOCK)  # 第一行
+        elif i == map_height - 1:
+            level_map[i].insert(map_width - 1, GlobalVars.ID_WALL_BLOCK)  # 最后一行
+        else:
+            level_map[i].insert(map_width - 1, GlobalVars.ID_EMPTY_TILE)  # 其他行
+    map_width += 1
+
+# 删除第二行
+func remove_second_row() -> void:
+    if map_height > MAP_MIN_HEIGHT:
+        level_map.remove_at(1)
+        map_height -= 1
+
+# 删除倒数第二行
+func remove_second_last_row() -> void:
+    if map_height > MAP_MIN_HEIGHT:
+        level_map.remove_at(map_height - 2)
+        map_height -= 1
+
+# 删除第二列
+func remove_second_column() -> void:
+    if map_width > MAP_MIN_WIDTH:
+        for i in range(map_height):
+            level_map[i].remove_at(1)
+        map_width -= 1
+
+# 删除倒数第二列
+func remove_second_last_column() -> void:
+    if map_width > MAP_MIN_WIDTH:
+        for i in range(map_height):
+            level_map[i].remove_at(map_width - 2)
+        map_width -= 1
