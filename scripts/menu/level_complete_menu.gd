@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _on_next_level_pressed() -> void:
     var current_level = CurrentLevelIndicatorSingleton.current_level_num
-    if current_level == CurrentLevelIndicatorSingleton.MAX_LEVELS_AVAILABLE:
+    if current_level >= CurrentLevelIndicatorSingleton.MAX_LEVELS_AVAILABLE:
         return
     current_level += 1
     CurrentLevelIndicatorSingleton.current_level_num = current_level
