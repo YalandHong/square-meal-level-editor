@@ -26,6 +26,7 @@ func _ready():
                 MENU_HEIGHT - 44 * (row+1)
             )
     $QuitButton.position = Vector2(MENU_WIDTH / 2, 5)
+    $NewButton.position = Vector2(MENU_WIDTH / 2, 5 + 44)
 
 func _process(_delta: float) -> void:
     update_select_menu_position()

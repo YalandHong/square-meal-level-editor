@@ -22,10 +22,10 @@ var player_col
 
 
 func _ready():
-    #request_map_size()  # 请求地图大小
     if not try_load_existing_level_file("user://edit_level.tsv"):
-        map_height = 20
-        map_width = 30
+        $PopupSetMapSizeWindow.popup_centered()
+        #map_height = 20
+        #map_width = 30
         create_default_empty_level_map()
     set_scroll_bounds()
 
@@ -262,3 +262,14 @@ func remove_second_last_column() -> void:
             level_map[i].remove_at(map_width - 2)
         map_width -= 1
         try_find_player_grid_pos()
+
+
+func _on_new_button_pressed() -> void:
+    $PopupSetMapSizeWindow.popup_centered()
+    create_default_empty_level_map()
+    set_scroll_bounds()
+
+func _on_set_map_size_window_confirmed(rows: int, columns: int) -> void:
+    assert(rows >= MAP_MIN_HEIGHT and columns >= MAP_MIN_WIDTH)
+    map_width = columns
+    map_height = rows
