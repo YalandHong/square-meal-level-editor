@@ -107,11 +107,12 @@ script = ExtResource("6_27ryd")
 displayed_text = "back"
 
 [node name="NewButton" type="TextureButton" parent="SelectMenuManager"]
+layout_mode = 0
 offset_right = 100.0
 offset_bottom = 42.0
 texture_normal = ExtResource("4_sscbb")
 script = ExtResource("6_27ryd")
-displayed_text = "back"
+displayed_text = "new"
 
 [node name="MouseTracker" parent="." instance=ExtResource("4_osxih")]
 visible = false

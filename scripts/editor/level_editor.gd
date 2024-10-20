@@ -22,6 +22,8 @@ var player_col
 
 
 func _ready():
+    $PopupSetMapSizeWindow.hide()
+    $PopupSetMapSizeWindow.force_native = true
     if not try_load_existing_level_file("user://edit_level.tsv"):
         $PopupSetMapSizeWindow.popup_centered()
         #map_height = 20
@@ -198,6 +200,7 @@ func add_row_below_first() -> void:
     new_row[map_width - 1] = GlobalVars.ID_WALL_BLOCK
     level_map.insert(1, new_row)
     map_height += 1
+    set_scroll_bounds()
 
 # 在最后一行上方增加一行
 func add_row_above_last() -> void:
@@ -208,6 +211,7 @@ func add_row_above_last() -> void:
     new_row[map_width - 1] = GlobalVars.ID_WALL_BLOCK
     level_map.insert(map_height - 1, new_row)
     map_height += 1
+    set_scroll_bounds()
 
 # 在第一列右侧增加一列
 func add_column_right_of_first() -> void:
@@ -219,6 +223,7 @@ func add_column_right_of_first() -> void:
         else:
             level_map[i].insert(1, GlobalVars.ID_EMPTY_TILE)  # 其他行
     map_width += 1
+    set_scroll_bounds()
 
 # 在最后一列左侧增加一列
 func add_column_left_of_last() -> void:
@@ -230,6 +235,7 @@ func add_column_left_of_last() -> void:
         else:
             level_map[i].insert(map_width - 1, GlobalVars.ID_EMPTY_TILE)  # 其他行
     map_width += 1
+    set_scroll_bounds()
 
 # 删除第二行
 func remove_second_row() -> void:
@@ -237,6 +243,7 @@ func remove_second_row() -> void:
         level_map.remove_at(1)
         map_height -= 1
         try_find_player_grid_pos()
+        set_scroll_bounds()
 
 
 # 删除倒数第二行
@@ -245,6 +252,7 @@ func remove_second_last_row() -> void:
         level_map.remove_at(map_height - 2)
         map_height -= 1
         try_find_player_grid_pos()
+        set_scroll_bounds()
 
 
 # 删除第二列
@@ -254,6 +262,7 @@ func remove_second_column() -> void:
             level_map[i].remove_at(1)
         map_width -= 1
         try_find_player_grid_pos()
+        set_scroll_bounds()
 
 # 删除倒数第二列
 func remove_second_last_column() -> void:
@@ -262,6 +271,7 @@ func remove_second_last_column() -> void:
             level_map[i].remove_at(map_width - 2)
         map_width -= 1
         try_find_player_grid_pos()
+        set_scroll_bounds()
 
 
 func _on_new_button_pressed() -> void:

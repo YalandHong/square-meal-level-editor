@@ -7,7 +7,6 @@ const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 
 func refresh_add_del_buttons():
     var BUTTON_SIZE = $AddRowTop.texture_normal.get_size().x + 5
-    print(BUTTON_SIZE)
     var LEVEL_WIDTH_PX = level_editor.map_width * TILE_WIDTH
     var LEVEL_HEIGHT_PX = level_editor.map_height * TILE_HEIGHT
 
