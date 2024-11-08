@@ -141,6 +141,8 @@ filters = PackedStringArray("*.tsv")
 use_native_dialog = true
 
 [node name="PopupSetMapSizeWindow" parent="." instance=ExtResource("12_lwwyy")]
+visible = false
+force_native = true
 
 [connection signal="pressed" from="AddRowColUiLayer/AddRowTop" to="AddRowColUiLayer" method="_on_add_row_top_pressed"]
 [connection signal="pressed" from="AddRowColUiLayer/AddRowBottom" to="AddRowColUiLayer" method="_on_add_row_bottom_pressed"]
@@ -152,3 +154,4 @@ use_native_dialog = true
 [connection signal="pressed" from="SelectMenuManager/ExportButton" to="." method="_on_export_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="on_confirm" from="PopupSetMapSizeWindow" to="." method="_on_set_map_size_window_confirmed"]

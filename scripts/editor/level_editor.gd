@@ -80,6 +80,7 @@ func create_default_empty_level_map():
                 level_map[i].append(GlobalVars.ID_WALL_BLOCK)
             else:
                 level_map[i].append(GlobalVars.ID_EMPTY_TILE)
+    try_find_player_grid_pos()
 
 # 处理相机移动
 func _process(_delta):
@@ -276,10 +277,11 @@ func remove_second_last_column() -> void:
 
 func _on_new_button_pressed() -> void:
     $PopupSetMapSizeWindow.popup_centered()
-    create_default_empty_level_map()
-    set_scroll_bounds()
+    get_tree().paused = true
 
 func _on_set_map_size_window_confirmed(rows: int, columns: int) -> void:
     assert(rows >= MAP_MIN_HEIGHT and columns >= MAP_MIN_WIDTH)
     map_width = columns
     map_height = rows
+    create_default_empty_level_map()
+    set_scroll_bounds()
