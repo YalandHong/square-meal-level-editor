@@ -88,12 +88,12 @@ func _process(_delta):
 
 # 计算滚动边界
 func set_scroll_bounds() -> void:
-    scroll_x_min = GlobalVars.WINDOW_WIDTH / 2
+    scroll_x_min = GlobalVars.WINDOW_WIDTH / 2 - 3*TILE_WIDTH
     scroll_x_max = max(scroll_x_min,
-        map_width * TILE_WIDTH)
+        map_width * TILE_WIDTH + 3*TILE_WIDTH)
     scroll_y_min = GlobalVars.WINDOW_HEIGHT / 2 - 3*TILE_HEIGHT
     scroll_y_max = max(scroll_y_min,
-        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 3*TILE_HEIGHT)
+        map_height * TILE_HEIGHT - GlobalVars.WINDOW_HEIGHT / 2 + 6*TILE_HEIGHT)
 
 # 处理相机移动的函数
 func handle_camera_movement():
