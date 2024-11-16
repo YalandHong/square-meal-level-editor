@@ -29,3 +29,9 @@ func _draw():
     for j in range(map_height):
         var y = j * tile_height
         draw_line(Vector2(0, y + half_line_width), Vector2(full_area_size.x, y + half_line_width), grid_color, line_width)
+
+
+func draw_grid(_map_width, _map_height):
+    map_width = _map_width
+    map_height = _map_height
+    queue_redraw()

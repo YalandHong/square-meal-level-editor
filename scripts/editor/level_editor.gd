@@ -9,6 +9,8 @@ var map_width: int
 var map_height: int
 const MAP_MIN_WIDTH: int = 3
 const MAP_MIN_HEIGHT: int = 3
+const MAP_MAX_WIDTH: int = 30
+const MAP_MAX_HEIGHT: int = 20
 
 # 滚动边界
 var scroll_x_min: int
@@ -26,14 +28,11 @@ func _ready():
     $PopupSetMapSizeWindow.force_native = true
     if not try_load_existing_level_file("user://edit_level.tsv"):
         $PopupSetMapSizeWindow.popup_centered()
-        #map_height = 20
-        #map_width = 30
         create_default_empty_level_map()
     set_scroll_bounds()
 
     camera.position = Vector2(GlobalVars.VIEW_WIDTH / 2, GlobalVars.VIEW_HEIGHT / 2)
-    $GridDrawer.map_width = map_width
-    $GridDrawer.map_height = map_height
+    $GridDrawer.draw_grid(map_width, map_height)
     $BgDrawer.map_width = map_width
     $BgDrawer.map_height = map_height
     $ImportFileDialog.file_selected.connect(_on_import_file_dialog_confirmed)
@@ -194,6 +193,8 @@ func is_valid_row_col(row: int, col: int) -> bool:
 
 # 在第一行下方增加一行
 func add_row_below_first() -> void:
+    if map_height >= MAP_MAX_HEIGHT:
+        return
     var new_row = []
     new_row.resize(map_width)
     new_row.fill(GlobalVars.ID_EMPTY_TILE)
@@ -202,9 +203,12 @@ func add_row_below_first() -> void:
     level_map.insert(1, new_row)
     map_height += 1
     set_scroll_bounds()
+    $GridDrawer.draw_grid(map_width, map_height)
 
 # 在最后一行上方增加一行
 func add_row_above_last() -> void:
+    if map_height >= MAP_MAX_HEIGHT:
+        return
     var new_row = []
     new_row.resize(map_width)
     new_row.fill(GlobalVars.ID_EMPTY_TILE)
@@ -213,9 +217,12 @@ func add_row_above_last() -> void:
     level_map.insert(map_height - 1, new_row)
     map_height += 1
     set_scroll_bounds()
+    $GridDrawer.draw_grid(map_width, map_height)
 
 # 在第一列右侧增加一列
 func add_column_right_of_first() -> void:
+    if map_width >= MAP_MAX_WIDTH:
+        return
     for i in range(map_height):
         if i == 0:
             level_map[i].insert(1, GlobalVars.ID_WALL_BLOCK)  # 第一行
@@ -225,9 +232,12 @@ func add_column_right_of_first() -> void:
             level_map[i].insert(1, GlobalVars.ID_EMPTY_TILE)  # 其他行
     map_width += 1
     set_scroll_bounds()
+    $GridDrawer.draw_grid(map_width, map_height)
 
 # 在最后一列左侧增加一列
 func add_column_left_of_last() -> void:
+    if map_width >= MAP_MAX_WIDTH:
+        return
     for i in range(map_height):
         if i == 0:
             level_map[i].insert(map_width - 1, GlobalVars.ID_WALL_BLOCK)  # 第一行
@@ -237,6 +247,7 @@ func add_column_left_of_last() -> void:
             level_map[i].insert(map_width - 1, GlobalVars.ID_EMPTY_TILE)  # 其他行
     map_width += 1
     set_scroll_bounds()
+    $GridDrawer.draw_grid(map_width, map_height)
 
 # 删除第二行
 func remove_second_row() -> void:
@@ -245,6 +256,7 @@ func remove_second_row() -> void:
         map_height -= 1
         try_find_player_grid_pos()
         set_scroll_bounds()
+        $GridDrawer.draw_grid(map_width, map_height)
 
 
 # 删除倒数第二行
@@ -254,6 +266,7 @@ func remove_second_last_row() -> void:
         map_height -= 1
         try_find_player_grid_pos()
         set_scroll_bounds()
+        $GridDrawer.draw_grid(map_width, map_height)
 
 
 # 删除第二列
@@ -264,6 +277,8 @@ func remove_second_column() -> void:
         map_width -= 1
         try_find_player_grid_pos()
         set_scroll_bounds()
+        $GridDrawer.draw_grid(map_width, map_height)
+
 
 # 删除倒数第二列
 func remove_second_last_column() -> void:
@@ -273,6 +288,7 @@ func remove_second_last_column() -> void:
         map_width -= 1
         try_find_player_grid_pos()
         set_scroll_bounds()
+        $GridDrawer.draw_grid(map_width, map_height)
 
 
 func _on_new_button_pressed() -> void:
@@ -284,4 +300,5 @@ func _on_set_map_size_window_confirmed(rows: int, columns: int) -> void:
     map_width = columns
     map_height = rows
     create_default_empty_level_map()
+    $GridDrawer.draw_grid(map_width, map_height)
     set_scroll_bounds()
