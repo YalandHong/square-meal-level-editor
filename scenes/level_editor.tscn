@@ -59,6 +59,34 @@ texture_normal = ExtResource("4_sscbb")
 script = ExtResource("6_27ryd")
 displayed_text = "delete"
 
+[node name="AddColLeft" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "add"
+
+[node name="AddColRight" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 100.0
+offset_bottom = 42.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "add"
+
+[node name="DelColLeft" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "delete"
+
+[node name="DelColRight" type="TextureButton" parent="AddRowColUiLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_sscbb")
+script = ExtResource("6_27ryd")
+displayed_text = "delete"
+
 [node name="SelectMenuManager" type="TextureRect" parent="."]
 offset_right = 275.0
 offset_bottom = 600.0
@@ -148,6 +176,10 @@ force_native = true
 [connection signal="pressed" from="AddRowColUiLayer/AddRowBottom" to="AddRowColUiLayer" method="_on_add_row_bottom_pressed"]
 [connection signal="pressed" from="AddRowColUiLayer/DelRowTop" to="AddRowColUiLayer" method="_on_del_row_top_pressed"]
 [connection signal="pressed" from="AddRowColUiLayer/DelRowBottom" to="AddRowColUiLayer" method="_on_del_row_bottom_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/AddColLeft" to="AddRowColUiLayer" method="_on_add_col_left_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/AddColRight" to="AddRowColUiLayer" method="_on_add_col_right_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/DelColLeft" to="AddRowColUiLayer" method="_on_del_col_left_pressed"]
+[connection signal="pressed" from="AddRowColUiLayer/DelColRight" to="AddRowColUiLayer" method="_on_del_col_right_pressed"]
 [connection signal="pressed" from="SelectMenuManager/RunButton" to="." method="_on_run_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="SelectMenuManager/ImportButton" to="." method="_on_import_button_pressed"]
