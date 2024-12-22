@@ -67,7 +67,13 @@ const NONE = ""
 
 const FRAME_RATE = 30
 
-const DEPTH_UI_ELEMENTS = 3000
-const DEPTH_EPLOSION = 1000
-const DEPTH_BG_FLOOR = -1000
-const DEPTH_BG_SCREEN = -3000
+const DEPTH_UI_ELEMENTS = 4090
+const DEPTH_EPLOSION = 4080
+const DEPTH_BG_FLOOR = -4080
+const DEPTH_BG_SCREEN = -4090
+
+# level editor max level size
+const EDITOR_MAP_MIN_WIDTH: int = 3
+const EDITOR_MAP_MIN_HEIGHT: int = 3
+const EDITOR_MAP_MAX_WIDTH: int = 50
+const EDITOR_MAP_MAX_HEIGHT: int = 50

@@ -7,10 +7,10 @@ const TILE_HEIGHT: int = GlobalVars.TILE_HEIGHT
 var level_map: Array
 var map_width: int
 var map_height: int
-const MAP_MIN_WIDTH: int = 3
-const MAP_MIN_HEIGHT: int = 3
-const MAP_MAX_WIDTH: int = 30
-const MAP_MAX_HEIGHT: int = 20
+const MAP_MIN_WIDTH: int = GlobalVars.EDITOR_MAP_MIN_WIDTH
+const MAP_MIN_HEIGHT: int = GlobalVars.EDITOR_MAP_MIN_HEIGHT
+const MAP_MAX_WIDTH: int = GlobalVars.EDITOR_MAP_MAX_WIDTH
+const MAP_MAX_HEIGHT: int = GlobalVars.EDITOR_MAP_MAX_HEIGHT
 
 # 滚动边界
 var scroll_x_min: int

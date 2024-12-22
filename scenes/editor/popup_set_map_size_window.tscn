@@ -20,22 +20,22 @@ grow_horizontal = 2
 
 [node name="SetRowLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Set Rows (3-20):"
+text = "Set Rows (3-50):"
 
 [node name="SetRowSpinBox" type="SpinBox" parent="VBoxContainer"]
 layout_mode = 2
 min_value = 3.0
-max_value = 20.0
+max_value = 50.0
 value = 10.0
 
 [node name="SetColLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Set Columns (3-30):"
+text = "Set Columns (3-50):"
 
 [node name="SetColSpinBox" type="SpinBox" parent="VBoxContainer"]
 layout_mode = 2
 min_value = 3.0
-max_value = 30.0
+max_value = 50.0
 value = 10.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
