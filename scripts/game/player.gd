@@ -23,7 +23,7 @@ var state: PlayerState
 
 # 转向相关
 var turn_count: int = 0
-const MAX_TURN_COUNT: int = 2
+const MAX_TURN_COUNT: int = 1
 
 # 移动相关
 const SIDE_WALK_SPEED: float = 5
