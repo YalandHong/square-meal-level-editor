@@ -304,3 +304,4 @@ func _on_set_map_size_window_confirmed(rows: int, columns: int) -> void:
     create_default_empty_level_map()
     $GridDrawer.draw_grid(map_width, map_height)
     set_scroll_bounds()
+    $AddRowColUiLayer.refresh_add_del_buttons()
