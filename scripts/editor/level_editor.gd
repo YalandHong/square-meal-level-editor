@@ -27,7 +27,9 @@ func _ready():
     $PopupSetMapSizeWindow.hide()
     $PopupSetMapSizeWindow.force_native = true
     if not try_load_existing_level_file("user://edit_level.tsv"):
-        $PopupSetMapSizeWindow.popup_centered()
+        #$PopupSetMapSizeWindow.popup_centered()
+        map_width = 10
+        map_height = 10
         create_default_empty_level_map()
     set_scroll_bounds()
 
