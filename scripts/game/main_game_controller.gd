@@ -40,7 +40,7 @@ func _process(_delta: float) -> void:
 func init_scroll_bounds() -> void:
     scroll_x_min = GlobalVars.VIEW_WIDTH / 2
     scroll_x_max = max(scroll_x_min, game_manager.map_width * TILE_WIDTH - GlobalVars.VIEW_WIDTH / 2)
-    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2
+    scroll_y_min = GlobalVars.VIEW_HEIGHT / 2 - TILE_HEIGHT / 2
     scroll_y_max = max(scroll_y_min, game_manager.map_height * TILE_HEIGHT - GlobalVars.VIEW_HEIGHT / 2)
 
 func scroll_game() -> void:
