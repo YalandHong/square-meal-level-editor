@@ -4,7 +4,7 @@ It's the 20th anniversary of Nitrome. Inspired by [Sim533's Square Meal Fan Edit
 
 Powered by [Godot Engine](https://godotengine.org/). I also utilize [JPEXS Free Flash Decompiler](https://github.com/jindrapetrik/jpexs-decompiler) and [ChatGPT](https://chatgpt.com/) for resources decompiling and coding.
 
-Some features have not been implemented yet, such as multi-player and pause menu. Maybe I'll add them in the future.
+Some features, such as multi-player and pause menu, have not been implemented yet. But currently, I don't have enough time to finish them.
 
 This project is for educational purposes only and should not be used for commercial purposes.
 
@@ -18,7 +18,7 @@ This project is for educational purposes only and should not be used for commerc
 
 游戏引擎为[Godot](https://godotengine.org/)。制作过程中借助[JPEXS Free Flash Decompiler](https://github.com/jindrapetrik/jpexs-decompiler)进行Flash解包，同时借助[ChatGPT](https://chatgpt.com/)移植代码。
 
-部分功能尚未实现，如双人游戏、暂停菜单等。未来我可能会补上。
+部分功能尚未实现，如双人游戏、暂停菜单等。不过目前我并没有足够时间去完成了 :(
 
 这个工程仅用于学习游戏开发。请勿用于商业用途。
 
