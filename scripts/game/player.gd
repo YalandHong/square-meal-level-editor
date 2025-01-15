@@ -192,8 +192,6 @@ func can_spit(target_row: int, target_col: int) -> bool:
 # 吐出方块逻辑
 # 原版Flash里在frame=2时才真正吐出方块
 # 但这样会给Player增加大量临时变量，我就没这么做，直接在frame=0就开始spit block
-# 而且，start spit block是确认了next step为空
-# 把do_spit逻辑写在start_spit_block的最后
 func start_spit_block():
     var target_row: int = GridHelper.get_next_row_in_direction(current_row, dir)
     var target_col: int = GridHelper.get_next_col_in_direction(current_col, dir)
@@ -204,10 +202,6 @@ func start_spit_block():
     play_spit_animation()
     SfxPlayerSingleton.play_sfx("spit")
     state = PlayerState.SPITTING
-
-    # TODO 暂无UI
-    # 更新显示玩家当前持有的方块状态 (这里假设有个 BlockDisplay 类来显示持有的方块)
-    #BlockDisplay.update_display(0)
 
     # 将玩家持有的方块放入目标格子，并清空玩家当前的持有方块
     if swallowed_block_type == GlobalVars.ID_EXPLOSIVE_BLOCK:
