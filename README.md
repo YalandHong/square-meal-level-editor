@@ -1,4 +1,8 @@
+
+
 Unofficial port and level editor of [Square Meal](https://www.nitrome.com/html5-games/squaremeal/), a Flash game by [Nitrome](https://www.nitrome.com/).
+
+The repository includes the 30 official levels in `levels/official/`.
 
 It's the 20th anniversary of Nitrome. Inspired by [Sim533's Square Meal Fan Editor](https://www.nitrome.com/blog/articles/1008), I made this project to replicate one of my favorite games when I was a kid.
 
